@@ -1,9 +1,8 @@
 // Funções usadas em todas as cenas.
 var PREFIXO = "ecos:";
-var itens = ["chavefenda", "alicate", "chave", "fusivel", "cartao", "corrente", "pingente", "medalhao"];
+var itens = ["chavefenda", "alicate", "chave", "corrente", "pingente", "medalhao"];
 var timerMensagem;
 var painelAtual = "";
-var jogoEncerrado = false;
 var paginaDiario = 0;
 var informacoesPorPagina = 3;
 
@@ -20,7 +19,7 @@ function limparJogo() {
   // Apaga somente os dados deste jogo.
   for (var i = localStorage.length - 1; i >= 0; i--) {
     var chave = localStorage.key(i);
-    if (chave.indexOf(PREFIXO) === 0) localStorage.removeItem(chave);
+    if (chave && chave.indexOf(PREFIXO) === 0) localStorage.removeItem(chave);
   }
 }
 
@@ -28,7 +27,8 @@ function limparJogo() {
 function novoJogo() {
   limparJogo();
   marcar("partidaIniciada");
-  registrarDiario("Você acordou no porão.");
+  marcar("mapaAtualizado");
+  registrarDiario("Você acordou no quarto.");
   window.location.href = "cena1.html";
 }
 
@@ -44,6 +44,11 @@ function iniciarPagina() {
     window.location.href = "final.html";
     return;
   }
+  if (pegar("travessia") && !foi("portaAberta")) {
+    irPara("cena1.html");
+    return;
+  }
+  atualizarProgressoAntigo();
   atualizarInventario();
   sincronizarObjetos();
   atualizarBotaoDiario();
@@ -74,8 +79,6 @@ function abrirPainel(nome) {
 }
 
 function fecharPainel() {
-  // Fecha o desafio de setas, se ele estiver aberto.
-  if (painelAtual === "setas") cancelarSetas();
   painelAtual = "";
   pegar("painel").style.display = "none";
 }
@@ -111,7 +114,6 @@ function sincronizarObjetos() {
     ["campo-chave-de-fenda", "chaveFendaPega"],
     ["campo-alicate", "alicatePego"],
     ["campo-diario1", "diarioPego"],
-    ["campo-papel", "papelBreuLido"],
     ["campo-cadeado", "portaAberta"]
   ];
   for (var i = 0; i < objetos.length; i++) {
@@ -119,9 +121,9 @@ function sincronizarObjetos() {
     if (campo) campo.hidden = foi(objetos[i][1]);
   }
   var caldeira = pegar("campo-caldeira");
-  if (caldeira && foi("caldeiraAberta")) caldeira.hidden = true;
+  if (caldeira) caldeira.hidden = foi("caldeiraAberta");
   var papel = pegar("campo-papel");
-  if (papel) papel.hidden = !foi("caldeiraAberta") || foi("papelBreuLido");
+  if (papel) papel.hidden = !foi("caldeiraAberta") || (foi("papelBreuLido") && foi("pingentePego"));
 }
 
 function atualizarBotaoDiario() {
@@ -138,17 +140,21 @@ function atualizarInventario() {
     botao.classList.toggle("sel", selecionado === itens[i]);
     botao.setAttribute("aria-pressed", String(selecionado === itens[i]));
   }
+  var alvos = document.querySelectorAll("[data-item-necessario]");
+  for (var j = 0; j < alvos.length; j++) {
+    alvos[j].classList.toggle("item-compativel", alvos[j].getAttribute("data-item-necessario") === selecionado);
+  }
 }
 
 function combinarItens(primeiro, segundo) {
   var combina = (primeiro === "corrente" && segundo === "pingente") ||
                 (primeiro === "pingente" && segundo === "corrente");
-  if (!combina) return false;
+  if (!combina || !foi("tem-" + primeiro) || !foi("tem-" + segundo)) return false;
   perder("corrente");
   perder("pingente");
   ganhar("medalhao");
-  falar("A corrente e o pingente formam um medalhão.");
-  registrarDiario("Combinação: corrente + pingente = medalhão.");
+  falar("A corrente e o pingente formam um medalhão gravado com uma meia-lua riscada.");
+  registrarDiario("A corrente e o pingente formam um medalhão com uma meia-lua riscada.");
   return true;
 }
 
@@ -167,7 +173,39 @@ function clicarItem(nome) {
 }
 
 // Diário
-function lerDiario() { return JSON.parse(lerTexto("diario") || "[]"); }
+function lerDiario() {
+  try {
+    var diario = JSON.parse(lerTexto("diario") || "[]");
+    return Array.isArray(diario) ? diario.filter(function (anotacao) {
+      return typeof anotacao === "string";
+    }) : [];
+  } catch (erro) {
+    return [];
+  }
+}
+
+function atualizarProgressoAntigo() {
+  if (foi("mapaAtualizado")) return;
+  var anotacoesObsoletas = [
+    /^Ação: (fusível encontrado|energia religada|alavanca puxada|a alavanca reiniciou)/i,
+    /^Ação: (terminal desbloqueado|cartão de acesso|fios cortados|leitor magnético|sequência do painel)/i,
+    /^Pista: (o retrato da |a data anotada|atrás do relógio|diário do guarda|os fios expostos)/i,
+    /^Erro: (terminal bloqueado|a ordem dos fios|a sequência do painel)/i,
+    /^Segredo: pingente encontrado atrás do retrato/i
+  ];
+  var diario = lerDiario().filter(function (anotacao) {
+    return !anotacoesObsoletas.some(function (regra) { return regra.test(anotacao); });
+  }).map(function (anotacao) {
+    return anotacao.replace(/no porão/gi, "no quarto").replace(/na biblioteca/gi, "no corredor");
+  });
+  gravar("diario", JSON.stringify(diario));
+  if (itens.indexOf(itemSelecionado()) === -1) desmarcar("selecionado");
+  desmarcar("tem-cartao");
+  desmarcar("tem-fusivel");
+  desmarcar("energiaLigada");
+  desmarcar("fusivelPego");
+  marcar("mapaAtualizado");
+}
 
 function registrarDiario(texto) {
   var diario = lerDiario();
@@ -220,21 +258,9 @@ function passarPaginaDiario(direcao) {
   atualizarPaginaDiario();
 }
 
-// Finais
-function terminarJogo(tipo) {
-  if (jogoEncerrado) return;
-  jogoEncerrado = true;
-  clearTimeout(timerMensagem);
-  fecharPainel();
-  gravar("final", tipo);
-  window.location.href = "final.html";
-}
-
-function escapar() {
-  terminarJogo("perfeito");
-}
-
 // Atualiza a página quando o jogador volta pelo histórico do navegador.
 window.onpageshow = function (evento) {
-  if (evento.persisted) iniciarPagina();
+  if (!evento.persisted || !pegar("palco")) return;
+  if (pegar("painel")) fecharPainel();
+  iniciarPagina();
 };

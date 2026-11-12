@@ -16,31 +16,23 @@
     <span class="nome-cena">Corredor</span>
 
     <!-- Áreas clicáveis -->
-    <div class="campo" id="campo-relogio" title="Relógio"
-         style="left:8%; top:12%; width:12%; height:24%"
-         onclick="clicarRelogio()">
 
+    <div class="campo" id="campo-terminal-senha" aria-label="Terminal"
+      style="left:56%; top:36%; width:4%; height:12%"
+      onclick="clicarTerminal()">
+      <img src="images/objetos/terminal-senha.png">
     </div>
 
-    <div class="campo" id="campo-quadro" title="Quadro torto"
-         style="left:30%; top:14%; width:16%; height:24%"
-         onclick="clicarQuadro()">
-
-    </div>
-
-    <div class="campo" id="campo-alavanca" title="Alavanca"
-         style="left:56%; top:46%; width:6%; height:16%"
-         onclick="clicarAlavanca()">
-
-    </div>
 
     <div class="campo" id="campo-porta-seguranca" aria-label="Porta da sala de segurança"
          style="left:14%; top:39%; width:9%; height:45%"
-         onclick="clicarPortaSeguranca()"></div>
+         onclick="clicarPortaSeguranca()">
+    </div>
 
     <div class="campo" id="campo-porta-armazem" aria-label="Porta do armazém"
          style="left:78%; top:36%; width:10%; height:49%"
-         onclick="clicarPortaArmazem()"></div>
+         onclick="clicarPortaArmazem()">
+    </div>
 
     <!-- Lanterna -->
     <div id="luz"></div>
@@ -53,7 +45,6 @@
           <a href="#" class="item-inventario" id="item-chavefenda" style="display:none" onclick="clicarItem('chavefenda'); return false;">Chave de fenda</a>
           <a href="#" class="item-inventario" id="item-alicate" style="display:none" onclick="clicarItem('alicate'); return false;">Alicate</a>
           <a href="#" class="item-inventario" id="item-chave" style="display:none" onclick="clicarItem('chave'); return false;">Chave de latão</a>
-          <a href="#" class="item-inventario" id="item-fusivel" style="display:none" onclick="clicarItem('fusivel'); return false;">Fusível</a>
           <a href="#" class="item-inventario" id="item-cartao" style="display:none" onclick="clicarItem('cartao'); return false;">Cartão de acesso</a>
           <a href="#" class="item-inventario" id="item-corrente" style="display:none" onclick="clicarItem('corrente'); return false;">Corrente de prata</a>
           <a href="#" class="item-inventario" id="item-pingente" style="display:none" onclick="clicarItem('pingente'); return false;">Pingente</a>
@@ -68,7 +59,7 @@
           <button onclick="irPara('cena1.html')">Descer ao porão</button>
           <button onclick="tentarIrBiblioteca()">Biblioteca</button>
           <button onclick="irPara('cena5.html')">Sala de Segurança</button>
-          <button onclick="tentarIrSaida()">Saída</button>
+          <button onclick="irPara('cena6.html')">Saída</button>
         </div>
 
       </div>

@@ -60,6 +60,49 @@ img.sprite {
   z-index: 1;
 }
 
+.campo.item-compativel:hover:not([hidden]) {
+  outline: 1px solid #ffe1a0;
+  border-radius: 5px;
+  box-shadow: 0 0 9px #ffc85b99;
+}
+
+#travessia {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+#travessia #palco {
+  width: min(calc(100vw - 30px), calc((100vh - 105px) * 16 / 9));
+}
+
+#travessia .nome-cena {
+  z-index: 1;
+  color: #aaa;
+}
+
+#travessia nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 12px;
+}
+
+.narracao-cena {
+  position: absolute;
+  inset: auto 12px 10px;
+  max-width: 620px;
+  margin-inline: auto;
+  padding: 7px 12px;
+  border-radius: 6px;
+  background: #000c;
+  color: #ddd5c4;
+  font-size: clamp(11px, 2vw, 14px);
+  text-align: center;
+  pointer-events: none;
+}
+
 /* Lanterna que acompanha o mouse. */
 #luz {
   position: absolute;

@@ -90,7 +90,7 @@
   text-shadow: 0 0 5px #fff, 0 0 13px #fff;
 }
 
-/* Painel por cima da cena (senhas, minigames, diário) */
+/* Painel por cima da cena (parafuso, relatório e diário) */
 #painel {
   position: absolute;
   inset: 0;
@@ -114,17 +114,6 @@
 #painel h3 {
   font-size: 22px;
   letter-spacing: 2px;
-}
-#painel input {
-  background: #1a1a1a;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font: inherit;
-  font-size: 22px;
-  padding: 6px;
-  width: 160px;
-  text-align: center;
 }
 #diario-aberto {
   position: relative;
@@ -184,8 +173,11 @@
   opacity: .35;
   cursor: default;
 }
+#p-papel { min-height: 0; }
+
 .texto-papel {
   max-width: min(640px, 80vw);
+  overflow-y: auto;
   padding: 20px 24px;
   background: #d8c79d;
   color: #281f16;
@@ -195,7 +187,7 @@
   line-height: 1.6;
   font-family: Georgia, serif;
 }
-.papel-campo {
+.papel-campo:not([hidden]) {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -208,24 +200,12 @@
   transform: rotate(-5deg);
 }
 
-/* Botões coloridos (fios e painel de cores) */
-.fio { width: 90px; height: 34px; font-weight: bold; }
-.fio:hover { filter: brightness(1.25); }
-button.vermelho { background: #d22; }
-button.azul     { background: #26d; }
-button.verde    { background: #2a2; }
-button.amarelo  { background: #dc2; }
-
-.setas {
-  font-size: 44px;
-  letter-spacing: 10px;
-}
-
-/* Parafuso do bueiro: um círculo com uma fenda. O JavaScript gira com style.transform */
+/* A cabeça do parafuso sobe e gira conforme a rosca se solta. */
 #parafuso {
   position: relative;
   width: 100px;
   height: 100px;
+  margin-top: 28px;
   border-radius: 50%;
   background: #8a8a8a;
   box-shadow: inset 0 0 0 6px #5c5c5c;

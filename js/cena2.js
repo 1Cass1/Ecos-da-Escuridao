@@ -44,14 +44,19 @@ function clicarPapel() {
     falar("Há algo escondido atrás das correntes da caldeira.");
     return;
   }
-  if (foi("papelBreuLido")) {
+  if (foi("papelBreuLido") && foi("pingentePego")) {
     falar("Você já leu o relatório encontrado atrás da caldeira.");
     return;
   }
   marcar("papelBreuLido");
-  registrarDiario("Relatório antigo: o Breu se alimenta de matéria orgânica e emoções extremas. Frequências de luz ultravioleta o enfraquecem, mas a criatura entrou pelos dutos e corrompeu os pesquisadores.");
+  if (!foi("pingentePego")) {
+    marcar("pingentePego");
+    ganhar("pingente");
+    falar("Você guardou o pingente que estava embrulhado no relatório.");
+  }
+  registrarDiario("Relatório do Breu: a guardiã deixou seu retrato no corredor. A meia-lua riscada da moldura também está gravada no pingente.");
   sincronizarObjetos();
-  pegar("papel-texto").textContent = "RELATÓRIO DE CAMPO — O Breu não é apenas escuridão. Ele se espalha pela matéria orgânica e parece reagir ao terror e à obsessão. Frequências de luz ultravioleta o enfraquecem. A contenção falhou quando a coisa entrou pelos dutos de ventilação. Os pesquisadores começaram a mudar. Se alguém encontrar isto, não confie nas vozes vindas do rádio.";
+  pegar("papel-texto").textContent = "O Breu se espalha pela matéria orgânica e reage ao medo. A luz ultravioleta o enfraquece. Desde que ele entrou pelos dutos, as vozes passaram a imitar as nossas. A guardiã deixou o retrato no corredor, perto da porta da frente. A meia-lua riscada na moldura também foi gravada no pingente que ela usava.";
   abrirPainel("papel");
 }
 

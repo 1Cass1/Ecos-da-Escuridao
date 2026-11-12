@@ -5,10 +5,10 @@ var texto = "";
 
 if (tipo === "perfeito") {
   titulo = "Fuga perfeita";
-  texto = "Você cruza o portão sem pressa e com a sanidade intacta. Lá atrás, a Sombra só observa. Ela perdeu.";
+  texto = "Você atravessa a porta da frente. Do lado de fora, o som dos dutos finalmente cessa. No corredor, a Sombra fica imóvel diante do retrato.";
 } else if (tipo === "secreto") {
   titulo = "Final secreto: o pacto";
-  texto = "Você estende o medalhão. A Sombra hesita, reconhece o rosto do retrato e se desfaz em cinzas. Era a guardiã da casa e agora você ocupa o lugar dela.";
+  texto = "Junto à porta da frente, você estende o medalhão. A Sombra toca a meia-lua riscada, a mesma marca na moldura do retrato do corredor. A antiga guardiã se desfaz em cinzas. Dos dutos, você ouve seu próprio nome. Agora é você quem guarda a casa.";
 } else {
   window.location.href = "index.html";
 }

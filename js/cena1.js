@@ -1,5 +1,6 @@
-// CENA 1: PORÃO
-var voltasParafuso = ler("voltasParafuso");
+// CENA 1: QUARTO
+var voltasParafuso = 0;
+var girosParaSoltar = 3;
 
 function clicarCaixas() {
   falar("Caixas velhas. Marcas de arrasto no chão levam ao bueiro.");
@@ -13,16 +14,13 @@ function clicarDiario() {
     pegar("campo-diario1").hidden = true;
     atualizarBotaoDiario();
     falar("Você encontrou e guardou o diário. O botão Diário foi liberado.");
-    registrarDiario("O diário foi encontrado no porão.");
+    registrarDiario("O diário foi encontrado no quarto.");
   }
   if (!foi("correntePega")) {
     marcar("correntePega");
     ganhar("corrente");
-    falar("Dentro do diário há uma corrente de prata e uma anotação: 'O retrato guarda o que falta'.");
-    registrarDiario("Pista: o retrato da biblioteca esconde algo que pertence à corrente.");
-  } else {
-    falar("O diário fala de uma mulher retratada na biblioteca e de uma data: 07/13.");
-    registrarDiario("Pista: a data anotada no diário é 07/13.");
+    falar("Dentro do diário há uma corrente de prata com um fecho para pingente.");
+    registrarDiario("Pista: a corrente de prata tem um fecho para pingente.");
   }
 }
 
@@ -33,32 +31,41 @@ function clicarBueiro() {
   if (foi("bueiroAberto")) {
     falar("A grade está aberta. A chave de latão já foi retirada.");
   } else if (itemSelecionado() === "chavefenda") {
-    pegar("voltas-texto").textContent = voltasParafuso;
-    pegar("parafuso").style.transform = "rotate(" + (voltasParafuso * -45) + "deg)";
+    // Partidas antigas usavam até oito giros.
+    voltasParafuso = Math.max(0, Math.min(ler("voltasParafuso"), girosParaSoltar - 1));
+    atualizarParafuso();
     abrirPainel("parafuso");
   } else {
     falar("O parafuso da grade está enferrujado. Selecione a chave de fenda.");
   }
 }
 
+function atualizarParafuso() {
+  pegar("voltas-texto").textContent = voltasParafuso;
+  pegar("parafuso").style.transform = "translateY(" + (-9 * voltasParafuso) + "px) rotate(" +
+    (-65 * voltasParafuso) + "deg) scale(" + (1 + 0.07 * voltasParafuso) + ")";
+}
+
 function girarParafuso(sentido) {
+  if (painelAtual !== "parafuso" || itemSelecionado() !== "chavefenda" || foi("bueiroAberto")) return;
   if (sentido === "esquerda") {
-    voltasParafuso = Math.min(voltasParafuso + 1, 8);
+    voltasParafuso++;
   } else {
     voltasParafuso = Math.max(voltasParafuso - 1, 0);
     falar("Isso aperta o parafuso. Gire para a esquerda.");
   }
   gravar("voltasParafuso", voltasParafuso);
-  pegar("voltas-texto").textContent = voltasParafuso;
-  pegar("parafuso").style.transform = "rotate(" + (voltasParafuso * -45) + "deg)";
+  atualizarParafuso();
 
-  if (voltasParafuso === 8) {
+  if (voltasParafuso === girosParaSoltar) {
     marcar("bueiroAberto");
     perder("chavefenda");
     ganhar("chave");
-    fecharPainel();
     falar("A grade se solta. Você encontra uma chave de latão lá embaixo.");
     registrarDiario("Ação: bueiro aberto; chave de latão encontrada.");
+    setTimeout(function () {
+      if (painelAtual === "parafuso") fecharPainel();
+    }, 420);
   }
 }
 

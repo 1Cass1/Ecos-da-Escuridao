@@ -4,7 +4,7 @@ Escape room feito com HTML, CSS e JavaScript. Os cliques ficam definidos nos ele
 
 ## Arquivos
 - `index.html`: tela inicial. `final.html`: mostra o final.
-- `cena1.html` Porão, `cena2.html` Subsolo, `cena3.html` Corredor, `cena4.html` Biblioteca, `cena5.html` Sala de Segurança, `cena6.html` Saída.
+- `cena1.html` Quarto, `cena2.html` Subsolo, `cena3.html` Corredor, `cena4.html` Biblioteca, `cena5.html` Sala de Segurança, `cena6.html` Saída.
 - `js/jogo.js`: funções usadas por todas as cenas (inventário, mensagens, diário e finais).
 - `js/cena1.js` até `js/cena6.js`: interações e enigmas de cada ambiente.
 - `js/final.js`: textos dos finais. Os HTMLs contêm a estrutura e carregam seus scripts no fim da página.
@@ -30,7 +30,7 @@ Com `class="debug"` no `<body>` os campos ganham contorno e a lanterna é deslig
 - Ao passar o mouse o objeto brilha (`drop-shadow` na regra `.campo:hover img` do `cena.css`). A cor do brilho é `--brilho` no `base.css`.
 
 ## Lanterna
-O alcance é controlado por `--luz-claro` e `--luz-escuro` no `css/base.css`.
+A casa permanece no escuro durante toda a partida. A lanterna é a única fonte de iluminação dos cenários. Seu alcance é controlado por `--luz-claro` e `--luz-escuro` no `css/base.css`.
 
 ## Organização do JavaScript
 - `jogo.js` cuida dos dados salvos, mensagens, painéis, inventário, diário e finais.
@@ -61,4 +61,6 @@ Os fundos `biblioteca.png` e `saida.png` ainda precisam ser adicionados à pasta
 
 ## Enigmas e itens
 A partida tem quatro enigmas principais: soltar o bueiro com a chave de fenda, descobrir a senha do terminal, cortar os fios na ordem da pista e repetir a sequência de setas. O diário e o livro fornecem pistas; a porta do porão usa a chave encontrada no bueiro.
-A chave de fenda, o alicate, a chave, o fusível e o cartão são consumidos ao serem usados. Os sprites da chave de fenda, do alicate e do cadeado somem da cena quando deixam de estar disponíveis. O diário entrega a corrente; o pingente vem do retrato. Juntos, os dois itens permitem o final secreto.
+A chave de fenda, o alicate, a chave e o cartão são consumidos ao serem usados. Os sprites da chave de fenda, do alicate e do cadeado somem da cena quando deixam de estar disponíveis. O diário entrega a corrente; o pingente vem do retrato. Juntos, os dois itens permitem o final secreto.
+
+Os dispositivos de segurança funcionam independentemente da iluminação da casa. A saída é acessível pelo corredor. Para abrir o portão, desative o laser infravermelho, passe o cartão no leitor e acerte a sequência de setas.
