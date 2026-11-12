@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ecos da Escuridão - Subsolo</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/cena.css">
+  <link rel="stylesheet" href="css/hud.css">
+</head>
+
+<!-- Use class="debug" no body para ver as áreas clicáveis. -->
+<body>
+
+  <div id="palco" style="background-image: url('images/subsolo.png')" onmousemove="moverLanterna(event)">
+    <span class="nome-cena">Subsolo</span>
+
+    <!-- Áreas clicáveis -->
+    <div class="campo" id="campo-escada-cima" title="Escada para cima"
+         style="left:46%; top:7%; width:9%; height:62%"
+         onclick="clicarEscadaCima()">
+    </div>
+
+    <div class="campo" id="campo-chave-de-fenda" title="Chave de fenda"
+         style="left:77%; top:55%; width:10%; height:10%"
+         onclick="clicarChaveDeFenda()">
+      <img src="images/objetos/chave-de-fenda.png">
+    </div>
+
+    <div class="campo" id="campo-caldeira" title="Caldeira"
+         style="left:23%; top:58%; width:10%; height:22%"
+         onclick="clicarCaldeira()">
+      <img src="images/objetos/caldeira.png">
+    </div>
+
+    <div class="campo papel-campo" id="campo-papel" title="Papel escondido"
+         style="left:25%; top:48%; width:7%; height:9%"
+         onclick="clicarPapel()" hidden>
+      <span>RELATÓRIO</span>
+    </div>
+
+    <div class="campo" id="campo-alicate" title="Alicate"
+         style="left:40%; top:78%; width:20%; height:20%"
+         onclick="clicarAlicate()">
+      <img src="images/objetos/alicate.png">
+    </div>
+
+    <!-- Lanterna -->
+    <div id="luz"></div>
+
+    <!-- Interface do jogo -->
+    <div id="topo">
+      <button id="botao-diario" onclick="abrirDiario()" hidden>Diário</button>
+      <div id="inv">
+          <span class="titulo-inventario">Itens</span>
+          <a href="#" class="item-inventario" id="item-chavefenda" style="display:none" onclick="clicarItem('chavefenda'); return false;">Chave de fenda</a>
+          <a href="#" class="item-inventario" id="item-alicate" style="display:none" onclick="clicarItem('alicate'); return false;">Alicate</a>
+          <a href="#" class="item-inventario" id="item-chave" style="display:none" onclick="clicarItem('chave'); return false;">Chave de latão</a>
+          <a href="#" class="item-inventario" id="item-fusivel" style="display:none" onclick="clicarItem('fusivel'); return false;">Fusível</a>
+          <a href="#" class="item-inventario" id="item-cartao" style="display:none" onclick="clicarItem('cartao'); return false;">Cartão de acesso</a>
+          <a href="#" class="item-inventario" id="item-corrente" style="display:none" onclick="clicarItem('corrente'); return false;">Corrente de prata</a>
+          <a href="#" class="item-inventario" id="item-pingente" style="display:none" onclick="clicarItem('pingente'); return false;">Pingente</a>
+          <a href="#" class="item-inventario" id="item-medalhao" style="display:none" onclick="clicarItem('medalhao'); return false;">Medalhão</a>
+        </div>
+    </div>
+
+    <div id="rodape">
+      <div id="mensagem"></div>
+      <div id="baixo">
+        <div id="nav">
+          <button onclick="clicarEscadaCima()">Subir a escada</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Painéis -->
+    <div id="painel">
+
+      <div class="subpainel" id="p-diario">
+        <h3>DIÁRIO DE BORDO</h3>
+        <div id="diario-aberto">
+          <section id="pagina-diario" class="pagina-diario esquerda">
+            <h4 id="diario-titulo"></h4>
+            <p id="diario-texto"></p>
+          </section>
+        </div>
+        <div id="controles-diario">
+          <button id="seta-diario-voltar" class="seta-diario" onclick="passarPaginaDiario(-1)" aria-label="Página anterior" disabled>&#8592;</button>
+          <span id="diario-pagina">1 / 1</span>
+          <button id="seta-diario-avancar" class="seta-diario" onclick="passarPaginaDiario(1)" aria-label="Próxima página">&#8594;</button>
+        </div>
+      </div>
+
+      <div class="subpainel" id="p-papel">
+        <h3>PAPEL ENCONTRADO NA CALDEIRA</h3>
+        <p id="papel-texto" class="texto-papel"></p>
+      </div>
+
+      <button id="botao-fechar-painel" onclick="fecharPainel()">Fechar</button>
+    </div>
+
+  </div>
+
+  <script src="js/jogo.js"></script>
+  <script src="js/cena2.js"></script>
+</body>
+</html>

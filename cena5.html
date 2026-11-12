@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ecos da Escuridão - Sala de Segurança</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/cena.css">
+  <link rel="stylesheet" href="css/hud.css">
+</head>
+
+<!-- Use class="debug" no body para ver as áreas clicáveis. -->
+<body>
+
+  <div id="palco" style="background-image: url('images/seguranca.png')" onmousemove="moverLanterna(event)">
+    <span class="nome-cena">Sala de Segurança</span>
+
+    <!-- Áreas clicáveis -->
+    <div class="campo" id="campo-caixa" title="Caixa de fusíveis"
+         style="left:8%; top:20%; width:16%; height:40%"
+         onclick="clicarCaixa()">
+
+    </div>
+
+    <div class="campo" id="campo-terminal" title="Terminal"
+         style="left:38%; top:34%; width:20%; height:28%"
+         onclick="clicarTerminal()">
+
+    </div>
+
+    <div class="campo" id="campo-gaveta" title="Gaveta eletrônica"
+         style="left:64%; top:56%; width:16%; height:24%"
+         onclick="clicarGaveta()">
+
+    </div>
+
+    <div class="campo" id="campo-fios" title="Painel de circuitos do laser"
+         style="left:84%; top:14%; width:11%; height:32%"
+         onclick="clicarFios()">
+
+    </div>
+
+    <!-- Lanterna -->
+    <div id="luz"></div>
+
+    <!-- Interface do jogo -->
+    <div id="topo">
+      <button id="botao-diario" onclick="abrirDiario()" hidden>Diário</button>
+      <div id="inv">
+          <span class="titulo-inventario">Itens</span>
+          <a href="#" class="item-inventario" id="item-chavefenda" style="display:none" onclick="clicarItem('chavefenda'); return false;">Chave de fenda</a>
+          <a href="#" class="item-inventario" id="item-alicate" style="display:none" onclick="clicarItem('alicate'); return false;">Alicate</a>
+          <a href="#" class="item-inventario" id="item-chave" style="display:none" onclick="clicarItem('chave'); return false;">Chave de latão</a>
+          <a href="#" class="item-inventario" id="item-fusivel" style="display:none" onclick="clicarItem('fusivel'); return false;">Fusível</a>
+          <a href="#" class="item-inventario" id="item-cartao" style="display:none" onclick="clicarItem('cartao'); return false;">Cartão de acesso</a>
+          <a href="#" class="item-inventario" id="item-corrente" style="display:none" onclick="clicarItem('corrente'); return false;">Corrente de prata</a>
+          <a href="#" class="item-inventario" id="item-pingente" style="display:none" onclick="clicarItem('pingente'); return false;">Pingente</a>
+          <a href="#" class="item-inventario" id="item-medalhao" style="display:none" onclick="clicarItem('medalhao'); return false;">Medalhão</a>
+        </div>
+    </div>
+
+    <div id="rodape">
+      <div id="mensagem"></div>
+      <div id="baixo">
+        <div id="nav">
+          <button onclick="irPara('cena3.html')">Voltar ao corredor</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Painéis -->
+    <div id="painel">
+
+      <div class="subpainel" id="p-terminal">
+        <h3>TERMINAL</h3>
+        <p>Senha de 4 dígitos</p>
+        <input id="in-terminal" maxlength="4">
+        <button onclick="tentarTerminal()">Entrar</button>
+      </div>
+
+      <div class="subpainel" id="p-fios">
+        <h3>DESATIVAR O LASER</h3>
+        <p>Circuitos alinhados: <span id="fios-contagem">0</span>/3</p>
+        <div>
+          <button class="fio vermelho" onclick="cortarFio('vermelho')">vermelho</button>
+          <button class="fio azul" onclick="cortarFio('azul')">azul</button>
+          <button class="fio verde" onclick="cortarFio('verde')">verde</button>
+          <button class="fio amarelo" onclick="cortarFio('amarelo')">amarelo</button>
+        </div>
+      </div>
+
+      <div class="subpainel" id="p-diario">
+        <h3>DIÁRIO DE BORDO</h3>
+        <div id="diario-aberto">
+          <section id="pagina-diario" class="pagina-diario esquerda">
+            <h4 id="diario-titulo"></h4>
+            <p id="diario-texto"></p>
+          </section>
+        </div>
+        <div id="controles-diario">
+          <button id="seta-diario-voltar" class="seta-diario" onclick="passarPaginaDiario(-1)" aria-label="Página anterior" disabled>&#8592;</button>
+          <span id="diario-pagina">1 / 1</span>
+          <button id="seta-diario-avancar" class="seta-diario" onclick="passarPaginaDiario(1)" aria-label="Próxima página">&#8594;</button>
+        </div>
+      </div>
+
+      <button id="botao-fechar-painel" onclick="fecharPainel()">Fechar</button>
+    </div>
+
+  </div>
+
+  <script src="js/jogo.js"></script>
+  <script src="js/cena5.js"></script>
+</body>
+</html>

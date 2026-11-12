@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ecos da Escuridão - Porão</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/cena.css">
+  <link rel="stylesheet" href="css/hud.css">
+</head>
+
+<!-- Use class="debug" no body para ver as áreas clicáveis. -->
+<body>
+
+  <div id="palco" style="background-image: url('images/quarto1.jpg')" onmousemove="moverLanterna(event)">
+    <span class="nome-cena">Porão</span>
+
+    <!-- Áreas clicáveis -->
+    <div class="campo" id="campo-caixas" title="Caixas"
+         style="left:14%; top:47%; width:22%; height:38%"
+         onclick="clicarCaixas()">
+      <img src="images/objetos/caixas.png">
+    </div>
+
+    <div class="campo" id="campo-diario1" title="Diário antigo"
+         style="left:78%; top:60%; width:16%; height:24%"
+         onclick="clicarDiario()">
+      <img src="images/objetos/diario1.png">
+    </div>
+
+    <div class="campo" id="campo-escada" title="Escada para baixo"
+         style="left:63%; top:38%; width:20%; height:40%"
+         onclick="clicarEscada()">
+      <img src="images/objetos/escada.png">
+    </div>
+
+    <div class="campo" id="campo-bueiro" title="Bueiro"
+         style="left:60%; top:86%; width:19%; height:19%"
+         onclick="clicarBueiro()">
+      <img src="images/objetos/bueiro.png">
+    </div>
+
+    <div class="campo" id="campo-porta" title="Porta"
+         style="left:44%; top:24%; width:12%; height:43%"
+         onclick="clicarPorta()">
+    </div>
+
+    <div class="campo" id="campo-cadeado" title="Cadeado"
+         style="left:45%; top:41%; width:18%; height:18%"
+         onclick="clicarCadeado()">
+      <img src="images/objetos/cadeado.png">
+    </div>
+
+    <!-- Lanterna -->
+    <div id="luz"></div>
+
+    <!-- Interface do jogo -->
+    <div id="topo">
+      <button id="botao-diario" onclick="abrirDiario()" hidden>Diário</button>
+      <div id="inv">
+          <span class="titulo-inventario">Itens</span>
+          <a href="#" class="item-inventario" id="item-chavefenda" style="display:none" onclick="clicarItem('chavefenda'); return false;">Chave de fenda</a>
+          <a href="#" class="item-inventario" id="item-alicate" style="display:none" onclick="clicarItem('alicate'); return false;">Alicate</a>
+          <a href="#" class="item-inventario" id="item-chave" style="display:none" onclick="clicarItem('chave'); return false;">Chave de latão</a>
+          <a href="#" class="item-inventario" id="item-fusivel" style="display:none" onclick="clicarItem('fusivel'); return false;">Fusível</a>
+          <a href="#" class="item-inventario" id="item-cartao" style="display:none" onclick="clicarItem('cartao'); return false;">Cartão de acesso</a>
+          <a href="#" class="item-inventario" id="item-corrente" style="display:none" onclick="clicarItem('corrente'); return false;">Corrente de prata</a>
+          <a href="#" class="item-inventario" id="item-pingente" style="display:none" onclick="clicarItem('pingente'); return false;">Pingente</a>
+          <a href="#" class="item-inventario" id="item-medalhao" style="display:none" onclick="clicarItem('medalhao'); return false;">Medalhão</a>
+        </div>
+    </div>
+
+    <div id="rodape">
+      <div id="mensagem"></div>
+      <div id="baixo">
+        <div id="nav">
+          <button onclick="clicarPorta()">Sair pela porta</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Painéis -->
+    <div id="painel">
+
+      <div class="subpainel" id="p-parafuso">
+        <h3>PARAFUSO DA GRADE</h3>
+        <div id="parafuso"></div>
+        <p>Voltas: <span id="voltas-texto">0</span>/8</p>
+        <div>
+          <button onclick="girarParafuso('esquerda')">Girar para a esquerda</button>
+          <button onclick="girarParafuso('direita')">Girar para a direita</button>
+        </div>
+      </div>
+
+      <div class="subpainel" id="p-diario">
+        <h3>DIÁRIO DE BORDO</h3>
+        <div id="diario-aberto">
+          <section id="pagina-diario" class="pagina-diario esquerda">
+            <h4 id="diario-titulo"></h4>
+            <p id="diario-texto"></p>
+          </section>
+        </div>
+        <div id="controles-diario">
+          <button id="seta-diario-voltar" class="seta-diario" onclick="passarPaginaDiario(-1)" aria-label="Página anterior" disabled>&#8592;</button>
+          <span id="diario-pagina">1 / 1</span>
+          <button id="seta-diario-avancar" class="seta-diario" onclick="passarPaginaDiario(1)" aria-label="Próxima página">&#8594;</button>
+        </div>
+      </div>
+
+      <button id="botao-fechar-painel" onclick="fecharPainel()">Fechar</button>
+    </div>
+
+  </div>
+
+  <script src="js/jogo.js"></script>
+  <script src="js/cena1.js"></script>
+</body>
+</html>

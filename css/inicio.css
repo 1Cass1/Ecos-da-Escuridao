@@ -1,0 +1,32 @@
+:root {
+  --sangue: #c0141c;
+  --botao: #5a1015;        /* cor dos botões */
+  --mudo: #777;
+  --brilho: #fff;          /* cor do brilho dos objetos ao passar o mouse */
+  --luz-claro: 10px;      /* até aqui a lanterna ilumina totalmente */
+  --luz-escuro: 250px;     /* a partir daqui fica quase tudo preto */
+  --x: 50%;                /* posição da lanterna (o JavaScript muda) */
+  --y: 50%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: white;
+  font-family: "Courier New", monospace;
+  overflow: hidden;
+}
+
+/* Centraliza a cena */
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
