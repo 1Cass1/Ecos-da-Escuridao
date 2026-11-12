@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +9,6 @@
   <link rel="stylesheet" href="css/hud.css">
   <link rel="stylesheet" href="css/equipamentos.css">
 </head>
-
 <body>
   <main id="travessia" class="com-equipamentos">
     <div id="palco" style="background-image: url('images/corredor.png')" onmousemove="moverLanterna(event)">
@@ -22,10 +20,12 @@
         style="left:56%; top:39%; width:17%; height:16%" aria-label="Terminal da porta da frente"
         onclick="tentarPortaDaFrente()"></button>
       <div id="luz"></div>
+      <aside id="inv" aria-label="Inventário">
+        <span class="titulo-inventario">Itens</span>
+        <span id="inventario-vazio">Vazio</span>
+      </aside>
       <p class="narracao-cena">Uma meia-lua riscada marca a moldura do retrato no corredor.</p>
-      <div id="rodape">
-        <p id="mensagem" role="status"></p>
-      </div>
+      <div id="rodape"><p id="mensagem" role="status"></p></div>
       <div id="painel">
         <div id="p-terminal" class="subpainel">
           <h3>Terminal da porta da frente</h3>
@@ -45,16 +45,9 @@
       <button type="button" onclick="tentarAbrirArmazem()">Armazém</button>
       <button type="button" onclick="tentarPortaDaFrente()">Porta da frente</button>
     </nav>
-    <div class="itens-travessia" role="group" aria-label="Ferramentas">
-      <button type="button" class="item-inventario" id="item-pedecabra" style="display:none"
-        onclick="clicarItem('pedecabra')">Pé de cabra</button>
-      <button type="button" class="item-inventario" id="item-bateria" style="display:none"
-        onclick="clicarItem('bateria')">Bateria portátil</button>
-    </div>
   </main>
   <script src="js/jogo.js"></script>
   <script src="js/cameras.js"></script>
   <script src="js/cena3.js"></script>
 </body>
-
 </html>

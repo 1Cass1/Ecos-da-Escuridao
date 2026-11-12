@@ -6,13 +6,19 @@
   <title>Ecos da Escuridão - Saída</title>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/cena.css">
+  <link rel="stylesheet" href="css/hud.css">
 </head>
 <body>
   <main id="travessia" data-requer-progresso="portaFrenteAberta">
     <div id="palco" style="background-image: url('images/saida.png')" onmousemove="moverLanterna(event)">
       <span class="nome-cena">Saída</span>
       <div id="luz"></div>
+      <aside id="inv" aria-label="Inventário">
+        <span class="titulo-inventario">Itens</span>
+        <span id="inventario-vazio">Vazio</span>
+      </aside>
       <p class="narracao-cena">Três batidas vêm dos dutos. Depois de uma pausa, o mesmo ritmo responde mais longe.</p>
+      <div id="rodape"><p id="mensagem" role="status"></p></div>
     </div>
     <nav aria-label="Navegação entre cenas">
       <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>

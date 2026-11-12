@@ -33,6 +33,7 @@ O botão **Porta da frente** abre o terminal do Corredor. O terminal libera a Sa
 - Os scripts das cenas cuidam das interações locais. `js/cena6.js` define o final e `js/final.js` exibe o desfecho.
 - `css/base.css` define cores e botões. `css/cena.css` cuida do palco e da lanterna. `css/hud.css` estiliza o inventário, o diário e os painéis.
 - O progresso fica no `localStorage` com o prefixo `ecos:`. Começar de novo apaga somente as chaves do jogo.
+- O inventário fica no canto superior esquerdo do palco nas seis cenas. O item selecionado acompanha o jogador entre as salas.
 
 ## Cenários e sprites
 

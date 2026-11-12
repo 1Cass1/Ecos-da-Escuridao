@@ -16,15 +16,15 @@
       <button type="button" class="campo equipamento" id="campo-bateria"
         style="left:66%; top:52%; width:13%; height:13%" onclick="pegarBateria()">Bateria portátil</button>
       <div id="luz"></div>
+      <aside id="inv" aria-label="Inventário">
+        <span class="titulo-inventario">Itens</span>
+        <span id="inventario-vazio">Vazio</span>
+      </aside>
       <div id="rodape"><p id="mensagem" role="status"></p></div>
     </div>
     <nav aria-label="Navegação entre cenas">
       <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>
     </nav>
-    <div class="itens-travessia" role="group" aria-label="Ferramentas">
-      <button type="button" class="item-inventario" id="item-pedecabra" style="display:none" onclick="clicarItem('pedecabra')">Pé de cabra</button>
-      <button type="button" class="item-inventario" id="item-bateria" style="display:none" onclick="clicarItem('bateria')">Bateria portátil</button>
-    </div>
   </main>
   <script src="js/jogo.js"></script>
   <script src="js/cena5.js"></script>

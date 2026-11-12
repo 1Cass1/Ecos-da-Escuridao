@@ -1,6 +1,16 @@
 // Funções usadas em todas as cenas.
 var PREFIXO = "ecos:";
-var itens = ["chavefenda", "alicate", "chave", "corrente", "pingente", "medalhao", "pedecabra", "bateria"];
+var nomesDosItens = {
+  chavefenda: "Chave de fenda",
+  alicate: "Alicate",
+  chave: "Chave de latão",
+  corrente: "Corrente de prata",
+  pingente: "Pingente",
+  medalhao: "Medalhão",
+  pedecabra: "Pé de cabra",
+  bateria: "Bateria portátil"
+};
+var itens = Object.keys(nomesDosItens);
 var timerMensagem;
 var painelAtual = "";
 var paginaDiario = 0;
@@ -141,14 +151,33 @@ function atualizarBotaoDiario() {
 }
 
 function atualizarInventario() {
+  var inventario = pegar("inv");
+  if (!inventario) return;
+
   var selecionado = itemSelecionado();
-  for (var i = 0; i < itens.length; i++) {
-    var botao = pegar("item-" + itens[i]);
-    if (!botao) continue;
-    botao.style.display = foi("tem-" + itens[i]) ? "block" : "none";
-    botao.classList.toggle("sel", selecionado === itens[i]);
-    botao.setAttribute("aria-pressed", String(selecionado === itens[i]));
+  if (selecionado && (itens.indexOf(selecionado) === -1 || !foi("tem-" + selecionado))) {
+    desmarcar("selecionado");
+    selecionado = "";
   }
+  var vazio = true;
+  itens.forEach(function (item) {
+    var id = "item-" + item;
+    var botao = pegar(id);
+    if (!botao) {
+      botao = document.createElement("button");
+      botao.type = "button";
+      botao.id = id;
+      botao.className = "item-inventario";
+      botao.textContent = nomesDosItens[item];
+      botao.addEventListener("click", function () { clicarItem(item); });
+      inventario.appendChild(botao);
+    }
+    botao.hidden = !foi("tem-" + item);
+    botao.classList.toggle("sel", selecionado === item);
+    botao.setAttribute("aria-pressed", String(selecionado === item));
+    if (!botao.hidden) vazio = false;
+  });
+  pegar("inventario-vazio").hidden = !vazio;
 }
 
 function combinarItens(primeiro, segundo) {
@@ -173,7 +202,7 @@ function clicarItem(nome) {
     // Outro item só troca o que está selecionado.
     gravar("selecionado", nome);
     atualizarInventario();
-    falar("Usando: " + pegar("item-" + nome).textContent);
+    falar("Usando: " + nomesDosItens[nome]);
   }
 }
 
