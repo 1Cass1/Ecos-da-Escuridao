@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ecos da Escuridão - Câmeras</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/cena.css">
+  <link rel="stylesheet" href="css/camera.css">
+</head>
+<body>
+  <main id="travessia" data-requer-progresso="monitoresLigados" data-voltar="cena4.html">
+    <figure id="palco" class="imagem-monitor">
+      <img id="imagem-camera" alt="">
+      <figcaption id="canal-camera"></figcaption>
+      <span id="digito-camera" aria-live="polite" hidden></span>
+    </figure>
+    <nav aria-label="Controles da câmera">
+      <button type="button" id="botao-uv" aria-pressed="false" onclick="alternarFiltroUV()">Filtro UV desligado</button>
+      <button type="button" onclick="irPara('cena4.html')">Voltar à Sala de Segurança</button>
+    </nav>
+  </main>
+  <script src="js/jogo.js"></script>
+  <script src="js/cameras.js"></script>
+  <script src="js/camera.js"></script>
+</body>
+</html>

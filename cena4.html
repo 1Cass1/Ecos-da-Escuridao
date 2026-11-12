@@ -6,16 +6,32 @@
   <title>Ecos da Escuridão - Sala de Segurança</title>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/cena.css">
+  <link rel="stylesheet" href="css/hud.css">
+  <link rel="stylesheet" href="css/equipamentos.css">
 </head>
 <body>
-  <main id="travessia">
+  <main id="travessia" class="com-equipamentos">
     <div id="palco" style="background-image: url('images/seguranca.png')" onmousemove="moverLanterna(event)">
       <span class="nome-cena">Sala de Segurança</span>
+      <div class="banco-monitores" role="group" aria-label="Monitores de segurança">
+        <button type="button" class="campo equipamento monitor" id="monitor-1" aria-label="Monitor 01: Quarto" onclick="acessarMonitor(1)"></button>
+        <button type="button" class="campo equipamento monitor" id="monitor-2" aria-label="Monitor 02: Subsolo" onclick="acessarMonitor(2)"></button>
+        <button type="button" class="campo equipamento monitor" id="monitor-3" aria-label="Monitor 03: Corredor" onclick="acessarMonitor(3)"></button>
+        <button type="button" class="campo equipamento monitor" id="monitor-4" aria-label="Monitor 04: Armazém" onclick="acessarMonitor(4)"></button>
+      </div>
+      <button type="button" class="campo equipamento" id="campo-pe-de-cabra"
+        style="left:13%; top:67%; width:19%; height:14%" aria-label="Pegar pé de cabra"
+        onclick="pegarPeDeCabra()"></button>
       <div id="luz"></div>
+      <div id="rodape"><p id="mensagem" role="status"></p></div>
     </div>
     <nav aria-label="Navegação entre cenas">
       <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>
     </nav>
+    <div class="itens-travessia" role="group" aria-label="Ferramentas">
+      <button type="button" class="item-inventario" id="item-pedecabra" style="display:none" onclick="clicarItem('pedecabra')">Pé de cabra</button>
+      <button type="button" class="item-inventario" id="item-bateria" style="display:none" onclick="clicarItem('bateria')">Bateria portátil</button>
+    </div>
   </main>
   <script src="js/jogo.js"></script>
   <script src="js/cena4.js"></script>

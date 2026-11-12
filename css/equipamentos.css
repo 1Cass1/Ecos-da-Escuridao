@@ -1,0 +1,103 @@
+#travessia.com-equipamentos {
+  gap: 8px;
+}
+
+#travessia.com-equipamentos #palco {
+  width: min(calc(100vw - 30px), calc((100vh - 145px) * 16 / 9));
+}
+
+.com-equipamentos #rodape {
+  bottom: 32px;
+}
+
+#travessia .itens-travessia {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.itens-travessia .item-inventario {
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+.campo.equipamento {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent center / contain no-repeat;
+  color: #f0e5ce;
+  font-size: clamp(9px, 1.55vw, 14px);
+  line-height: 1.13;
+  text-shadow: 0 1px 3px #000;
+}
+
+.campo.equipamento[hidden] {
+  display: none;
+}
+
+.campo.equipamento:focus-visible {
+  z-index: 1;
+  outline: 1px dashed #bbb;
+}
+
+.banco-monitores {
+  position: absolute;
+  left: 34%;
+  top: 17%;
+  width: 42%;
+  height: 43%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 4%;
+}
+
+.banco-monitores .monitor {
+  position: relative;
+}
+
+#campo-pe-de-cabra { background-image: url('../images/objetos/pe-de-cabra.png'); }
+#campo-terminal { background-image: url('../images/objetos/terminal-senha.png'); }
+#monitor-1 { background-image: url('../images/objetos/monitor-01.png'); }
+#monitor-2 { background-image: url('../images/objetos/monitor-02.png'); }
+#monitor-3 { background-image: url('../images/objetos/monitor-03.png'); }
+#monitor-4 { background-image: url('../images/objetos/monitor-04.png'); }
+
+#p-terminal {
+  width: min(100%, 440px);
+  gap: 6px;
+  font-size: clamp(11px, 2.3vw, 16px);
+}
+
+.com-equipamentos #painel {
+  gap: 6px;
+  padding: clamp(6px, 2vw, 18px);
+  overflow: auto;
+}
+
+#p-terminal h3 {
+  font-size: clamp(13px, 2.8vw, 22px);
+}
+
+#p-terminal form {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+#senha-terminal {
+  width: 8ch;
+  padding: 6px;
+  border: 1px solid #a19586;
+  border-radius: 4px;
+  background: #181515;
+  color: #f0e5ce;
+  font: inherit;
+  text-align: center;
+  letter-spacing: .18em;
+}
+
+#resposta-terminal {
+  font-size: clamp(11px, 2vw, 14px);
+}

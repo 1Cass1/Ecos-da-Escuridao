@@ -1,66 +1,47 @@
 # Ecos da Escuridão
 
-Escape room feito com HTML, CSS e JavaScript. Os cliques ficam definidos nos elementos do HTML.
+Escape room em HTML, CSS e JavaScript. A casa permanece no escuro durante toda a partida. A lanterna ilumina os cenários conforme o jogador move o mouse.
 
-## Arquivos
-- `index.html`: tela inicial. `final.html`: mostra o final.
-- `cena1.html` Quarto, `cena2.html` Subsolo, `cena3.html` Corredor, `cena4.html` Biblioteca, `cena5.html` Sala de Segurança, `cena6.html` Saída.
-- `js/jogo.js`: funções usadas por todas as cenas (inventário, mensagens, diário e finais).
-- `js/cena1.js` até `js/cena6.js`: interações e enigmas de cada ambiente.
-- `js/final.js`: textos dos finais. Os HTMLs contêm a estrutura e carregam seus scripts no fim da página.
-- `css/base.css` (cores e botões), `css/cena.css` (cena, áreas clicáveis e lanterna), `css/hud.css` (inventário e painéis).
+## Mapa e arquivos
 
-## Como funciona
-Cada cena é uma página. O jogo guarda itens e pistas no `localStorage` do navegador para manter o progresso ao trocar de cena.
-Para testar, use a extensão Live Server do VS Code ou o link da Vercel.
+| Página | Cena | Fundo em `images/` |
+| --- | --- | --- |
+| `cena1.html` | Quarto | `quarto.png` |
+| `cena2.html` | Subsolo | `subsolo.png` |
+| `cena3.html` | Corredor | `corredor.png` |
+| `cena4.html` | Sala de Segurança | `seguranca.png` |
+| `cena5.html` | Armazém | `armazem.png` |
+| `cena6.html` | Saída | `saida.png` |
 
-## Imagens de fundo
-Coloque na pasta `images/` com estes nomes (ou troque o nome no `style` do `#palco` de cada cena):
-`quarto1.jpg` (cena1), `subsolo.png` (cena2), `corredor.png` (cena3), `biblioteca.png` (cena4), `seguranca.png` (cena5), `saida.png` (cena6).
-O palco tem sempre a proporção 16:9 (`aspect-ratio` no `cena.css`) e uma moldura em volta, então o fundo não estica. Use imagens 16:9, por exemplo 1920x1080.
+Comece em `index.html`. O Quarto leva ao Subsolo e, depois que a porta é destrancada, ao Corredor. Pelo Corredor, o jogador pode voltar ao Quarto ou seguir para a Sala de Segurança, para o Armazém ou pela porta da frente até a Saída. `final.html` mostra o desfecho.
 
-## Campos clicáveis
-Cada campo é uma `<div class="campo">` com `left`, `top`, `width` e `height` em % no `style`.
-Com `class="debug"` no `<body>` os campos ganham contorno e a lanterna é desligada. Apague a classe no final.
+O botão **Porta da frente** abre o terminal do Corredor. O terminal libera a Saída depois que os monitores estiverem ligados e a senha for inserida.
 
-## Sprites e brilho
-- Sprite recortado: tire o comentário da linha `<img>` dentro do campo e ajuste `left/top/width/height` para cobrir o objeto.
-  Cálculo: `left = x / largura_do_fundo * 100`, `top = y / altura_do_fundo * 100`, `width = w / largura_do_fundo * 100`, `height = h / altura_do_fundo * 100`.
-- Sprite do tamanho da cena (PNG com o mesmo tamanho do fundo): coloque `<img class="sprite" src="images/objetos/nome.png">` logo DEPOIS da div do campo.
-- Ao passar o mouse o objeto brilha (`drop-shadow` na regra `.campo:hover img` do `cena.css`). A cor do brilho é `--brilho` no `base.css`.
+## Enigmas e história
 
-## Lanterna
-A casa permanece no escuro durante toda a partida. A lanterna é a única fonte de iluminação dos cenários. Seu alcance é controlado por `--luz-claro` e `--luz-escuro` no `css/base.css`.
+- No Subsolo, encontre a chave de fenda. Selecione-a e gire o parafuso do bueiro três vezes para a esquerda. A chave de latão encontrada na grade abre a porta do Quarto.
+- O alicate abre a caldeira. O relatório contém o pingente e explica a ligação entre a guardiã e a meia-lua riscada na moldura do retrato do Corredor.
+- O diário no Quarto guarda a corrente. Selecione a corrente e o pingente em sequência para montar o medalhão. O desfecho reconhece quem chega à Saída com o medalhão montado.
+- Na Sala de Segurança, pegue o pé de cabra e selecione-o para abrir a porta emperrada do Armazém. Pegue a bateria na bancada, volte à Sala de Segurança e selecione a bateria para conectar a qualquer um dos quatro monitores.
+- Os canais 01 a 04 mostram Quarto, Subsolo, Corredor e Armazém, nessa ordem. Em cada câmera, ligue o filtro UV para descobrir um dígito. Digite a sequência no terminal do Corredor.
+- Na Saída, `audio/batidas-dutos.wav` reproduz dois grupos de três batidas quando o navegador permite reprodução automática. A legenda descreve o eco.
 
-## Organização do JavaScript
-- `jogo.js` cuida dos dados salvos, mensagens, painéis, inventário, diário e finais.
-- `cenaN.js` contém apenas as interações daquele ambiente e chama `iniciarPagina()` no fim.
-- `final.js` escolhe o texto do desfecho salvo.
-- Os eventos do jogo ficam nos elementos HTML, usando atributos como `onclick` e `onmousemove`.
+## Organização do código
 
-### Progresso
-`gravar` e `lerTexto` salvam e leem textos; `ler` lê números. `marcar`, `foi` e `desmarcar` controlam acontecimentos como abrir uma porta.
-Todas as chaves novas começam com `ecos:`. Reiniciar remove apenas os dados deste jogo.
+- `js/jogo.js` reúne progresso, inventário, diário, painéis e lanterna.
+- `camera.html` e `js/camera.js` controlam a visualização e o filtro UV. `js/cameras.js` reúne a ordem, as imagens, os dígitos e suas posições, e fornece a senha ao terminal.
+- Os scripts das cenas cuidam das interações locais. `js/cena6.js` define o final e `js/final.js` exibe o desfecho.
+- `css/base.css` define cores e botões. `css/cena.css` cuida do palco e da lanterna. `css/hud.css` estiliza o inventário, o diário e os painéis.
+- O progresso fica no `localStorage` com o prefixo `ecos:`. Começar de novo apaga somente as chaves do jogo.
 
-### Inventário, diário e desafios
-Clique em um item para selecioná-lo e novamente para guardá-lo. Clique em outro para trocar a seleção. Corrente e pingente se combinam automaticamente quando selecionados em sequência.
-O diário reúne até três informações em cada página. Use as setas para avançar e voltar. Os itens aparecem no canto superior direito e brilham quando selecionados.
-As tentativas erradas do terminal persistem ao trocar de página e são zeradas pela alavanca. Fechar o painel de setas cancela o desafio.
+## Cenários e sprites
 
-## Verificação
-Com Node.js instalado, execute:
+Mantenha a pasta `images/` do projeto junto aos HTMLs. Use fundos com proporção 16:9 e confira os nomes na tabela. O fundo do Armazém deve estar em `images/armazem.png`. Para usar outro caminho, atualize `cena5.html` e `js/cameras.js`.
 
-```sh
-node --test tests/jogo.test.cjs
-```
+Os campos usam posições em porcentagem sobre o palco. As câmeras usam os mesmos quatro fundos indicados na tabela, com o dígito sobreposto pelo código. Para conferir a posição dos campos, adicione temporariamente `class="debug"` ao `body`.
 
-Os testes simulam o armazenamento e os elementos usados pelas funções. Eles não substituem a conferência visual no navegador.
+Coloque os PNGs dos equipamentos em `images/objetos/`. O pé de cabra usa `pe-de-cabra.png`, e o terminal usa `terminal-senha.png`. Os monitores 01 a 04 usam `monitor-01.png`, `monitor-02.png`, `monitor-03.png` e `monitor-04.png`, na ordem Quarto, Subsolo, Corredor e Armazém. Cada área clicável fica transparente até que a imagem correspondente esteja na pasta.
 
-Os fundos `biblioteca.png` e `saida.png` ainda precisam ser adicionados à pasta `images/`.
+## Como testar
 
-
-## Enigmas e itens
-A partida tem quatro enigmas principais: soltar o bueiro com a chave de fenda, descobrir a senha do terminal, cortar os fios na ordem da pista e repetir a sequência de setas. O diário e o livro fornecem pistas; a porta do porão usa a chave encontrada no bueiro.
-A chave de fenda, o alicate, a chave e o cartão são consumidos ao serem usados. Os sprites da chave de fenda, do alicate e do cadeado somem da cena quando deixam de estar disponíveis. O diário entrega a corrente; o pingente vem do retrato. Juntos, os dois itens permitem o final secreto.
-
-Os dispositivos de segurança funcionam independentemente da iluminação da casa. A saída é acessível pelo corredor. Para abrir o portão, desative o laser infravermelho, passe o cartão no leitor e acerte a sequência de setas.
+Abra `index.html` pelo Live Server ou sirva a pasta com `python -m http.server 8000` e acesse `http://localhost:8000`. Teste uma partida montando o medalhão e outra resolvendo o caminho das câmeras até a Saída sem montar o medalhão.

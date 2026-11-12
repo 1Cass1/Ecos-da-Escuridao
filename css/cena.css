@@ -60,12 +60,6 @@ img.sprite {
   z-index: 1;
 }
 
-.campo.item-compativel:hover:not([hidden]) {
-  outline: 1px solid #ffe1a0;
-  border-radius: 5px;
-  box-shadow: 0 0 9px #ffc85b99;
-}
-
 #travessia {
   display: grid;
   justify-items: center;

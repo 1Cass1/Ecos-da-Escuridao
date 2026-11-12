@@ -1,6 +1,6 @@
 // Funções usadas em todas as cenas.
 var PREFIXO = "ecos:";
-var itens = ["chavefenda", "alicate", "chave", "corrente", "pingente", "medalhao"];
+var itens = ["chavefenda", "alicate", "chave", "corrente", "pingente", "medalhao", "pedecabra", "bateria"];
 var timerMensagem;
 var painelAtual = "";
 var paginaDiario = 0;
@@ -36,22 +36,29 @@ function iniciarPagina() {
   if (!foi("partidaIniciada")) {
     if (!lerTexto("diario")) {
       window.location.href = "index.html";
-      return;
+      return false;
     }
     marcar("partidaIniciada");
   }
   if (lerTexto("final")) {
     window.location.href = "final.html";
-    return;
+    return false;
   }
-  if (pegar("travessia") && !foi("portaAberta")) {
+  var travessia = pegar("travessia");
+  if (travessia && !foi("portaAberta")) {
     irPara("cena1.html");
-    return;
+    return false;
+  }
+  var progressoNecessario = travessia && travessia.getAttribute("data-requer-progresso");
+  if (progressoNecessario && !foi(progressoNecessario)) {
+    irPara(travessia.getAttribute("data-voltar") || "cena3.html");
+    return false;
   }
   atualizarProgressoAntigo();
   atualizarInventario();
   sincronizarObjetos();
   atualizarBotaoDiario();
+  return true;
 }
 
 function irPara(pagina) {
@@ -114,7 +121,9 @@ function sincronizarObjetos() {
     ["campo-chave-de-fenda", "chaveFendaPega"],
     ["campo-alicate", "alicatePego"],
     ["campo-diario1", "diarioPego"],
-    ["campo-cadeado", "portaAberta"]
+    ["campo-cadeado", "portaAberta"],
+    ["campo-pe-de-cabra", "peDeCabraPego"],
+    ["campo-bateria", "bateriaPega"]
   ];
   for (var i = 0; i < objetos.length; i++) {
     var campo = pegar(objetos[i][0]);
@@ -139,10 +148,6 @@ function atualizarInventario() {
     botao.style.display = foi("tem-" + itens[i]) ? "block" : "none";
     botao.classList.toggle("sel", selecionado === itens[i]);
     botao.setAttribute("aria-pressed", String(selecionado === itens[i]));
-  }
-  var alvos = document.querySelectorAll("[data-item-necessario]");
-  for (var j = 0; j < alvos.length; j++) {
-    alvos[j].classList.toggle("item-compativel", alvos[j].getAttribute("data-item-necessario") === selecionado);
   }
 }
 
