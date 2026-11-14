@@ -1,7 +1,7 @@
 /* Cores e lanterna */
 :root {
-  --sangue: #c0141c;
-  --botao: #621197;        /* cor dos botões */
+  --sangue: #a34bd2;
+  --botao: #52117a;        /* cor roxa dos botões */
   --mudo: #777;
   --brilho: #fff;          /* cor do brilho dos objetos ao passar o mouse */
   --luz-claro: 10px;      /* até aqui a lanterna ilumina totalmente */

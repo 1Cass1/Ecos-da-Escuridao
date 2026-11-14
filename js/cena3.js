@@ -30,7 +30,9 @@ function tentarSenha(evento) {
   if (terminal.alarme >= limiteAlarme) {
     encerrarPartida("");
   } else if (terminal.estado === "resolvido") {
-    irPara("cena6.html");
+    pegar("sprite-porta-saida-aberta").hidden = false;
+    fecharPainel();
+    falar("A porta de saída foi destrancada. Clique nela para sair.");
   }
 }
 

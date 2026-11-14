@@ -134,6 +134,9 @@ function atualizarCena() {
 
   var pacto = pegar("botao-pacto");
   if (pacto) pacto.disabled = !inventario.tem("medalhao");
+
+  var portaAberta = pegar("sprite-porta-saida-aberta");
+  if (portaAberta) portaAberta.hidden = puzzles.terminal.estado !== "resolvido";
 }
 
 function atualizarAposAcao(mensagem) {

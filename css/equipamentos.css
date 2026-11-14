@@ -34,13 +34,47 @@
   position: relative;
 }
 
-#campo-pe-de-cabra { background-image: url('../images/objetos/pe-de-cabra.png'); }
-#campo-terminal { background-image: url('../images/objetos/terminal-senha.png'); }
-#monitor-1 { background-image: url('../images/objetos/monitor-01.png'); }
-#monitor-2 { background-image: url('../images/objetos/monitor-02.png'); }
-#monitor-3 { background-image: url('../images/objetos/monitor-03.png'); }
-#monitor-4 { background-image: url('../images/objetos/monitor-04.png'); }
-
+#campo-pe-de-cabra img,
+#campo-bateria img,
+#campo-terminal img,
+.banco-monitores .monitor img { object-fit: contain; }
+#campo-porta-saida {
+  left: 45%;
+  top: 29%;
+  width: 9%;
+  height: 31%;
+}
+.sprite-porta-saida {
+  position: absolute;
+  left: 43%;
+  top: 26%;
+  width: 14%;
+  height: 36%;
+  object-fit: fill;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+.sprite-porta-saida[hidden] {
+  display: none;
+}
+#campo-porta-seguranca {
+  left: 15.5%;
+  top: 18%;
+  width: 8%;
+  height: 66%;
+}
+#campo-porta-armazem {
+  left: 78.5%;
+  top: 20%;
+  width: 8%;
+  height: 66%;
+}
+#campo-saida-seguranca {
+  left: 84%;
+  top: 21%;
+  width: 12%;
+  height: 72%;
+}
 #p-terminal {
   width: min(100%, 440px);
   gap: 6px;

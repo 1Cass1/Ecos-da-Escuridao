@@ -48,7 +48,6 @@ function prepararPartida() {
   if (!partida.iniciada || partida.final || partida.sorteio) return;
   iniciarTempo();
 
-  // Uma partida anterior já podia ter coletado o pingente e anotado outra senha.
   if (puzzles.relatorio.estado === "resolvido" || puzzles.caixas.estado === "resolvido") {
     partida.sorteio.localPingente = "relatorio";
   }

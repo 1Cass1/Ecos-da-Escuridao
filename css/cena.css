@@ -14,11 +14,17 @@
 
 .nome-cena {
   position: absolute;
-  left: 12px;
-  top: 8px;
-  font-size: 13px;
+  left: 14px;
+  top: 14px;
+  padding: 7px 11px;
+  border: 1px solid #ffffff24;
+  border-radius: 7px;
+  background: #09080dc9;
+  box-shadow: 0 4px 14px #0009;
+  font-size: 12px;
+  letter-spacing: .08em;
   z-index: 1;
-  color: #aaa;
+  color: #ded4e6;
   font-weight: normal;
 }
 
@@ -54,6 +60,22 @@
     radial-gradient(ellipse at 50% 90%, #626262 0 32%, transparent 34%),
     linear-gradient(#262626, #080808);
   color: #dedede;
+}
+
+/* O campo cobre apenas a moldura do espelho na cena de saída. */
+#campo-espelho {
+  left: 13.5%;
+  top: 13.5%;
+  width: 12.5%;
+  height: 39%;
+}
+
+/* Área da porta final, alinhada ao desenho no fundo da Saída. */
+#campo-porta-final {
+  left: 38%;
+  top: 16%;
+  width: 24%;
+  height: 62%;
 }
 
 .marca-retrato {
@@ -168,14 +190,17 @@ body.modo-claro {
 #sussurro:not(:empty) {
   width: fit-content;
   margin: 0 auto;
-  padding: 3px 7px;
-  border-radius: 4px;
-  background: #100d0def;
+  padding: 6px 12px;
+  border: 1px solid #a34bd255;
+  border-radius: 999px;
+  background: #100d16ed;
+  box-shadow: 0 4px 18px #000a;
 }
 
 #tempo-restante {
   color: #efe6db;
   font-weight: bold;
+  letter-spacing: .08em;
 }
 
 #tempo-restante.tempo-baixo {
@@ -184,6 +209,7 @@ body.modo-claro {
 
 #sussurro:not(:empty) {
   margin-top: 3px;
+  border-radius: 9px;
   color: #ddd1da;
 }
 

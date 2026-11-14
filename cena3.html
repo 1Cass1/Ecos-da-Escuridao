@@ -17,12 +17,18 @@
         aria-label="Examinar retrato da guardiã" onclick="clicarRetrato()">
         <span class="marca-retrato" aria-hidden="true">☾</span>
       </button>
+      <button type="button" class="campo equipamento" id="campo-porta-seguranca"
+        aria-label="Entrar na Sala de Segurança" onclick="irPara('cena4.html')"></button>
       <button type="button" class="campo equipamento" id="campo-porta-armazem"
-        style="left:78%; top:36%; width:13%; height:38%" aria-label="Porta do Armazém"
+        aria-label="Porta do Armazém"
         onclick="tentarAbrirArmazem()"></button>
+      <button type="button" class="campo equipamento" id="campo-porta-saida"
+        aria-label="Porta de saída" onclick="tentarPortaDaFrente()"></button>
+      <img id="sprite-porta-saida-aberta" class="sprite-porta-saida"
+        src="images/objetos/porta-segura-aberta.png" alt="" hidden>
       <button type="button" class="campo equipamento" id="campo-terminal"
         style="left:56%; top:39%; width:17%; height:16%" aria-label="Terminal da porta da frente"
-        onclick="tentarPortaDaFrente()"></button>
+        onclick="tentarPortaDaFrente()"><img src="images/objetos/terminal-senha.png" alt=""></button>
       <div id="luz"></div>
       <div class="vinheta-breu" aria-hidden="true"></div>
       <div class="hud-tempo">

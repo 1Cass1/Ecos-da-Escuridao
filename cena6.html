@@ -12,6 +12,8 @@
   <main id="travessia" class="cena-jogo" data-requer-progresso="terminal">
     <div id="palco" style="background-image: url('images/saida.png')" onmousemove="moverLanterna(event)">
       <h1 class="nome-cena" tabindex="-1">Saída</h1>
+      <button type="button" id="campo-espelho" class="campo" onclick="clicarEspelho()" aria-label="Entregar o medalhão ao espelho"></button>
+      <button type="button" id="campo-porta-final" class="campo" onclick="clicarPortaFinal()" aria-label="Abrir a porta final e fugir"></button>
       <div id="luz"></div>
       <div class="vinheta-breu" aria-hidden="true"></div>
       <div class="hud-tempo">
@@ -44,13 +46,23 @@
         <button type="button" id="botao-fechar-painel" onclick="fecharPainel()">Fechar</button>
       </div>
     </div>
+    <section id="confirmacao-final" class="confirmacao-jogo" role="dialog" aria-modal="true" aria-labelledby="titulo-confirmacao-final" hidden>
+      <div class="modal-confirmacao">
+        <span class="selo-pacto" aria-hidden="true">☾</span>
+        <h2 id="titulo-confirmacao-final">O espelho chama</h2>
+        <p id="texto-confirmacao-final">Entregar o medalhão pode mudar seu destino. Você tem certeza?</p>
+        <div class="acoes-confirmacao">
+          <button type="button" class="botao-secundario" onclick="fecharConfirmacaoFinal()">Voltar</button>
+          <button type="button" id="confirmar-final" onclick="confirmarFinal()">Entregar medalhão</button>
+        </div>
+      </div>
+    </section>
     <nav aria-label="Navegação entre cenas">
       <button type="button" id="botao-batidas" onclick="alternarBatidas()">Ouvir batidas</button>
       <button type="button" id="botao-mudo" aria-pressed="false" onclick="alternarMudo()">Silenciar batidas</button>
       <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>
-      <button type="button" id="botao-pacto" onclick="concluirTravessia('medalhao')" disabled>Usar o medalhão</button>
-      <button type="button" onclick="concluirTravessia('fugir')">Fugir</button>
-      <button type="button" onclick="concluirTravessia('ficar')">Ficar</button>
+      <button type="button" onclick="pedirConfirmacaoFinal('fugir')">Fugir</button>
+      <button type="button" onclick="pedirConfirmacaoFinal('ficar')">Ficar</button>
       <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
     </nav>
     <audio id="audio-batidas" src="audio/batidas-dutos.wav" preload="metadata"

@@ -434,10 +434,7 @@ function salvarEstado() {
 
 function carregarEstado() {
   var salvo = localStorage.getItem(PREFIXO + "estado");
-  if (!salvo) {
-    if (localStorage.getItem(PREFIXO + "partidaIniciada") === "sim") importarEtapa1();
-    return;
-  }
+  if (!salvo) return;
 
   var estado = JSON.parse(salvo);
   partida = estado.partida;
@@ -456,57 +453,11 @@ function carregarEstado() {
   }
 }
 
-function limparJogo(manterEstado) {
+function limparJogo() {
   for (var i = localStorage.length - 1; i >= 0; i--) {
     var chave = localStorage.key(i);
-    if (chave.indexOf(PREFIXO) === 0 && chave !== PREFIXO + "modoClaro" &&
-        (!manterEstado || chave !== PREFIXO + "estado")) {
+    if (chave.indexOf(PREFIXO) === 0 && chave !== PREFIXO + "modoClaro") {
       localStorage.removeItem(chave);
     }
   }
-}
-
-// Transfere o progresso de quem já começou uma partida na Etapa 1.
-function importarEtapa1() {
-  var resolvidos = {
-    bueiroAberto: "bueiro",
-    portaAberta: "portaQuarto",
-    diarioPego: "diario",
-    caldeiraAberta: "caldeira",
-    papelBreuLido: "relatorio",
-    "tem-medalhao": "medalhao",
-    armazemAberto: "armazem",
-    monitoresLigados: "monitores",
-    portaFrenteAberta: "terminal",
-    chaveFendaPega: "chaveFenda",
-    alicatePego: "alicate",
-    peDeCabraPego: "peDeCabra",
-    bateriaPega: "bateria"
-  };
-  for (var chave in resolvidos) {
-    if (localStorage.getItem(PREFIXO + chave) !== "sim") continue;
-    var enigma = puzzles[resolvidos[chave]];
-    enigma.estado = "resolvido";
-    enigma.inspecionado = true;
-  }
-  for (var item in fichaDosItens) {
-    if (localStorage.getItem(PREFIXO + "tem-" + item) === "sim") inventario.ganhar(item);
-  }
-  if (puzzles.armazem.estado === "resolvido") inventario.ganhar("pedecabra");
-  if (puzzles.monitores.estado === "resolvido") {
-    puzzles.cameras.estado = "aberto";
-    if (puzzles.terminal.estado === "trancado") puzzles.terminal.estado = "aberto";
-  }
-  if (puzzles.caldeira.estado === "resolvido" && puzzles.relatorio.estado === "trancado") {
-    puzzles.relatorio.estado = "aberto";
-  }
-
-  puzzles.bueiro.voltas = Number(localStorage.getItem(PREFIXO + "voltasParafuso")) || 0;
-  if (puzzles.bueiro.voltas > 0 && puzzles.bueiro.estado === "trancado") puzzles.bueiro.estado = "aberto";
-  inventario.selecionar(localStorage.getItem(PREFIXO + "selecionado"));
-  diario.entradas = JSON.parse(localStorage.getItem(PREFIXO + "diario") || "[]");
-  partida.iniciada = true;
-  partida.final = localStorage.getItem(PREFIXO + "final") || "";
-  salvarEstado();
-  limparJogo(true);
 }
