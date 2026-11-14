@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="css/equipamentos.css">
 </head>
 <body>
-  <main id="travessia" class="com-equipamentos">
+  <main id="travessia" class="cena-jogo com-equipamentos">
     <div id="palco" style="background-image: url('images/seguranca.png')" onmousemove="moverLanterna(event)">
-      <span class="nome-cena">Sala de Segurança</span>
+      <h1 class="nome-cena">Sala de Segurança</h1>
       <div class="banco-monitores" role="group" aria-label="Monitores de segurança">
         <button type="button" class="campo equipamento monitor" id="monitor-1" aria-label="Monitor 01: Quarto" onclick="acessarMonitor(1)"></button>
         <button type="button" class="campo equipamento monitor" id="monitor-2" aria-label="Monitor 02: Subsolo" onclick="acessarMonitor(2)"></button>
@@ -31,6 +31,7 @@
     </div>
     <nav aria-label="Navegação entre cenas">
       <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>
+      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
     </nav>
   </main>
   <script src="js/jogo.js"></script>

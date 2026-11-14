@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="css/equipamentos.css">
 </head>
 <body>
-  <main id="travessia" class="com-equipamentos" data-requer-progresso="armazemAberto">
+  <main id="travessia" class="cena-jogo com-equipamentos" data-requer-progresso="armazemAberto">
     <div id="palco" style="background-image: url('images/armazem.png')" onmousemove="moverLanterna(event)">
-      <span class="nome-cena">Armazém</span>
+      <h1 class="nome-cena">Armazém</h1>
       <button type="button" class="campo equipamento" id="campo-bateria"
         style="left:66%; top:52%; width:13%; height:13%" onclick="pegarBateria()">Bateria portátil</button>
       <div id="luz"></div>
@@ -24,6 +24,7 @@
     </div>
     <nav aria-label="Navegação entre cenas">
       <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>
+      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
     </nav>
   </main>
   <script src="js/jogo.js"></script>

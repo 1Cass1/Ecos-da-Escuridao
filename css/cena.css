@@ -17,13 +17,27 @@
   left: 12px;
   top: 8px;
   font-size: 13px;
-  color: var(--mudo);
+  z-index: 1;
+  color: #aaa;
+  font-weight: normal;
 }
 
 /* Áreas clicáveis dos objetos. */
 .campo {
   position: absolute;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
   cursor: pointer;
+}
+
+.campo:hover {
+  background-color: transparent;
+}
+
+.campo:focus-visible {
+  z-index: 1;
+  outline-offset: -2px;
 }
 
 /* Imagens dos objetos. */
@@ -60,22 +74,17 @@ img.sprite {
   z-index: 1;
 }
 
-#travessia {
+.cena-jogo {
   display: grid;
   justify-items: center;
   gap: 14px;
 }
 
-#travessia #palco {
+.cena-jogo #palco {
   width: min(calc(100vw - 30px), calc((100vh - 105px) * 16 / 9));
 }
 
-#travessia .nome-cena {
-  z-index: 1;
-  color: #aaa;
-}
-
-#travessia nav {
+.cena-jogo nav {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -102,7 +111,11 @@ img.sprite {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(circle at var(--x) var(--y), transparent 0, transparent var(--luz-claro), rgba(0, 0, 0, 0.97) var(--luz-escuro));
+  background: radial-gradient(circle at var(--x) var(--y), transparent 0, transparent var(--luz-claro), rgba(0, 0, 0, var(--opacidade-escuro, .97)) var(--luz-escuro));
+}
+
+body.modo-claro {
+  --opacidade-escuro: .48;
 }
 
 /* Modo de ajuste: mostra as áreas clicáveis. */

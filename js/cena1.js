@@ -31,8 +31,7 @@ function clicarBueiro() {
   if (foi("bueiroAberto")) {
     falar("A grade está aberta. A chave de latão já foi retirada.");
   } else if (itemSelecionado() === "chavefenda") {
-    // Partidas antigas usavam até oito giros.
-    voltasParafuso = Math.max(0, Math.min(ler("voltasParafuso"), girosParaSoltar - 1));
+    voltasParafuso = ler("voltasParafuso");
     atualizarParafuso();
     abrirPainel("parafuso");
   } else {
@@ -51,7 +50,7 @@ function girarParafuso(sentido) {
   if (sentido === "esquerda") {
     voltasParafuso++;
   } else {
-    voltasParafuso = Math.max(voltasParafuso - 1, 0);
+    if (voltasParafuso > 0) voltasParafuso--;
     falar("Isso aperta o parafuso. Gire para a esquerda.");
   }
   gravar("voltasParafuso", voltasParafuso);

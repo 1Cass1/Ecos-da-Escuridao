@@ -1,7 +1,7 @@
 /* Cores e lanterna */
 :root {
   --sangue: #c0141c;
-  --botao: #5b0fb3;        /* cor dos botões */
+  --botao: #5a1015;        /* cor dos botões */
   --mudo: #777;
   --brilho: #fff;          /* cor do brilho dos objetos ao passar o mouse */
   --luz-claro: 10px;      /* até aqui a lanterna ilumina totalmente */
@@ -43,6 +43,44 @@ button {
 }
 
 button:hover,
-button.sel {
+button.sel,
+button[aria-pressed="true"] {
   background: var(--sangue);
+}
+
+button:focus-visible {
+  outline: 2px solid #eee;
+  outline-offset: 2px;
+}
+
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Telas de início e de final */
+.tela {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+}
+.tela h1 {
+  font-size: clamp(34px, 8vw, 72px);
+  letter-spacing: 4px;
+  text-shadow: 3px 3px 0 var(--sangue);
+}
+.tela p {
+  max-width: 560px;
+  line-height: 1.5;
 }

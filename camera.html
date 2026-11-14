@@ -9,15 +9,17 @@
   <link rel="stylesheet" href="css/camera.css">
 </head>
 <body>
-  <main id="travessia" data-requer-progresso="monitoresLigados" data-voltar="cena4.html">
+  <main id="travessia" class="cena-jogo" data-requer-progresso="monitoresLigados" data-voltar="cena4.html">
+    <h1 class="so-leitor">Câmeras de segurança</h1>
     <figure id="palco" class="imagem-monitor">
-      <img id="imagem-camera" alt="">
-      <figcaption id="canal-camera"></figcaption>
+      <img id="imagem-camera" src="images/quarto.png" alt="">
       <span id="digito-camera" aria-live="polite" hidden></span>
+      <figcaption id="canal-camera"></figcaption>
     </figure>
     <nav aria-label="Controles da câmera">
       <button type="button" id="botao-uv" aria-pressed="false" onclick="alternarFiltroUV()">Filtro UV desligado</button>
       <button type="button" onclick="irPara('cena4.html')">Voltar à Sala de Segurança</button>
+      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
     </nav>
   </main>
   <script src="js/jogo.js"></script>

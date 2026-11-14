@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="css/hud.css">
 </head>
 <body>
-  <main id="travessia" data-requer-progresso="portaFrenteAberta">
+  <main id="travessia" class="cena-jogo" data-requer-progresso="portaFrenteAberta">
     <div id="palco" style="background-image: url('images/saida.png')" onmousemove="moverLanterna(event)">
-      <span class="nome-cena">Saída</span>
+      <h1 class="nome-cena">Saída</h1>
       <div id="luz"></div>
       <aside id="inv" aria-label="Inventário">
         <span class="titulo-inventario">Itens</span>
@@ -21,10 +21,14 @@
       <div id="rodape"><p id="mensagem" role="status"></p></div>
     </div>
     <nav aria-label="Navegação entre cenas">
+      <button type="button" id="botao-batidas" onclick="alternarBatidas()">Ouvir batidas</button>
+      <button type="button" id="botao-mudo" aria-pressed="false" onclick="alternarMudo()">Silenciar batidas</button>
       <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>
       <button type="button" onclick="concluirTravessia()">Ver desfecho</button>
+      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
     </nav>
-    <audio src="audio/batidas-dutos.wav" autoplay></audio>
+    <audio id="audio-batidas" src="audio/batidas-dutos.wav" preload="metadata"
+      onplay="atualizarBotaoBatidas()" onpause="atualizarBotaoBatidas()" onended="atualizarBotaoBatidas()"></audio>
   </main>
   <script src="js/jogo.js"></script>
   <script src="js/cena6.js"></script>

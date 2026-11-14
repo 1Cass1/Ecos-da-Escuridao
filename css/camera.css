@@ -48,6 +48,10 @@
   text-shadow: 0 0 6px #bb51ff, 0 0 20px #7e2be2;
 }
 
-#botao-uv[aria-pressed="true"] {
-  background: #612f81;
+.modo-claro .imagem-monitor img {
+  filter: grayscale(1) brightness(.9) contrast(1.1);
+}
+
+.modo-claro .imagem-monitor.filtro-uv img {
+  filter: grayscale(1) brightness(.82) contrast(1.2) sepia(1) hue-rotate(219deg) saturate(2.2);
 }

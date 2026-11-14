@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ecos da Escuridão</title>
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/hud.css">
 </head>
 <body>
 
-  <div class="tela">
+  <main class="tela">
     <h1>Ecos da Escuridão</h1>
     <p>Você acordou num quarto estranho. Sua lanterna é a única luz. Procure a porta da frente enquanto a Sombra ronda a casa.</p>
     <p>Clique nos objetos, junte itens e resolva os enigmas.</p>
     <p>Aperte F11 para jogar em tela cheia.</p>
-    <button onclick="novoJogo()">Começar</button>
-  </div>
+    <button type="button" onclick="novoJogo()">Começar</button>
+    <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
+  </main>
 
   <script src="js/jogo.js"></script>
 </body>

@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="css/equipamentos.css">
 </head>
 <body>
-  <main id="travessia" class="com-equipamentos">
+  <main id="travessia" class="cena-jogo com-equipamentos">
     <div id="palco" style="background-image: url('images/corredor.png')" onmousemove="moverLanterna(event)">
-      <span class="nome-cena">Corredor</span>
+      <h1 class="nome-cena" tabindex="-1">Corredor</h1>
       <button type="button" class="campo equipamento" id="campo-porta-armazem"
         style="left:78%; top:36%; width:13%; height:38%" aria-label="Porta do Armazém"
         onclick="tentarAbrirArmazem()"></button>
@@ -28,7 +28,7 @@
       <div id="rodape"><p id="mensagem" role="status"></p></div>
       <div id="painel">
         <div id="p-terminal" class="subpainel">
-          <h3>Terminal da porta da frente</h3>
+          <h2>Terminal da porta da frente</h2>
           <form onsubmit="tentarSenha(event)">
             <label for="senha-terminal">Dígitos dos canais 01 a 04</label>
             <input id="senha-terminal" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" required>
@@ -44,6 +44,7 @@
       <button type="button" onclick="irPara('cena4.html')">Sala de Segurança</button>
       <button type="button" onclick="tentarAbrirArmazem()">Armazém</button>
       <button type="button" onclick="tentarPortaDaFrente()">Porta da frente</button>
+      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
     </nav>
   </main>
   <script src="js/jogo.js"></script>

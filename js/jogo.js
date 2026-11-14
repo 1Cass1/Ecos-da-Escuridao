@@ -13,6 +13,7 @@ var nomesDosItens = {
 var itens = Object.keys(nomesDosItens);
 var timerMensagem;
 var painelAtual = "";
+var focoAntesPainel;
 var paginaDiario = 0;
 var informacoesPorPagina = 3;
 
@@ -29,7 +30,9 @@ function limparJogo() {
   // Apaga somente os dados deste jogo.
   for (var i = localStorage.length - 1; i >= 0; i--) {
     var chave = localStorage.key(i);
-    if (chave && chave.indexOf(PREFIXO) === 0) localStorage.removeItem(chave);
+    if (chave && chave.indexOf(PREFIXO) === 0 && chave !== PREFIXO + "modoClaro") {
+      localStorage.removeItem(chave);
+    }
   }
 }
 
@@ -37,18 +40,14 @@ function limparJogo() {
 function novoJogo() {
   limparJogo();
   marcar("partidaIniciada");
-  marcar("mapaAtualizado");
   registrarDiario("Você acordou no quarto.");
   window.location.href = "cena1.html";
 }
 
 function iniciarPagina() {
   if (!foi("partidaIniciada")) {
-    if (!lerTexto("diario")) {
-      window.location.href = "index.html";
-      return false;
-    }
-    marcar("partidaIniciada");
+    irPara("index.html");
+    return false;
   }
   if (lerTexto("final")) {
     window.location.href = "final.html";
@@ -64,7 +63,6 @@ function iniciarPagina() {
     irPara(travessia.getAttribute("data-voltar") || "cena3.html");
     return false;
   }
-  atualizarProgressoAntigo();
   atualizarInventario();
   sincronizarObjetos();
   atualizarBotaoDiario();
@@ -73,6 +71,22 @@ function iniciarPagina() {
 
 function irPara(pagina) {
   window.location.href = pagina;
+}
+
+function atualizarModoClaro() {
+  var ativo = foi("modoClaro");
+  var botao = document.querySelector(".botao-modo-claro");
+  document.body.classList.toggle("modo-claro", ativo);
+  if (botao) botao.setAttribute("aria-pressed", String(ativo));
+}
+
+function alternarModoClaro() {
+  if (foi("modoClaro")) {
+    desmarcar("modoClaro");
+  } else {
+    marcar("modoClaro");
+  }
+  atualizarModoClaro();
 }
 
 // Mensagens e painéis
@@ -86,18 +100,28 @@ function falar(texto) {
 function esconderMensagem() { pegar("mensagem").style.opacity = 0; }
 
 function abrirPainel(nome) {
-  fecharPainel();
+  focoAntesPainel = document.activeElement;
   var pedacos = document.getElementsByClassName("subpainel");
   for (var i = 0; i < pedacos.length; i++) pedacos[i].style.display = "none";
   painelAtual = nome;
   pegar("botao-fechar-painel").textContent = nome === "diario" ? "Fechar diário" : "Fechar";
-  pegar("p-" + nome).style.display = "flex";
+  var painel = pegar("p-" + nome);
+  painel.style.display = "flex";
   pegar("painel").style.display = "flex";
+  var titulo = painel.querySelector("h2");
+  titulo.tabIndex = -1;
+  titulo.focus();
 }
 
 function fecharPainel() {
+  if (!painelAtual) return;
   painelAtual = "";
   pegar("painel").style.display = "none";
+  if (focoAntesPainel && !focoAntesPainel.hidden && focoAntesPainel !== document.body) {
+    focoAntesPainel.focus();
+  } else {
+    pegar("palco").querySelector("h1").focus();
+  }
 }
 
 function moverLanterna(evento) {
@@ -218,29 +242,6 @@ function lerDiario() {
   }
 }
 
-function atualizarProgressoAntigo() {
-  if (foi("mapaAtualizado")) return;
-  var anotacoesObsoletas = [
-    /^Ação: (fusível encontrado|energia religada|alavanca puxada|a alavanca reiniciou)/i,
-    /^Ação: (terminal desbloqueado|cartão de acesso|fios cortados|leitor magnético|sequência do painel)/i,
-    /^Pista: (o retrato da |a data anotada|atrás do relógio|diário do guarda|os fios expostos)/i,
-    /^Erro: (terminal bloqueado|a ordem dos fios|a sequência do painel)/i,
-    /^Segredo: pingente encontrado atrás do retrato/i
-  ];
-  var diario = lerDiario().filter(function (anotacao) {
-    return !anotacoesObsoletas.some(function (regra) { return regra.test(anotacao); });
-  }).map(function (anotacao) {
-    return anotacao.replace(/no porão/gi, "no quarto").replace(/na biblioteca/gi, "no corredor");
-  });
-  gravar("diario", JSON.stringify(diario));
-  if (itens.indexOf(itemSelecionado()) === -1) desmarcar("selecionado");
-  desmarcar("tem-cartao");
-  desmarcar("tem-fusivel");
-  desmarcar("energiaLigada");
-  desmarcar("fusivelPego");
-  marcar("mapaAtualizado");
-}
-
 function registrarDiario(texto) {
   var diario = lerDiario();
   if (diario.indexOf(texto) !== -1) return;
@@ -292,8 +293,11 @@ function passarPaginaDiario(direcao) {
   atualizarPaginaDiario();
 }
 
+atualizarModoClaro();
+
 // Atualiza a página quando o jogador volta pelo histórico do navegador.
 window.onpageshow = function (evento) {
+  atualizarModoClaro();
   if (!evento.persisted || !pegar("palco")) return;
   if (pegar("painel")) fecharPainel();
   iniciarPagina();

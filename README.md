@@ -1,6 +1,6 @@
 # Ecos da Escuridão
 
-Escape room em HTML, CSS e JavaScript. A casa permanece no escuro durante toda a partida. A lanterna ilumina os cenários conforme o jogador move o mouse.
+Escape room em HTML, CSS e JavaScript. A casa permanece no escuro durante toda a partida. A lanterna ilumina os cenários conforme o jogador move o mouse. O Modo claro reduz a escuridão e os botões podem ser acionados com Tab e Enter.
 
 ## Mapa e arquivos
 
@@ -24,7 +24,7 @@ O botão **Porta da frente** abre o terminal do Corredor. O terminal libera a Sa
 - O diário no Quarto guarda a corrente. Selecione a corrente e o pingente em sequência para montar o medalhão. O desfecho reconhece quem chega à Saída com o medalhão montado.
 - Na Sala de Segurança, pegue o pé de cabra e selecione-o para abrir a porta emperrada do Armazém. Pegue a bateria na bancada, volte à Sala de Segurança e selecione a bateria para conectar a qualquer um dos quatro monitores.
 - Os canais 01 a 04 mostram Quarto, Subsolo, Corredor e Armazém, nessa ordem. Em cada câmera, ligue o filtro UV para descobrir um dígito. Digite a sequência no terminal do Corredor.
-- Na Saída, `audio/batidas-dutos.wav` reproduz dois grupos de três batidas quando o navegador permite reprodução automática. A legenda descreve o eco.
+- Na Saída, **Ouvir batidas** toca dois grupos de três batidas. O mesmo botão pausa o áudio, e **Silenciar batidas** liga ou desliga o som.
 
 ## Organização do código
 
@@ -32,7 +32,7 @@ O botão **Porta da frente** abre o terminal do Corredor. O terminal libera a Sa
 - `camera.html` e `js/camera.js` controlam a visualização e o filtro UV. `js/cameras.js` reúne a ordem, as imagens, os dígitos e suas posições, e fornece a senha ao terminal.
 - Os scripts das cenas cuidam das interações locais. `js/cena6.js` define o final e `js/final.js` exibe o desfecho.
 - `css/base.css` define cores e botões. `css/cena.css` cuida do palco e da lanterna. `css/hud.css` estiliza o inventário, o diário e os painéis.
-- O progresso fica no `localStorage` com o prefixo `ecos:`. Começar de novo apaga somente as chaves do jogo.
+- O progresso fica no `localStorage` com o prefixo `ecos:`. Começar de novo apaga o progresso e preserva a preferência do **Modo claro**.
 - O inventário fica no canto superior esquerdo do palco nas seis cenas. O item selecionado acompanha o jogador entre as salas.
 
 ## Cenários e sprites
