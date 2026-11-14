@@ -81,6 +81,7 @@ function calcularFinal(escolha, tempoGasto) {
   if (tempoGasto >= duracaoPartida) return "tempo";
   if (puzzles.terminal.alarme >= limiteAlarme) return "alarme";
   if (puzzles.terminal.estado !== "resolvido") return "";
+  if (puzzles.ritmo.estado !== "resolvido") return "";
   if (escolha === "medalhao" && inventario.tem("medalhao")) return "secreto";
   if (escolha === "ficar") return "ficou";
   if (escolha !== "fugir") return "";

@@ -175,6 +175,80 @@
   font-size: 14px;
   line-height: 1.6;
 }
+.modal-ritmo {
+  width: min(470px, 100%);
+  padding: 26px;
+  border-color: #505050;
+  border-radius: 10px;
+  background: #111;
+  box-shadow: none;
+}
+#minigame-ritmo {
+  background: #000b;
+  backdrop-filter: none;
+}
+.modal-ritmo h2 {
+  margin-bottom: 8px;
+  color: #eee;
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: 0;
+}
+.modal-ritmo > p {
+  margin-top: 12px;
+  color: #c9c9c9;
+}
+.sequencia-ritmo {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 18px 0;
+}
+.pulso-ritmo {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #666;
+  border-radius: 50%;
+  background: #222;
+  transition: background-color 120ms ease;
+}
+.pulso-ritmo.aceso {
+  background: #e5e5e5;
+}
+#ritmo-progresso {
+  min-height: 42px;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: #e0e0e0;
+}
+.controles-ritmo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.controles-ritmo button:last-child {
+  grid-column: 1 / -1;
+}
+.controles-ritmo button {
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #292929;
+  box-shadow: none;
+  color: #eee;
+}
+.controles-ritmo button:hover:not(:disabled) {
+  border-color: #777;
+  background: #3a3a3a;
+  transform: none;
+}
+.controles-ritmo button:disabled {
+  background: #242424;
+  color: #888;
+}
+.controles-ritmo button:focus-visible {
+  outline-color: #ddd;
+}
 .acoes-confirmacao {
   display: flex;
   justify-content: center;
@@ -191,6 +265,29 @@
   background: #17131b;
   border-color: #ffffff30;
   color: #d1c9d5;
+}
+.acoes-confirmacao.controles-ritmo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.acoes-confirmacao.controles-ritmo button {
+  border: 1px solid #555;
+  background: #292929;
+  box-shadow: none;
+  color: #eee;
+}
+.acoes-confirmacao.controles-ritmo .botao-secundario {
+  border-color: #555;
+  background: #292929;
+  color: #eee;
+}
+.acoes-confirmacao.controles-ritmo button:hover:not(:disabled) {
+  border-color: #777;
+  background: #3a3a3a;
+  transform: none;
+}
+.acoes-confirmacao.controles-ritmo button:last-child {
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 560px) {

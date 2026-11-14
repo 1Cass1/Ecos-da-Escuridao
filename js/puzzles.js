@@ -345,6 +345,43 @@ function criarPuzzles() {
       }
     }),
 
+    ritmo: criarEnigma({
+      nome: "Ritmo dos dutos",
+      cena: "Saída",
+      estado: "trancado",
+      // Intervalos entre os sinais luminosos, em milissegundos.
+      intervalos: [340, 560],
+      tolerancia: 300,
+      pistasNecessarias: ["terminal"],
+      afeta: ["terminal", "finais"],
+      pista: "Observe os três sinais luminosos e repita o ritmo com a barra de espaço ou pelo botão.",
+      sucesso: "O ritmo foi reconhecido. A saída aceita sua decisão.",
+
+      tentar: function (intervalos) {
+        if (this.estado === "resolvido") return this.sucesso;
+        this.inspecionar();
+        this.tentativas++;
+
+        var correto = intervalos.length === this.intervalos.length;
+        for (var i = 0; correto && i < this.intervalos.length; i++) {
+          if (Math.abs(intervalos[i] - this.intervalos[i]) > this.tolerancia) correto = false;
+        }
+
+        if (correto) return this.resolver();
+
+        puzzles.terminal.alarme++;
+        if (puzzles.terminal.alarme >= limiteAlarme) {
+          diario.registrar("Errei três vezes o ritmo dos dutos e disparei o alarme.");
+          return "O ritmo estava errado. O alarme disparou.";
+        }
+        return "O ritmo estava errado. Alertas: " + puzzles.terminal.alarme + "/" + limiteAlarme + ".";
+      },
+
+      aoResolver: function () {
+        diario.registrar(this.sucesso);
+      }
+    }),
+
     retrato: criarEnigma({
       nome: "Retrato da guardiã",
       cena: "Corredor",

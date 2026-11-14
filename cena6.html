@@ -25,7 +25,7 @@
         <span id="inventario-vazio">Vazio</span>
         <button type="button" id="inspecionar-item" onclick="inspecionarItem()" hidden>Inspecionar</button>
       </aside>
-      <p class="narracao-cena">Três batidas vêm dos dutos. Depois de uma pausa, o mesmo ritmo responde mais longe.</p>
+      <p class="narracao-cena">Três sinais percorrem o painel dos dutos. Depois, repita o padrão.</p>
       <div id="rodape"><p id="mensagem" role="status"></p></div>
       <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>Diário</button>
       <div id="painel">
@@ -57,16 +57,30 @@
         </div>
       </div>
     </section>
+    <section id="minigame-ritmo" class="confirmacao-jogo" role="dialog" aria-modal="true" aria-labelledby="titulo-ritmo" hidden>
+      <div class="modal-confirmacao modal-ritmo">
+        <h2 id="titulo-ritmo">O ritmo dos dutos</h2>
+        <p>Observe os três sinais luminosos. Depois, repita o ritmo com a barra de espaço ou clique três vezes.</p>
+        <div class="sequencia-ritmo" aria-label="Painel com três sinais luminosos">
+          <span class="pulso-ritmo"></span>
+          <span class="pulso-ritmo"></span>
+          <span class="pulso-ritmo"></span>
+        </div>
+        <p id="ritmo-progresso" role="status" aria-live="polite">Pronto para mostrar a sequência.</p>
+        <div class="acoes-confirmacao controles-ritmo">
+          <button type="button" id="botao-mostrar-ritmo" onclick="mostrarSequenciaRitmo()">Mostrar sequência</button>
+          <button type="button" id="botao-batida-manual" class="botao-secundario" onclick="registrarBatidaClique()" disabled aria-label="Marcar uma batida; clique três vezes no ritmo">Marcar batida</button>
+          <button type="button" class="botao-secundario" onclick="fecharMinigameRitmo()">Voltar</button>
+        </div>
+      </div>
+    </section>
     <nav aria-label="Navegação entre cenas">
-      <button type="button" id="botao-batidas" onclick="alternarBatidas()">Ouvir batidas</button>
-      <button type="button" id="botao-mudo" aria-pressed="false" onclick="alternarMudo()">Silenciar batidas</button>
+      <button type="button" id="botao-ritmo" onclick="abrirDesafioBatidas()">Repetir sequência</button>
       <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>
       <button type="button" onclick="pedirConfirmacaoFinal('fugir')">Fugir</button>
       <button type="button" onclick="pedirConfirmacaoFinal('ficar')">Ficar</button>
       <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
     </nav>
-    <audio id="audio-batidas" src="audio/batidas-dutos.wav" preload="metadata"
-      onplay="atualizarBotaoBatidas()" onpause="atualizarBotaoBatidas()" onended="atualizarBotaoBatidas()"></audio>
   </main>
   <script src="js/puzzles.js"></script>
   <script src="js/partida.js"></script>

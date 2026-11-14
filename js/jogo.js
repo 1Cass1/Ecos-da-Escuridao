@@ -135,6 +135,12 @@ function atualizarCena() {
   var pacto = pegar("botao-pacto");
   if (pacto) pacto.disabled = !inventario.tem("medalhao");
 
+  var ritmo = pegar("botao-ritmo");
+  if (ritmo) {
+    ritmo.disabled = puzzles.ritmo.estado === "resolvido";
+    ritmo.textContent = ritmo.disabled ? "Ritmo reconhecido" : "Repetir batidas";
+  }
+
   var portaAberta = pegar("sprite-porta-saida-aberta");
   if (portaAberta) portaAberta.hidden = puzzles.terminal.estado !== "resolvido";
 }

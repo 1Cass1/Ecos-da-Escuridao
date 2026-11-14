@@ -24,7 +24,7 @@ O botão **Porta da frente** abre o terminal do Corredor. O terminal libera a Sa
 - O diário no Quarto guarda a corrente. Selecione a corrente e o pingente em sequência para montar o medalhão. Com ele selecionado, examine o retrato para comparar as marcas da meia-lua.
 - Na Sala de Segurança, pegue o pé de cabra para abrir a porta emperrada do Armazém e o fundo falso das caixas do Quarto. Junte o recorte das caixas ao fragmento do retrato para recuperar o bilhete da guardiã.
 - Leve a bateria do Armazém à Sala de Segurança. Os canais 01 a 04 mostram Quarto, Subsolo, Corredor e Armazém, nessa ordem. Ative o UV em cada canal para revelar a senha. Um deles também mostra o vulto da Sombra.
-- Na Saída, **Ouvir batidas** toca dois grupos de três batidas. O mesmo botão pausa o áudio, e **Silenciar batidas** liga ou desliga o som.
+- Na Saída, **Mostrar sequência** acende três sinais no painel dos dutos. Repita o ritmo com a barra de espaço ou pelo botão.
 
 ## Finais
 
