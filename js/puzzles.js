@@ -224,19 +224,24 @@ function criarPuzzles() {
       cena: "Subsolo",
       afeta: ["medalhao", "retrato", "cameras"],
       pista: "Há algo escondido atrás das correntes da caldeira.",
-      sucesso: "Você guardou o pingente que estava embrulhado no relatório.",
+      sucesso: "Você leu o relatório da guardiã.",
       texto: "O Breu se espalha pela matéria orgânica e reage ao medo. A luz ultravioleta o enfraquece. Desde que ele entrou pelos dutos, as vozes passaram a imitar as nossas. A guardiã deixou o retrato no corredor, perto da porta da frente. A meia-lua riscada na moldura também foi gravada no pingente que ela usava.",
 
       tentar: function () {
         this.tentativas++;
         this.inspecionar();
         if (this.estado === "trancado") return this.pista;
-        return this.resolver();
+        var mensagem = this.resolver();
+        if (mensagem && partida.sorteio.localPingente === "relatorio") {
+          return "Você guardou o pingente que estava embrulhado no relatório.";
+        }
+        return mensagem;
       },
 
       aoResolver: function () {
-        inventario.ganhar("pingente");
+        if (partida.sorteio.localPingente === "relatorio") inventario.ganhar("pingente");
         diario.registrar("Relatório do Breu: a meia-lua riscada no retrato da guardiã também está gravada no pingente.");
+        diario.registrar(pistaDoPingente());
       }
     }),
 
@@ -294,16 +299,18 @@ function criarPuzzles() {
         return "";
       },
 
-      tentar: function (camera) {
+      tentar: function (canal) {
         if (this.estado === "trancado") return "";
         this.inspecionar();
         this.tentativas++;
+        var camera = cameras[canal - 1];
+        var digito = digitoDoCanal(canal);
         if (this.canaisVistos.indexOf(camera.nome) === -1) {
           this.canaisVistos.push(camera.nome);
-          diario.registrar(camera.nome + " (UV): dígito " + camera.digito + ".");
+          diario.registrar("Canal 0" + canal + " · " + camera.nome + " (UV): dígito " + digito + ".");
         }
         if (this.canaisVistos.length === cameras.length) this.resolver();
-        return camera.digito;
+        return digito;
       }
     }),
 
@@ -312,7 +319,6 @@ function criarPuzzles() {
       cena: "Corredor",
       pistasNecessarias: ["Quarto", "Subsolo", "Corredor", "Armazém"],
       alarme: 0,
-      bloqueadoAte: 0,
       afeta: ["cameras", "saida"],
       pista: "A senha usa os dígitos dos canais 01 a 04, em ordem.",
       sucesso: "O terminal liberou a porta da frente.",
@@ -323,21 +329,18 @@ function criarPuzzles() {
           return "A central de câmeras está desligada. Ligue os monitores na Sala de Segurança.";
         }
         if (this.estado === "resolvido") return "";
-        if (Date.now() < this.bloqueadoAte) return "Aguarde o desbloqueio do terminal.";
         this.tentativas++;
-        if (codigo === senhaDoTerminal(this.pistasNecessarias)) return this.resolver();
+        if (codigo === senhaDoTerminal()) return this.resolver();
 
         this.alarme++;
-        if (this.alarme % 3 === 0) {
-          this.bloqueadoAte = Date.now() + 8000;
-          diario.registrar("O alarme bloqueou o terminal por alguns segundos.");
-          return "Alarme " + this.alarme + ". Terminal bloqueado por 8 segundos.";
+        if (this.alarme === limiteAlarme) {
+          diario.registrar("O terceiro erro no terminal disparou o alarme.");
+          return "O alarme disparou.";
         }
-        return "Sequência incorreta. Alarme " + this.alarme + ". Confira os dígitos dos canais 01 a 04.";
+        return "Sequência incorreta. Alertas: " + this.alarme + "/" + limiteAlarme + ".";
       },
 
       aoResolver: function () {
-        this.bloqueadoAte = 0;
         diario.registrar(this.sucesso);
       }
     }),
@@ -375,7 +378,7 @@ function criarPuzzles() {
       nome: "Caixas do quarto",
       cena: "Quarto",
       itemNecessario: "pedecabra",
-      afeta: ["bueiro", "bilhete"],
+      afeta: ["bueiro", "bilhete", "medalhao"],
       pista: "Há marcas de arrasto até o bueiro. Uma das caixas tem um fundo que dá para forçar.",
       sucesso: "Você forçou o fundo da caixa e achou um recorte de papel.",
 
@@ -385,12 +388,20 @@ function criarPuzzles() {
         if (this.estado === "resolvido") return "O compartimento das caixas está vazio.";
         diario.registrar("Caixas: marcas de arrasto levam ao bueiro.");
         if (item !== this.itemNecessario) return this.pista;
-        return this.resolver();
+        var mensagem = this.resolver();
+        if (partida.sorteio.localPingente === "caixas") {
+          return mensagem + " O pingente também estava lá.";
+        }
+        return mensagem;
       },
 
       aoResolver: function () {
         inventario.ganhar("recorte");
         diario.registrar(this.sucesso);
+        if (partida.sorteio.localPingente === "caixas") {
+          inventario.ganhar("pingente");
+          diario.registrar("Encontrei o pingente no fundo falso das caixas do quarto.");
+        }
       }
     }),
 
@@ -435,7 +446,7 @@ function carregarEstado() {
   diario.entradas = estado.entradas;
 
   // As funções ficam no código. Só o progresso vem do arquivo salvo.
-  var campos = ["estado", "inspecionado", "tentativas", "voltas", "canaisVistos", "alarme", "bloqueadoAte"];
+  var campos = ["estado", "inspecionado", "tentativas", "voltas", "canaisVistos", "alarme"];
   for (var nome in puzzles) {
     if (!estado.puzzles[nome]) continue;
     for (var i = 0; i < campos.length; i++) {

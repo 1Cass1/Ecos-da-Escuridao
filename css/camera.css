@@ -48,6 +48,64 @@
   text-shadow: 0 0 6px #bb51ff, 0 0 20px #7e2be2;
 }
 
+#estado-camera,
+#aviso-vulto {
+  position: absolute;
+  z-index: 1;
+  background: #101713;
+  color: #c3dfc7;
+  font-size: clamp(11px, 2vw, 14px);
+}
+
+#estado-camera {
+  bottom: 12px;
+  left: 12px;
+}
+
+#aviso-vulto {
+  bottom: 12px;
+  right: 12px;
+}
+
+#estado-camera:not(:empty),
+#aviso-vulto:not(:empty) {
+  padding: 5px 8px;
+}
+
+#bueiro-camera {
+  position: absolute;
+  left: 64.5%;
+  top: 91.8%;
+  width: 12%;
+  height: 7.9%;
+  background: linear-gradient(165deg, #737373, #070707 34%, #000 70%, #292929);
+  clip-path: polygon(0 7%, 76% 0, 100% 100%, 19% 100%);
+}
+
+#vulto-camera {
+  position: absolute;
+  left: 55%;
+  top: 18%;
+  width: 15%;
+  height: 68%;
+  background: #09030c;
+  clip-path: polygon(42% 0, 66% 5%, 74% 20%, 65% 31%, 86% 40%, 100% 100%, 0 100%, 18% 47%, 40% 31%, 34% 19%);
+}
+
+#vulto-camera:not([hidden]) {
+  opacity: .65;
+  animation: aparicao .45s ease-out;
+}
+
+@keyframes aparicao {
+  from { opacity: 1; transform: translateX(-24%) scale(1.3); }
+  to { opacity: .65; transform: translateX(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #vulto-camera:not([hidden]) { animation: none; }
+}
+
 .modo-claro .imagem-monitor img {
   filter: grayscale(1) brightness(.9) contrast(1.1);
 }

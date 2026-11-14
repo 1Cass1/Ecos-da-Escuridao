@@ -16,7 +16,7 @@
       <!-- Áreas clicáveis -->
       <button type="button" class="campo" id="campo-escada-cima"
         style="left:46%; top:7%; width:9%; height:62%" aria-label="Escada para cima"
-        onclick="clicarEscadaCima()"></button>
+        onclick="irPara('cena1.html')"></button>
 
       <button type="button" class="campo" id="campo-chave-de-fenda"
         style="left:77%; top:55%; width:10%; height:10%" aria-label="Chave de fenda"
@@ -44,13 +44,19 @@
 
       <!-- Lanterna -->
       <div id="luz"></div>
+      <div class="vinheta-breu" aria-hidden="true"></div>
+      <div class="hud-tempo">
+        <p id="tempo-restante" role="timer" aria-label="Tempo restante">4:00</p>
+        <p id="sussurro" role="status"></p>
+      </div>
       <aside id="inv" aria-label="Inventário">
         <span class="titulo-inventario">Itens</span>
         <span id="inventario-vazio">Vazio</span>
+        <button type="button" id="inspecionar-item" onclick="inspecionarItem()" hidden>Inspecionar</button>
       </aside>
 
       <!-- Interface do jogo -->
-      <button type="button" id="botao-diario" onclick="abrirDiario()" hidden>Diário</button>
+      <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>Diário</button>
 
       <div id="rodape"><p id="mensagem" role="status"></p></div>
 
@@ -80,11 +86,13 @@
       </div>
     </div>
     <nav aria-label="Navegação entre cenas">
-      <button type="button" onclick="clicarEscadaCima()">Subir a escada</button>
+      <button type="button" onclick="irPara('cena1.html')">Subir a escada</button>
       <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
     </nav>
   </main>
 
+  <script src="js/puzzles.js"></script>
+  <script src="js/partida.js"></script>
   <script src="js/jogo.js"></script>
   <script src="js/cena2.js"></script>
 </body>

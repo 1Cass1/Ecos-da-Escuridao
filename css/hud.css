@@ -85,6 +85,11 @@
 .item-inventario[hidden] {
   display: none;
 }
+
+#inspecionar-item {
+  padding: 4px 6px;
+  font-size: 12px;
+}
 .item-inventario:hover,
 .item-inventario.sel {
   background: transparent;

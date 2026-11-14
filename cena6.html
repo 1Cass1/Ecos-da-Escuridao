@@ -9,27 +9,55 @@
   <link rel="stylesheet" href="css/hud.css">
 </head>
 <body>
-  <main id="travessia" class="cena-jogo" data-requer-progresso="portaFrenteAberta">
+  <main id="travessia" class="cena-jogo" data-requer-progresso="terminal">
     <div id="palco" style="background-image: url('images/saida.png')" onmousemove="moverLanterna(event)">
-      <h1 class="nome-cena">Saída</h1>
+      <h1 class="nome-cena" tabindex="-1">Saída</h1>
       <div id="luz"></div>
+      <div class="vinheta-breu" aria-hidden="true"></div>
+      <div class="hud-tempo">
+        <p id="tempo-restante" role="timer" aria-label="Tempo restante">4:00</p>
+        <p id="sussurro" role="status"></p>
+      </div>
       <aside id="inv" aria-label="Inventário">
         <span class="titulo-inventario">Itens</span>
         <span id="inventario-vazio">Vazio</span>
+        <button type="button" id="inspecionar-item" onclick="inspecionarItem()" hidden>Inspecionar</button>
       </aside>
       <p class="narracao-cena">Três batidas vêm dos dutos. Depois de uma pausa, o mesmo ritmo responde mais longe.</p>
       <div id="rodape"><p id="mensagem" role="status"></p></div>
+      <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>Diário</button>
+      <div id="painel">
+        <div class="subpainel" id="p-diario">
+          <h2>DIÁRIO DE BORDO</h2>
+          <div id="diario-aberto">
+            <section id="pagina-diario" class="pagina-diario esquerda">
+              <h3 id="diario-titulo">Anotação antiga</h3>
+              <p id="diario-texto"></p>
+            </section>
+          </div>
+          <div id="controles-diario">
+            <button type="button" id="seta-diario-voltar" class="seta-diario" onclick="passarPaginaDiario(-1)" aria-label="Página anterior" disabled>&#8592;</button>
+            <span id="diario-pagina">1 / 1</span>
+            <button type="button" id="seta-diario-avancar" class="seta-diario" onclick="passarPaginaDiario(1)" aria-label="Próxima página">&#8594;</button>
+          </div>
+        </div>
+        <button type="button" id="botao-fechar-painel" onclick="fecharPainel()">Fechar</button>
+      </div>
     </div>
     <nav aria-label="Navegação entre cenas">
       <button type="button" id="botao-batidas" onclick="alternarBatidas()">Ouvir batidas</button>
       <button type="button" id="botao-mudo" aria-pressed="false" onclick="alternarMudo()">Silenciar batidas</button>
       <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>
-      <button type="button" onclick="concluirTravessia()">Ver desfecho</button>
+      <button type="button" id="botao-pacto" onclick="concluirTravessia('medalhao')" disabled>Usar o medalhão</button>
+      <button type="button" onclick="concluirTravessia('fugir')">Fugir</button>
+      <button type="button" onclick="concluirTravessia('ficar')">Ficar</button>
       <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
     </nav>
     <audio id="audio-batidas" src="audio/batidas-dutos.wav" preload="metadata"
       onplay="atualizarBotaoBatidas()" onpause="atualizarBotaoBatidas()" onended="atualizarBotaoBatidas()"></audio>
   </main>
+  <script src="js/puzzles.js"></script>
+  <script src="js/partida.js"></script>
   <script src="js/jogo.js"></script>
   <script src="js/cena6.js"></script>
 </body>

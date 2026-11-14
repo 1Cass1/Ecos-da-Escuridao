@@ -1,95 +1,70 @@
-// Funções usadas em todas as cenas.
-var PREFIXO = "ecos:";
-var nomesDosItens = {
-  chavefenda: "Chave de fenda",
-  alicate: "Alicate",
-  chave: "Chave de latão",
-  corrente: "Corrente de prata",
-  pingente: "Pingente",
-  medalhao: "Medalhão",
-  pedecabra: "Pé de cabra",
-  bateria: "Bateria portátil"
-};
-var itens = Object.keys(nomesDosItens);
 var timerMensagem;
 var painelAtual = "";
 var focoAntesPainel;
 var paginaDiario = 0;
 var informacoesPorPagina = 3;
 
-// Salvar e ler o progresso
-function gravar(nome, valor) { localStorage.setItem(PREFIXO + nome, valor); }
-function lerTexto(nome) { return localStorage.getItem(PREFIXO + nome) || ""; }
-function ler(nome) { return Number(lerTexto(nome)) || 0; }
-function marcar(nome) { gravar(nome, "sim"); }
-function foi(nome) { return lerTexto(nome) === "sim"; }
-function desmarcar(nome) { localStorage.removeItem(PREFIXO + nome); }
 function pegar(id) { return document.getElementById(id); }
 
-function limparJogo() {
-  // Apaga somente os dados deste jogo.
-  for (var i = localStorage.length - 1; i >= 0; i--) {
-    var chave = localStorage.key(i);
-    if (chave && chave.indexOf(PREFIXO) === 0 && chave !== PREFIXO + "modoClaro") {
-      localStorage.removeItem(chave);
-    }
-  }
-}
-
-// Começar e trocar de cena
 function novoJogo() {
   limparJogo();
-  marcar("partidaIniciada");
-  registrarDiario("Você acordou no quarto.");
-  window.location.href = "cena1.html";
+  puzzles = criarPuzzles();
+  partida = { iniciada: true, final: "" };
+  inventario.itens = [];
+  inventario.selecionar("");
+  diario.entradas = [];
+  diario.registrar("Você acordou no quarto.");
+  iniciarTempo();
+  salvarEstado();
+  irPara("cena1.html");
 }
 
 function iniciarPagina() {
-  if (!foi("partidaIniciada")) {
+  carregarEstado();
+  if (!partida.iniciada) {
     irPara("index.html");
     return false;
   }
-  if (lerTexto("final")) {
-    window.location.href = "final.html";
+  if (partida.final) {
+    irPara("final.html");
     return false;
   }
+  prepararPartida();
+  if (!iniciarRelogio()) return false;
+
   var travessia = pegar("travessia");
-  if (travessia && !foi("portaAberta")) {
+  if (travessia && puzzles.portaQuarto.estado !== "resolvido") {
     irPara("cena1.html");
     return false;
   }
-  var progressoNecessario = travessia && travessia.getAttribute("data-requer-progresso");
-  if (progressoNecessario && !foi(progressoNecessario)) {
+  var progresso = travessia && travessia.getAttribute("data-requer-progresso");
+  if (progresso && puzzles[progresso].estado !== "resolvido") {
     irPara(travessia.getAttribute("data-voltar") || "cena3.html");
     return false;
   }
-  atualizarInventario();
-  sincronizarObjetos();
-  atualizarBotaoDiario();
+  atualizarCena();
   return true;
 }
 
-function irPara(pagina) {
-  window.location.href = pagina;
-}
+function irPara(pagina) { window.location.href = pagina; }
 
 function atualizarModoClaro() {
-  var ativo = foi("modoClaro");
+  var ativo = localStorage.getItem(PREFIXO + "modoClaro") === "sim";
   var botao = document.querySelector(".botao-modo-claro");
   document.body.classList.toggle("modo-claro", ativo);
   if (botao) botao.setAttribute("aria-pressed", String(ativo));
 }
 
 function alternarModoClaro() {
-  if (foi("modoClaro")) {
-    desmarcar("modoClaro");
+  var chave = PREFIXO + "modoClaro";
+  if (localStorage.getItem(chave) === "sim") {
+    localStorage.removeItem(chave);
   } else {
-    marcar("modoClaro");
+    localStorage.setItem(chave, "sim");
   }
   atualizarModoClaro();
 }
 
-// Mensagens e painéis
 function falar(texto) {
   pegar("mensagem").textContent = texto;
   pegar("mensagem").style.opacity = 1;
@@ -131,150 +106,103 @@ function moverLanterna(evento) {
   palco.style.setProperty("--y", (evento.clientY - caixa.top) + "px");
 }
 
-// Inventário
-function ganhar(item) {
-  marcar("tem-" + item);
+function atualizarCena() {
   atualizarInventario();
-}
 
-function perder(item) {
-  desmarcar("tem-" + item);
-  if (itemSelecionado() === item) gravar("selecionado", "");
-  atualizarInventario();
-}
-
-function itemSelecionado() { return lerTexto("selecionado"); }
-
-function soltarItem() {
-  gravar("selecionado", "");
-  atualizarInventario();
-}
-
-function sincronizarObjetos() {
-  var objetos = [
-    ["campo-chave-de-fenda", "chaveFendaPega"],
-    ["campo-alicate", "alicatePego"],
-    ["campo-diario1", "diarioPego"],
-    ["campo-cadeado", "portaAberta"],
-    ["campo-pe-de-cabra", "peDeCabraPego"],
-    ["campo-bateria", "bateriaPega"]
-  ];
-  for (var i = 0; i < objetos.length; i++) {
-    var campo = pegar(objetos[i][0]);
-    if (campo) campo.hidden = foi(objetos[i][1]);
+  var objetos = {
+    "campo-chave-de-fenda": "chaveFenda",
+    "campo-alicate": "alicate",
+    "campo-diario1": "diario",
+    "campo-cadeado": "portaQuarto",
+    "campo-caldeira": "caldeira",
+    "campo-pe-de-cabra": "peDeCabra",
+    "campo-bateria": "bateria"
+  };
+  for (var id in objetos) {
+    var campo = pegar(id);
+    if (campo) campo.hidden = puzzles[objetos[id]].estado === "resolvido";
   }
-  var caldeira = pegar("campo-caldeira");
-  if (caldeira) caldeira.hidden = foi("caldeiraAberta");
+
   var papel = pegar("campo-papel");
-  if (papel) papel.hidden = !foi("caldeiraAberta") || (foi("papelBreuLido") && foi("pingentePego"));
+  if (papel) papel.hidden = puzzles.relatorio.estado === "trancado";
+
+  var retrato = pegar("campo-retrato");
+  if (retrato) retrato.classList.toggle("retrato-inspecionado", puzzles.retrato.inspecionado);
+
+  var botao = pegar("botao-diario");
+  if (botao) botao.hidden = puzzles.diario.estado !== "resolvido";
+
+  var pacto = pegar("botao-pacto");
+  if (pacto) pacto.disabled = !inventario.tem("medalhao");
 }
 
-function atualizarBotaoDiario() {
-  var botao = pegar("botao-diario");
-  if (botao) botao.hidden = !foi("diarioPego");
+function atualizarAposAcao(mensagem) {
+  salvarEstado();
+  atualizarCena();
+  if (mensagem) falar(mensagem);
 }
 
 function atualizarInventario() {
-  var inventario = pegar("inv");
-  if (!inventario) return;
+  var lista = pegar("inv");
+  if (!lista) return;
 
-  var selecionado = itemSelecionado();
-  if (selecionado && (itens.indexOf(selecionado) === -1 || !foi("tem-" + selecionado))) {
-    desmarcar("selecionado");
-    selecionado = "";
-  }
-  var vazio = true;
-  itens.forEach(function (item) {
-    var id = "item-" + item;
-    var botao = pegar(id);
+  var inspecionar = pegar("inspecionar-item");
+  for (var item in fichaDosItens) {
+    var botao = pegar("item-" + item);
     if (!botao) {
       botao = document.createElement("button");
       botao.type = "button";
-      botao.id = id;
+      botao.id = "item-" + item;
+      botao.value = item;
       botao.className = "item-inventario";
-      botao.textContent = nomesDosItens[item];
-      botao.addEventListener("click", function () { clicarItem(item); });
-      inventario.appendChild(botao);
+      botao.textContent = fichaDosItens[item].nome;
+      botao.addEventListener("click", clicarItem);
+      lista.insertBefore(botao, inspecionar);
     }
-    botao.hidden = !foi("tem-" + item);
-    botao.classList.toggle("sel", selecionado === item);
-    botao.setAttribute("aria-pressed", String(selecionado === item));
-    if (!botao.hidden) vazio = false;
-  });
-  pegar("inventario-vazio").hidden = !vazio;
-}
-
-function combinarItens(primeiro, segundo) {
-  var combina = (primeiro === "corrente" && segundo === "pingente") ||
-                (primeiro === "pingente" && segundo === "corrente");
-  if (!combina || !foi("tem-" + primeiro) || !foi("tem-" + segundo)) return false;
-  perder("corrente");
-  perder("pingente");
-  ganhar("medalhao");
-  falar("A corrente e o pingente formam um medalhão gravado com uma meia-lua riscada.");
-  registrarDiario("A corrente e o pingente formam um medalhão com uma meia-lua riscada.");
-  return true;
-}
-
-function clicarItem(nome) {
-  if (!foi("tem-" + nome)) return;
-  var selecionado = itemSelecionado();
-  if (selecionado === nome) {
-    soltarItem();
-    falar("Item guardado.");
-  } else if (!combinarItens(selecionado, nome)) {
-    // Outro item só troca o que está selecionado.
-    gravar("selecionado", nome);
-    atualizarInventario();
-    falar("Usando: " + nomesDosItens[nome]);
+    botao.hidden = !inventario.tem(item);
+    botao.classList.toggle("sel", inventario.selecionado === item);
+    botao.setAttribute("aria-pressed", String(inventario.selecionado === item));
   }
+  pegar("inventario-vazio").hidden = inventario.itens.length !== 0;
+  inspecionar.hidden = !inventario.selecionado;
 }
 
-// Diário
-function lerDiario() {
-  try {
-    var diario = JSON.parse(lerTexto("diario") || "[]");
-    return Array.isArray(diario) ? diario.filter(function (anotacao) {
-      return typeof anotacao === "string";
-    }) : [];
-  } catch (erro) {
-    return [];
-  }
-}
-
-function registrarDiario(texto) {
-  var diario = lerDiario();
-  if (diario.indexOf(texto) !== -1) return;
-  diario.push(texto);
-  gravar("diario", JSON.stringify(diario));
-}
-
-function abrirDiario() {
-  if (!foi("diarioPego")) {
-    falar("Você precisa encontrar o diário antes de consultá-lo.");
+function clicarItem(evento) {
+  var item = evento.currentTarget.value;
+  var selecionado = inventario.selecionado;
+  if (selecionado === item) {
+    inventario.selecionar("");
+    atualizarAposAcao("Item guardado.");
     return;
   }
-  paginaDiario = 0;
-  atualizarPaginaDiario();
-  abrirPainel("diario");
+
+  var mensagem = inventario.combinar(selecionado, item);
+  if (!mensagem) {
+    inventario.selecionar(item);
+    mensagem = "Usando: " + fichaDosItens[item].nome;
+  }
+  atualizarAposAcao(mensagem);
+}
+
+function inspecionarItem() {
+  falar(inventario.inspecionar());
 }
 
 function atualizarPaginaDiario() {
-  var diario = lerDiario();
-  var totalPaginas = Math.ceil(diario.length / informacoesPorPagina) + 1;
+  var entradas = diario.entradas;
+  var totalPaginas = Math.ceil(entradas.length / informacoesPorPagina) + 1;
 
   if (paginaDiario === 0) {
     pegar("diario-titulo").textContent = "ANOTAÇÃO ANTIGA";
-    pegar("diario-texto").textContent = "Se alguém encontrar este caderno, não siga as vozes nos dutos. A escuridão sabe repetir o que escuta. Eu tranquei a passagem, mas ela continua chamando pelo meu nome. — registro sem assinatura";
+    pegar("diario-texto").textContent = partida.sorteio.anotacao;
   } else {
-    var primeiraInformacao = (paginaDiario - 1) * informacoesPorPagina;
+    var primeira = (paginaDiario - 1) * informacoesPorPagina;
     var textoPagina = "";
     pegar("diario-titulo").textContent = "ANOTAÇÕES " + paginaDiario;
 
-    for (var i = primeiraInformacao; i < primeiraInformacao + informacoesPorPagina && i < diario.length; i++) {
-      textoPagina += "- " + diario[i] + "\n\n";
+    for (var i = primeira; i < primeira + informacoesPorPagina && i < entradas.length; i++) {
+      textoPagina += "- " + entradas[i] + "\n\n";
     }
-
     pegar("diario-texto").textContent = textoPagina;
   }
 
@@ -286,8 +214,8 @@ function atualizarPaginaDiario() {
 }
 
 function passarPaginaDiario(direcao) {
-  var totalPaginas = Math.ceil(lerDiario().length / informacoesPorPagina) + 1;
-  paginaDiario = paginaDiario + direcao;
+  var totalPaginas = Math.ceil(diario.entradas.length / informacoesPorPagina) + 1;
+  paginaDiario += direcao;
   if (paginaDiario < 0) paginaDiario = 0;
   if (paginaDiario >= totalPaginas) paginaDiario = totalPaginas - 1;
   atualizarPaginaDiario();
@@ -295,10 +223,22 @@ function passarPaginaDiario(direcao) {
 
 atualizarModoClaro();
 
-// Atualiza a página quando o jogador volta pelo histórico do navegador.
 window.onpageshow = function (evento) {
   atualizarModoClaro();
-  if (!evento.persisted || !pegar("palco")) return;
+  if (!evento.persisted) return;
   if (pegar("painel")) fecharPainel();
-  iniciarPagina();
+  var palco = pegar("palco");
+  if (palco) {
+    if (palco.classList.contains("imagem-monitor")) {
+      iniciarCamera();
+    } else {
+      iniciarPagina();
+    }
+  } else if (pegar("titulo")) {
+    mostrarFinal();
+  }
 };
+
+document.addEventListener("visibilitychange", function () {
+  if (!document.hidden && relogio && partida.iniciada && !partida.final) atualizarRelogio();
+});

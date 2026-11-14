@@ -1,17 +1,51 @@
-// Mostra o final salvo pelo jogo.
-var tipo = lerTexto("final");
-var titulo = "";
-var texto = "";
+var finais = {
+  perfeito: {
+    titulo: "Fuga perfeita",
+    texto: "Você fecha a porta por fora e as batidas param. Do outro lado do vidro, a Sombra ainda está olhando para o corredor. Ela não viu você sair."
+  },
+  sequelas: {
+    titulo: "Fuga com sequelas",
+    texto: "Você consegue sair, mas traz o som dos dutos com você. Na primeira noite fora da casa, as mesmas três batidas vêm de dentro da parede."
+  },
+  alarme: {
+    titulo: "Captura pelo alarme",
+    texto: "Ao terceiro erro, uma sirene ecoa pelos dutos. As travas da porta descem. Antes que a sirene pare, a Sombra já está atrás de você."
+  },
+  tempo: {
+    titulo: "Captura pelo Breu",
+    texto: "A lanterna apaga. Quando você estende a mão, alguém do escuro segura a sua. Já é tarde para encontrar a saída."
+  },
+  secreto: {
+    titulo: "Final secreto: o pacto",
+    texto: "Você oferece o medalhão. A Sombra toca o risco na meia-lua, e a porta se abre. Quando os dutos chamam pelo seu nome, você entende o preço: a guardiã pode sair, e a casa agora é sua."
+  },
+  ficou: {
+    titulo: "Você ficou",
+    texto: "Você solta a maçaneta e volta pelo corredor. Atrás de você, a porta fecha devagar. As batidas nos dutos aprendem a repetir o seu nome."
+  }
+};
 
-if (tipo === "perfeito") {
-  titulo = "Fuga perfeita";
-  texto = "Você atravessa a porta da frente. Do lado de fora, o som dos dutos finalmente cessa. No corredor, a Sombra fica imóvel diante do retrato.";
-} else if (tipo === "secreto") {
-  titulo = "Final secreto: o pacto";
-  texto = "Junto à porta da frente, você estende o medalhão. A Sombra toca a meia-lua riscada, a mesma marca na moldura do retrato do corredor. A antiga guardiã se desfaz em cinzas. Dos dutos, você ouve seu próprio nome. Agora é você quem guarda a casa.";
-} else {
-  window.location.href = "index.html";
+function mostrarFinal() {
+  carregarEstado();
+  var final = finais[partida.final];
+  if (!final) {
+    irPara("index.html");
+    return;
+  }
+
+  pegar("titulo").textContent = final.titulo;
+  pegar("texto").textContent = final.texto;
+  pegar("tempo-gasto").textContent = partida.tempoGasto === undefined
+    ? "Tempo gasto indisponível para esta partida."
+    : "Tempo gasto: " + formatarTempo(Math.floor(partida.tempoGasto / 1000));
+  var lista = pegar("pistas-encontradas");
+  lista.textContent = "";
+  pegar("pistas-vazias").hidden = diario.entradas.length !== 0;
+  for (var i = 0; i < diario.entradas.length; i++) {
+    var pista = document.createElement("li");
+    pista.textContent = diario.entradas[i];
+    lista.appendChild(pista);
+  }
 }
 
-pegar("titulo").textContent = titulo;
-pegar("texto").textContent = texto;
+mostrarFinal();

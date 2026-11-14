@@ -40,6 +40,31 @@
   outline-offset: -2px;
 }
 
+#campo-retrato {
+  left: 38.5%;
+  top: 30.5%;
+  width: 4.6%;
+  height: 12%;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+  border: 3px double #a3a3a3;
+  background:
+    radial-gradient(ellipse at 50% 33%, #777 0 12%, transparent 14%),
+    radial-gradient(ellipse at 50% 90%, #626262 0 32%, transparent 34%),
+    linear-gradient(#262626, #080808);
+  color: #dedede;
+}
+
+.marca-retrato {
+  opacity: 0;
+  font-size: clamp(12px, 2vw, 23px);
+}
+
+#campo-retrato.retrato-inspecionado .marca-retrato {
+  opacity: 1;
+}
+
 /* Imagens dos objetos. */
 .campo img,
 img.sprite {
@@ -116,6 +141,50 @@ img.sprite {
 
 body.modo-claro {
   --opacidade-escuro: .48;
+}
+
+.vinheta-breu {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse, transparent 30%, #000 100%);
+  opacity: var(--breu, 0);
+  pointer-events: none;
+}
+
+.modo-claro .vinheta-breu {
+  opacity: calc(var(--breu, 0) * .4);
+}
+
+.hud-tempo {
+  position: absolute;
+  z-index: 4;
+  inset: 8px 16% auto;
+  pointer-events: none;
+  text-align: center;
+  font-size: clamp(10px, 1.7vw, 15px);
+}
+
+#tempo-restante,
+#sussurro:not(:empty) {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: #100d0def;
+}
+
+#tempo-restante {
+  color: #efe6db;
+  font-weight: bold;
+}
+
+#tempo-restante.tempo-baixo {
+  color: #ff9296;
+}
+
+#sussurro:not(:empty) {
+  margin-top: 3px;
+  color: #ddd1da;
 }
 
 /* Modo de ajuste: mostra as áreas clicáveis. */

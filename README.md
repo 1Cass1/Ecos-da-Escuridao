@@ -15,24 +15,35 @@ Escape room em HTML, CSS e JavaScript. A casa permanece no escuro durante toda a
 
 Comece em `index.html`. O Quarto leva ao Subsolo e, depois que a porta é destrancada, ao Corredor. Pelo Corredor, o jogador pode voltar ao Quarto ou seguir para a Sala de Segurança, para o Armazém ou pela porta da frente até a Saída. `final.html` mostra o desfecho.
 
-O botão **Porta da frente** abre o terminal do Corredor. O terminal libera a Saída depois que os monitores estiverem ligados e a senha for inserida.
+O botão **Porta da frente** abre o terminal do Corredor. O terminal libera a Saída depois que os monitores estiverem ligados e a senha for inserida. Você tem quatro minutos para decidir o que fazer na Saída.
 
 ## Enigmas e história
 
 - No Subsolo, encontre a chave de fenda. Selecione-a e gire o parafuso do bueiro três vezes para a esquerda. A chave de latão encontrada na grade abre a porta do Quarto.
-- O alicate abre a caldeira. O relatório contém o pingente e explica a ligação entre a guardiã e a meia-lua riscada na moldura do retrato do Corredor.
-- O diário no Quarto guarda a corrente. Selecione a corrente e o pingente em sequência para montar o medalhão. O desfecho reconhece quem chega à Saída com o medalhão montado.
-- Na Sala de Segurança, pegue o pé de cabra e selecione-o para abrir a porta emperrada do Armazém. Pegue a bateria na bancada, volte à Sala de Segurança e selecione a bateria para conectar a qualquer um dos quatro monitores.
-- Os canais 01 a 04 mostram Quarto, Subsolo, Corredor e Armazém, nessa ordem. Em cada câmera, ligue o filtro UV para descobrir um dígito. Digite a sequência no terminal do Corredor.
+- O alicate abre a caldeira. Leia o relatório para descobrir onde o pingente foi escondido. Ele pode estar no próprio papel ou no fundo falso das caixas do Quarto.
+- O diário no Quarto guarda a corrente. Selecione a corrente e o pingente em sequência para montar o medalhão. Com ele selecionado, examine o retrato para comparar as marcas da meia-lua.
+- Na Sala de Segurança, pegue o pé de cabra para abrir a porta emperrada do Armazém e o fundo falso das caixas do Quarto. Junte o recorte das caixas ao fragmento do retrato para recuperar o bilhete da guardiã.
+- Leve a bateria do Armazém à Sala de Segurança. Os canais 01 a 04 mostram Quarto, Subsolo, Corredor e Armazém, nessa ordem. Ative o UV em cada canal para revelar a senha. Um deles também mostra o vulto da Sombra.
 - Na Saída, **Ouvir batidas** toca dois grupos de três batidas. O mesmo botão pausa o áudio, e **Silenciar batidas** liga ou desliga o som.
+
+## Finais
+
+| Final | Condição |
+| --- | --- |
+| Fuga perfeita | Escolher Fugir com pelo menos 1 minuto restante, os quatro dígitos vistos e zero erros no terminal. |
+| Fuga com sequelas | Escolher Fugir sem cumprir todos os critérios da fuga perfeita. |
+| Captura pelo alarme | Errar a senha três vezes. |
+| Captura pelo Breu | Deixar o tempo acabar. |
+| O pacto | Montar o medalhão e escolher Usar o medalhão na Saída. |
+| Você ficou | Escolher Ficar na Saída. |
 
 ## Organização do código
 
-- `js/jogo.js` reúne progresso, inventário, diário, painéis e lanterna.
-- `camera.html` e `js/camera.js` controlam a visualização e o filtro UV. `js/cameras.js` reúne a ordem, as imagens, os dígitos e suas posições, e fornece a senha ao terminal.
-- Os scripts das cenas cuidam das interações locais. `js/cena6.js` define o final e `js/final.js` exibe o desfecho.
+- `js/puzzles.js` define os objetos dos enigmas, do inventário e do diário. As cenas chamam seus métodos e atualizam a tela. Use **Inspecionar** no inventário para ver a descrição do item selecionado.
+- `js/partida.js` sorteia a senha, o esconderijo, o canal do vulto e os textos da partida. Também calcula o tempo restante e decide o final. A lanterna perde alcance e a vinheta escurece à medida que o relógio avança.
+- `js/jogo.js` atualiza a interface, os painéis, a lanterna e a navegação. `js/cameras.js` fornece os dígitos sorteados para o filtro UV e o terminal. `js/final.js` exibe o desfecho, o tempo gasto e as anotações da partida.
 - `css/base.css` define cores e botões. `css/cena.css` cuida do palco e da lanterna. `css/hud.css` estiliza o inventário, o diário e os painéis.
-- O progresso fica no `localStorage` com o prefixo `ecos:`. Começar de novo apaga o progresso e preserva a preferência do **Modo claro**.
+- `salvarEstado()` grava a partida, os enigmas, o inventário e o diário em `ecos:estado`. `carregarEstado()` restaura esses dados ao mudar de página. Começar de novo apaga o progresso e preserva o **Modo claro**.
 - O inventário fica no canto superior esquerdo do palco nas seis cenas. O item selecionado acompanha o jogador entre as salas.
 
 ## Cenários e sprites
@@ -45,4 +56,4 @@ Coloque os PNGs dos equipamentos em `images/objetos/`. O pé de cabra usa `pe-de
 
 ## Como testar
 
-Abra `index.html` pelo Live Server ou sirva a pasta com `python -m http.server 8000` e acesse `http://localhost:8000`. Teste uma partida montando o medalhão e outra resolvendo o caminho das câmeras até a Saída sem montar o medalhão.
+Abra `index.html` pelo Live Server ou sirva a pasta com `python -m http.server 8000` e acesse `http://localhost:8000`. Confira se o relógio continua ao entrar no Subsolo e ao recarregar a página. Na Saída, experimente Fugir, Ficar e Usar o medalhão em partidas diferentes.
