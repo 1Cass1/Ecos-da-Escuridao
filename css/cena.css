@@ -3,15 +3,14 @@
   position: relative;
   aspect-ratio: 16 / 9;
   width: min(calc(100vw - 30px), calc((100vh - 30px) * 16 / 9));
-  outline: 3px solid #444;         /* a moldura */
+  outline: 3px solid #444; /* a moldura */
   background-color: #050505;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  image-rendering: pixelated;      /* mantém o pixel art nítido. Apague se usar imagens normais */
+  image-rendering: pixelated; /* mantém o pixel art nítido. Apague se usar imagens normais */
   overflow: hidden;
   cursor: crosshair;
 }
-
 .nome-cena {
   position: absolute;
   left: 14px;
@@ -22,7 +21,7 @@
   background: #09080dc9;
   box-shadow: 0 4px 14px #0009;
   font-size: 12px;
-  letter-spacing: .08em;
+  letter-spacing: 0.08em;
   z-index: 1;
   color: #ded4e6;
   font-weight: normal;
@@ -109,10 +108,8 @@ img.sprite {
 /* Brilho ao passar o mouse. */
 .campo:hover img,
 .campo:hover + img.sprite {
-  filter:
-    drop-shadow(4px 6px 5px rgba(0, 0, 0, 0.8))
-    drop-shadow(0 0 8px var(--brilho))
-    brightness(1.4);
+  filter: drop-shadow(4px 6px 5px rgba(0, 0, 0, 0.8))
+    drop-shadow(0 0 8px var(--brilho)) brightness(1.4);
 }
 
 /* Deixa o objeto acima da lanterna. */
@@ -158,11 +155,16 @@ img.sprite {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(circle at var(--x) var(--y), transparent 0, transparent var(--luz-claro), rgba(0, 0, 0, var(--opacidade-escuro, .97)) var(--luz-escuro));
+  background: radial-gradient(
+    circle at var(--x) var(--y),
+    transparent 0,
+    transparent var(--luz-claro),
+    rgba(0, 0, 0, var(--opacidade-escuro, 0.97)) var(--luz-escuro)
+  );
 }
 
 body.modo-claro {
-  --opacidade-escuro: .48;
+  --opacidade-escuro: 0.48;
 }
 
 .vinheta-breu {
@@ -174,7 +176,7 @@ body.modo-claro {
 }
 
 .modo-claro .vinheta-breu {
-  opacity: calc(var(--breu, 0) * .4);
+  opacity: calc(var(--breu, 0) * 0.4);
 }
 
 .hud-tempo {
@@ -200,7 +202,7 @@ body.modo-claro {
 #tempo-restante {
   color: #efe6db;
   font-weight: bold;
-  letter-spacing: .08em;
+  letter-spacing: 0.08em;
 }
 
 #tempo-restante.tempo-baixo {
@@ -214,5 +216,9 @@ body.modo-claro {
 }
 
 /* Modo de ajuste: mostra as áreas clicáveis. */
-.debug #luz { display: none; }
-.debug .campo { outline: 1px dashed #ffffff80; }
+.debug #luz {
+  display: none;
+}
+.debug .campo {
+  outline: 1px dashed #ffffff80;
+}

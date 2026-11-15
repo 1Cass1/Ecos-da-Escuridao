@@ -1,68 +1,163 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ecos da Escuridão - Sala de Segurança</title>
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/cena.css">
-  <link rel="stylesheet" href="css/hud.css">
-  <link rel="stylesheet" href="css/equipamentos.css">
-</head>
-<body>
-  <main id="travessia" class="cena-jogo com-equipamentos">
-    <div id="palco" style="background-image: url('images/seguranca.png')" onmousemove="moverLanterna(event)">
-      <h1 class="nome-cena" tabindex="-1">Sala de Segurança</h1>
-      <div class="banco-monitores" role="group" aria-label="Monitores de segurança">
-        <button type="button" class="campo equipamento monitor" id="monitor-1" aria-label="Monitor 01: Quarto" onclick="acessarMonitor(1)"><img src="images/objetos/monitor-01.png" alt=""></button>
-        <button type="button" class="campo equipamento monitor" id="monitor-2" aria-label="Monitor 02: Subsolo" onclick="acessarMonitor(2)"><img src="images/objetos/monitor-02.png" alt=""></button>
-        <button type="button" class="campo equipamento monitor" id="monitor-3" aria-label="Monitor 03: Corredor" onclick="acessarMonitor(3)"><img src="images/objetos/monitor-03.png" alt=""></button>
-        <button type="button" class="campo equipamento monitor" id="monitor-4" aria-label="Monitor 04: Armazém" onclick="acessarMonitor(4)"><img src="images/objetos/monitor-04.png" alt=""></button>
-      </div>
-      <button type="button" class="campo equipamento" id="campo-saida-seguranca"
-        aria-label="Sair da Sala de Segurança para o corredor" onclick="irPara('cena3.html')"></button>
-      <button type="button" class="campo equipamento" id="campo-pe-de-cabra"
-        style="left:13%; top:67%; width:19%; height:14%" aria-label="Pegar pé de cabra"
-        onclick="pegarPeDeCabra()"><img src="images/objetos/pe-de-cabra.png" alt=""></button>
-      <div id="luz"></div>
-      <div class="vinheta-breu" aria-hidden="true"></div>
-      <div class="hud-tempo">
-        <p id="tempo-restante" role="timer" aria-label="Tempo restante">4:00</p>
-        <p id="sussurro" role="status"></p>
-      </div>
-      <aside id="inv" aria-label="Inventário">
-        <span class="titulo-inventario">Itens</span>
-        <span id="inventario-vazio">Vazio</span>
-        <button type="button" id="inspecionar-item" onclick="inspecionarItem()" hidden>Inspecionar</button>
-      </aside>
-      <div id="rodape"><p id="mensagem" role="status"></p></div>
-      <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>Diário</button>
-      <div id="painel">
-        <div class="subpainel" id="p-diario">
-          <h2>DIÁRIO DE BORDO</h2>
-          <div id="diario-aberto">
-            <section id="pagina-diario" class="pagina-diario esquerda">
-              <h3 id="diario-titulo">Anotação antiga</h3>
-              <p id="diario-texto"></p>
-            </section>
-          </div>
-          <div id="controles-diario">
-            <button type="button" id="seta-diario-voltar" class="seta-diario" onclick="passarPaginaDiario(-1)" aria-label="Página anterior" disabled>&#8592;</button>
-            <span id="diario-pagina">1 / 1</span>
-            <button type="button" id="seta-diario-avancar" class="seta-diario" onclick="passarPaginaDiario(1)" aria-label="Próxima página">&#8594;</button>
-          </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ecos da Escuridão - Sala de Segurança</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/cena.css" />
+    <link rel="stylesheet" href="css/hud.css" />
+    <link rel="stylesheet" href="css/equipamentos.css" />
+  </head>
+  <body>
+    <main id="travessia" class="cena-jogo com-equipamentos">
+      <div
+        id="palco"
+        style="background-image: url(&quot;images/seguranca.png&quot;)"
+        onmousemove="moverLanterna(event)"
+      >
+        <h1 class="nome-cena" tabindex="-1">Sala de Segurança</h1>
+        <div
+          class="banco-monitores"
+          role="group"
+          aria-label="Monitores de segurança"
+        >
+          <button
+            type="button"
+            class="campo equipamento monitor"
+            id="monitor-1"
+            aria-label="Monitor 01: Quarto"
+            onclick="acessarMonitor(1)"
+          >
+            <img src="images/objetos/monitor-01.png" alt="" />
+          </button>
+          <button
+            type="button"
+            class="campo equipamento monitor"
+            id="monitor-2"
+            aria-label="Monitor 02: Subsolo"
+            onclick="acessarMonitor(2)"
+          >
+            <img src="images/objetos/monitor-02.png" alt="" />
+          </button>
+          <button
+            type="button"
+            class="campo equipamento monitor"
+            id="monitor-3"
+            aria-label="Monitor 03: Corredor"
+            onclick="acessarMonitor(3)"
+          >
+            <img src="images/objetos/monitor-03.png" alt="" />
+          </button>
+          <button
+            type="button"
+            class="campo equipamento monitor"
+            id="monitor-4"
+            aria-label="Monitor 04: Armazém"
+            onclick="acessarMonitor(4)"
+          >
+            <img src="images/objetos/monitor-04.png" alt="" />
+          </button>
         </div>
-        <button type="button" id="botao-fechar-painel" onclick="fecharPainel()">Fechar</button>
+        <button
+          type="button"
+          class="campo equipamento"
+          id="campo-saida-seguranca"
+          aria-label="Sair da Sala de Segurança para o corredor"
+          onclick="irPara('cena3.html')"
+        ></button>
+        <button
+          type="button"
+          class="campo equipamento"
+          id="campo-pe-de-cabra"
+          style="left: 13%; top: 67%; width: 19%; height: 14%"
+          aria-label="Pegar pé de cabra"
+          onclick="pegarPeDeCabra()"
+        >
+          <img src="images/objetos/pe-de-cabra.png" alt="" />
+        </button>
+        <div id="luz"></div>
+        <div class="vinheta-breu" aria-hidden="true"></div>
+        <div class="hud-tempo">
+          <p id="tempo-restante" role="timer" aria-label="Tempo restante">
+            4:00
+          </p>
+          <p id="sussurro" role="status"></p>
+        </div>
+        <aside id="inv" aria-label="Inventário">
+          <span class="titulo-inventario">Itens</span>
+          <span id="inventario-vazio">Vazio</span>
+          <button
+            type="button"
+            id="inspecionar-item"
+            onclick="inspecionarItem()"
+            hidden
+          >
+            Inspecionar
+          </button>
+        </aside>
+        <div id="rodape"><p id="mensagem" role="status"></p></div>
+        <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>
+          Diário
+        </button>
+        <div id="painel">
+          <div class="subpainel" id="p-diario">
+            <h2>DIÁRIO DE BORDO</h2>
+            <div id="diario-aberto">
+              <section id="pagina-diario" class="pagina-diario esquerda">
+                <h3 id="diario-titulo">Anotação antiga</h3>
+                <p id="diario-texto"></p>
+              </section>
+            </div>
+            <div id="controles-diario">
+              <button
+                type="button"
+                id="seta-diario-voltar"
+                class="seta-diario"
+                onclick="passarPaginaDiario(-1)"
+                aria-label="Página anterior"
+                disabled
+              >
+                &#8592;
+              </button>
+              <span id="diario-pagina">1 / 1</span>
+              <button
+                type="button"
+                id="seta-diario-avancar"
+                class="seta-diario"
+                onclick="passarPaginaDiario(1)"
+                aria-label="Próxima página"
+              >
+                &#8594;
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="botao-fechar-painel"
+            onclick="fecharPainel()"
+          >
+            Fechar
+          </button>
+        </div>
       </div>
-    </div>
-    <nav aria-label="Navegação entre cenas">
-      <button type="button" onclick="irPara('cena3.html')">Voltar ao corredor</button>
-      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">Modo claro</button>
-    </nav>
-  </main>
-  <script src="js/puzzles.js"></script>
-  <script src="js/partida.js"></script>
-  <script src="js/jogo.js"></script>
-  <script src="js/cena4.js"></script>
-</body>
+      <nav aria-label="Navegação entre cenas">
+        <button type="button" onclick="irPara('cena3.html')">
+          Voltar ao corredor
+        </button>
+        <button
+          type="button"
+          class="botao-modo-claro"
+          aria-pressed="false"
+          onclick="alternarModoClaro()"
+        >
+          Modo claro
+        </button>
+      </nav>
+    </main>
+    <script src="js/puzzles.js"></script>
+    <script src="js/partida.js"></script>
+    <script src="js/jogo.js"></script>
+    <script src="js/cena4.js"></script>
+  </body>
 </html>

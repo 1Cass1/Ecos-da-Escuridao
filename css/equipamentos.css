@@ -37,7 +37,9 @@
 #campo-pe-de-cabra img,
 #campo-bateria img,
 #campo-terminal img,
-.banco-monitores .monitor img { object-fit: contain; }
+.banco-monitores .monitor img {
+  object-fit: contain;
+}
 #campo-porta-saida {
   left: 45%;
   top: 29%;
@@ -106,7 +108,7 @@
   color: #f0e5ce;
   font: inherit;
   text-align: center;
-  letter-spacing: .18em;
+  letter-spacing: 0.18em;
 }
 
 #resposta-terminal {

@@ -6,26 +6,28 @@ var avisoSussurro;
 
 var esconderijos = {
   relatorio: "O pingente está embrulhado neste relatório.",
-  caixas: "Escondi o pingente no fundo falso de uma das caixas do quarto. É preciso forçar a tampa."
+  caixas:
+    "Escondi o pingente no fundo falso de uma das caixas do quarto. É preciso forçar a tampa.",
 };
 var locaisPingente = ["relatorio", "caixas"];
 
 var anotacoesAntigas = [
   "A Sombra aprendeu a falar com a minha voz. Se ouvir alguém chamando nos dutos, não responda.",
   "Vi a Sombra parada diante do retrato. Ela repetiu meu nome antes que eu dissesse uma palavra.",
-  "A luz violeta fez a Sombra recuar. Anotei isso antes que ela voltasse a bater nos canos."
+  "A luz violeta fez a Sombra recuar. Anotei isso antes que ela voltasse a bater nos canos.",
 ];
 
 var sussurros = [
   "Uma voz sussurra seu nome de dentro da parede.",
   "As batidas nos dutos parecem passos por um instante.",
   "Uma voz conhecida pede que você apague a lanterna.",
-  "Alguém atrás de você sussurra: «Eu ainda estou aqui»."
+  "Alguém atrás de você sussurra: «Eu ainda estou aqui».",
 ];
 
 function sortearPartida() {
   var digitos = [];
-  for (var i = 0; i < 4; i++) digitos.push(String(Math.floor(Math.random() * 10)));
+  for (var i = 0; i < 4; i++)
+    digitos.push(String(Math.floor(Math.random() * 10)));
 
   var primeiroSussurro = Math.floor(Math.random() * sussurros.length);
   var segundoSussurro = Math.floor(Math.random() * sussurros.length);
@@ -34,10 +36,12 @@ function sortearPartida() {
   }
   return {
     digitos: digitos,
-    localPingente: locaisPingente[Math.floor(Math.random() * locaisPingente.length)],
+    localPingente:
+      locaisPingente[Math.floor(Math.random() * locaisPingente.length)],
     canalVulto: 1 + Math.floor(Math.random() * 4),
-    anotacao: anotacoesAntigas[Math.floor(Math.random() * anotacoesAntigas.length)],
-    sussurros: [sussurros[primeiroSussurro], sussurros[segundoSussurro]]
+    anotacao:
+      anotacoesAntigas[Math.floor(Math.random() * anotacoesAntigas.length)],
+    sussurros: [sussurros[primeiroSussurro], sussurros[segundoSussurro]],
   };
 }
 
@@ -51,10 +55,14 @@ function prepararPartida() {
   if (!partida.iniciada || partida.final || partida.sorteio) return;
   iniciarTempo();
 
-  if (puzzles.relatorio.estado === "resolvido" || puzzles.caixas.estado === "resolvido") {
+  if (
+    puzzles.relatorio.estado === "resolvido" ||
+    puzzles.caixas.estado === "resolvido"
+  ) {
     partida.sorteio.localPingente = "relatorio";
   }
-  if (puzzles.terminal.alarme >= limiteAlarme) puzzles.terminal.alarme = limiteAlarme - 1;
+  if (puzzles.terminal.alarme >= limiteAlarme)
+    puzzles.terminal.alarme = limiteAlarme - 1;
   puzzles.cameras.canaisVistos = [];
   if (puzzles.cameras.estado === "resolvido") puzzles.cameras.estado = "aberto";
   diario.entradas = diario.entradas.filter(function (entrada) {
@@ -90,8 +98,12 @@ function calcularFinal(escolha, tempoGasto) {
   if (escolha !== "fugir") return "";
 
   var tempoRestante = duracaoPartida - tempoGasto;
-  if (tempoRestante >= tempoFugaPerfeita && puzzles.terminal.alarme === 0 &&
-      puzzles.cameras.estado === "resolvido") return "perfeito";
+  if (
+    tempoRestante >= tempoFugaPerfeita &&
+    puzzles.terminal.alarme === 0 &&
+    puzzles.cameras.estado === "resolvido"
+  )
+    return "perfeito";
   return "sequelas";
 }
 
@@ -125,7 +137,7 @@ function atualizarRelogio() {
 
   contador.textContent = formatarTempo(Math.ceil(restante / 1000));
   contador.classList.toggle("tempo-baixo", restante <= 30000);
-  palco.style.setProperty("--luz-escuro", (250 - 140 * proporcao) + "px");
+  palco.style.setProperty("--luz-escuro", 250 - 140 * proporcao + "px");
   palco.style.setProperty("--breu", 0.7 * proporcao);
 
   if (restante === 0 || puzzles.terminal.alarme >= limiteAlarme) {
@@ -147,5 +159,7 @@ function mostrarSussurro(tempo) {
   partida.sussurrosMostrados++;
   salvarEstado();
   clearTimeout(avisoSussurro);
-  avisoSussurro = setTimeout(function () { aviso.textContent = ""; }, 4800);
+  avisoSussurro = setTimeout(function () {
+    aviso.textContent = "";
+  }, 4800);
 }

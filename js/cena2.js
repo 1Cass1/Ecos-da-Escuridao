@@ -13,7 +13,8 @@ function clicarCaldeira() {
 function clicarPapel() {
   atualizarAposAcao(puzzles.relatorio.tentar());
   if (puzzles.relatorio.estado === "resolvido") {
-    pegar("papel-texto").textContent = puzzles.relatorio.texto + " " + pistaDoPingente();
+    pegar("papel-texto").textContent =
+      puzzles.relatorio.texto + " " + pistaDoPingente();
     abrirPainel("papel");
   }
 }

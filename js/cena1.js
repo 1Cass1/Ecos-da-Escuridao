@@ -17,8 +17,14 @@ function clicarBueiro() {
 function atualizarParafuso() {
   var voltas = puzzles.bueiro.voltas;
   pegar("voltas-texto").textContent = voltas;
-  pegar("parafuso").style.transform = "translateY(" + (-9 * voltas) + "px) rotate(" +
-    (-65 * voltas) + "deg) scale(" + (1 + 0.07 * voltas) + ")";
+  pegar("parafuso").style.transform =
+    "translateY(" +
+    -9 * voltas +
+    "px) rotate(" +
+    -65 * voltas +
+    "deg) scale(" +
+    (1 + 0.07 * voltas) +
+    ")";
 }
 
 function girarParafuso(sentido) {

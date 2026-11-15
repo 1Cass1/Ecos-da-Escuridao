@@ -1,28 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ecos da Escuridão - Final</title>
-  <link rel="stylesheet" href="css/base.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ecos da Escuridão - Final</title>
+    <link rel="stylesheet" href="css/base.css" />
+  </head>
+  <body>
+    <main class="tela tela-final">
+      <h1 id="titulo">Desfecho</h1>
+      <p id="texto"></p>
+      <p id="tempo-gasto"></p>
+      <section class="pistas-finais" aria-labelledby="titulo-pistas">
+        <h2 id="titulo-pistas">Pistas encontradas</h2>
+        <p id="pistas-vazias" hidden>
+          Você ainda não tinha anotado nenhuma pista.
+        </p>
+        <ul id="pistas-encontradas"></ul>
+      </section>
+      <button type="button" onclick="novoJogo()">Jogar de novo</button>
+    </main>
 
-  <main class="tela tela-final">
-    <h1 id="titulo">Desfecho</h1>
-    <p id="texto"></p>
-    <p id="tempo-gasto"></p>
-    <section class="pistas-finais" aria-labelledby="titulo-pistas">
-      <h2 id="titulo-pistas">Pistas encontradas</h2>
-      <p id="pistas-vazias" hidden>Você ainda não tinha anotado nenhuma pista.</p>
-      <ul id="pistas-encontradas"></ul>
-    </section>
-    <button type="button" onclick="novoJogo()">Jogar de novo</button>
-  </main>
-
-  <script src="js/puzzles.js"></script>
-  <script src="js/partida.js"></script>
-  <script src="js/jogo.js"></script>
-  <script src="js/final.js"></script>
-</body>
+    <script src="js/puzzles.js"></script>
+    <script src="js/partida.js"></script>
+    <script src="js/jogo.js"></script>
+    <script src="js/final.js"></script>
+  </body>
 </html>

@@ -25,7 +25,9 @@ function tentarSenha(evento) {
   evento.preventDefault();
   if (!atualizarRelogio()) return;
   var terminal = puzzles.terminal;
-  pegar("resposta-terminal").textContent = terminal.tentar(pegar("senha-terminal").value);
+  pegar("resposta-terminal").textContent = terminal.tentar(
+    pegar("senha-terminal").value,
+  );
   salvarEstado();
   if (terminal.alarme >= limiteAlarme) {
     encerrarPartida("");

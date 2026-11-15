@@ -2,17 +2,54 @@ var PREFIXO = "ecos:";
 var partida = { iniciada: false, final: "" };
 
 var fichaDosItens = {
-  chavefenda: { nome: "Chave de fenda", descricao: "A ponta encaixa no parafuso enferrujado do bueiro." },
-  alicate: { nome: "Alicate", descricao: "Forte o bastante para cortar as correntes da caldeira." },
-  chave: { nome: "Chave de latão", descricao: "Os dentes da chave encaixam no cadeado do quarto." },
-  corrente: { nome: "Corrente de prata", descricao: "O fecho tem espaço para um pingente." },
-  pingente: { nome: "Pingente", descricao: "Tem uma meia-lua riscada e um furo para passar uma corrente." },
-  medalhao: { nome: "Medalhão", descricao: "A meia-lua riscada é a marca de quem guardava a casa." },
-  pedecabra: { nome: "Pé de cabra", descricao: "Serve para forçar a porta do armazém e a tampa das caixas no quarto." },
-  bateria: { nome: "Bateria portátil", descricao: "O plugue encaixa na entrada de energia dos monitores." },
-  recorte: { nome: "Recorte de papel", descricao: "Um pedaço de papel com a frase «Ligue o UV…». A frase continua na outra metade." },
-  fragmento: { nome: "Fragmento do retrato", descricao: "Uma tira de papel com a frase «…e leia os canais de 01 a 04». A borda está rasgada." },
-  bilhete: { nome: "Bilhete da guardiã", descricao: "Ligue o UV e leia os canais de 01 a 04. Digite os números nessa ordem." }
+  chavefenda: {
+    nome: "Chave de fenda",
+    descricao: "A ponta encaixa no parafuso enferrujado do bueiro.",
+  },
+  alicate: {
+    nome: "Alicate",
+    descricao: "Forte o bastante para cortar as correntes da caldeira.",
+  },
+  chave: {
+    nome: "Chave de latão",
+    descricao: "Os dentes da chave encaixam no cadeado do quarto.",
+  },
+  corrente: {
+    nome: "Corrente de prata",
+    descricao: "O fecho tem espaço para um pingente.",
+  },
+  pingente: {
+    nome: "Pingente",
+    descricao: "Tem uma meia-lua riscada e um furo para passar uma corrente.",
+  },
+  medalhao: {
+    nome: "Medalhão",
+    descricao: "A meia-lua riscada é a marca de quem guardava a casa.",
+  },
+  pedecabra: {
+    nome: "Pé de cabra",
+    descricao:
+      "Serve para forçar a porta do armazém e a tampa das caixas no quarto.",
+  },
+  bateria: {
+    nome: "Bateria portátil",
+    descricao: "O plugue encaixa na entrada de energia dos monitores.",
+  },
+  recorte: {
+    nome: "Recorte de papel",
+    descricao:
+      "Um pedaço de papel com a frase «Ligue o UV…». A frase continua na outra metade.",
+  },
+  fragmento: {
+    nome: "Fragmento do retrato",
+    descricao:
+      "Uma tira de papel com a frase «…e leia os canais de 01 a 04». A borda está rasgada.",
+  },
+  bilhete: {
+    nome: "Bilhete da guardiã",
+    descricao:
+      "Ligue o UV e leia os canais de 01 a 04. Digite os números nessa ordem.",
+  },
 };
 
 var inventario = {
@@ -42,13 +79,18 @@ var inventario = {
     if (item === "medalhao" && puzzles.retrato.inspecionado) {
       return "A meia-lua do medalhão tem o mesmo risco que você viu na moldura do retrato.";
     }
-    return item ? fichaDosItens[item].descricao : "Selecione um item para inspecionar.";
+    return item
+      ? fichaDosItens[item].descricao
+      : "Selecione um item para inspecionar.";
   },
 
   combinar: function (primeiro, segundo) {
     if (!this.tem(primeiro) || !this.tem(segundo)) return "";
-    return puzzles.medalhao.tentar(primeiro, segundo) || puzzles.bilhete.tentar(primeiro, segundo);
-  }
+    return (
+      puzzles.medalhao.tentar(primeiro, segundo) ||
+      puzzles.bilhete.tentar(primeiro, segundo)
+    );
+  },
 };
 
 var diario = {
@@ -63,7 +105,7 @@ var diario = {
     paginaDiario = 0;
     atualizarPaginaDiario();
     abrirPainel("diario");
-  }
+  },
 };
 
 function criarEnigma(dados) {
@@ -84,7 +126,8 @@ function criarEnigma(dados) {
       if (this.estado === "resolvido") return "";
       this.inspecionar();
       this.tentativas++;
-      if (this.itemNecessario && item !== this.itemNecessario) return this.pista;
+      if (this.itemNecessario && item !== this.itemNecessario)
+        return this.pista;
       return this.resolver();
     },
 
@@ -93,7 +136,7 @@ function criarEnigma(dados) {
       this.estado = "resolvido";
       if (this.aoResolver) this.aoResolver();
       return this.sucesso;
-    }
+    },
   };
   for (var campo in dados) enigma[campo] = dados[campo];
   return enigma;
@@ -110,11 +153,18 @@ function criarColeta(nome, cena, item, afeta, sucesso, anotacao) {
     aoResolver: function () {
       inventario.ganhar(item);
       diario.registrar(anotacao);
-    }
+    },
   });
 }
 
-function criarCombinacao(nome, primeiroItem, segundoItem, resultado, afeta, sucesso) {
+function criarCombinacao(
+  nome,
+  primeiroItem,
+  segundoItem,
+  resultado,
+  afeta,
+  sucesso,
+) {
   return criarEnigma({
     nome: nome,
     cena: "Inventário",
@@ -124,7 +174,8 @@ function criarCombinacao(nome, primeiroItem, segundoItem, resultado, afeta, suce
     sucesso: sucesso,
 
     tentar: function (primeiro, segundo) {
-      var encaixa = (primeiro === primeiroItem && segundo === segundoItem) ||
+      var encaixa =
+        (primeiro === primeiroItem && segundo === segundoItem) ||
         (primeiro === segundoItem && segundo === primeiroItem);
       if (!encaixa) return "";
       this.inspecionar();
@@ -137,7 +188,7 @@ function criarCombinacao(nome, primeiroItem, segundoItem, resultado, afeta, suce
       inventario.perder(segundoItem);
       inventario.ganhar(resultado);
       diario.registrar(this.sucesso);
-    }
+    },
   });
 }
 
@@ -150,12 +201,14 @@ function criarPuzzles() {
       voltas: 0,
       girosParaSoltar: 3,
       afeta: ["portaQuarto", "cameras"],
-      pista: "O parafuso da grade está enferrujado. Selecione a chave de fenda.",
+      pista:
+        "O parafuso da grade está enferrujado. Selecione a chave de fenda.",
       sucesso: "A grade se solta. Você encontra uma chave de latão lá embaixo.",
 
       tentar: function (item, sentido) {
         this.inspecionar();
-        if (this.estado === "resolvido") return "A grade está aberta. A chave de latão já foi retirada.";
+        if (this.estado === "resolvido")
+          return "A grade está aberta. A chave de latão já foi retirada.";
         this.tentativas++;
         if (item !== this.itemNecessario) return this.pista;
         this.estado = "aberto";
@@ -174,7 +227,7 @@ function criarPuzzles() {
         inventario.perder("chavefenda");
         inventario.ganhar("chave");
         diario.registrar("Bueiro aberto. A chave de latão estava sob a grade.");
-      }
+      },
     }),
 
     portaQuarto: criarEnigma({
@@ -188,7 +241,7 @@ function criarPuzzles() {
       aoResolver: function () {
         inventario.perder("chave");
         diario.registrar("O cadeado do quarto abriu com a chave de latão.");
-      }
+      },
     }),
 
     diario: criarEnigma({
@@ -196,12 +249,15 @@ function criarPuzzles() {
       cena: "Quarto",
       estado: "aberto",
       afeta: ["medalhao", "diario"],
-      sucesso: "Você encontrou o diário e a corrente de prata. O botão Diário foi liberado.",
+      sucesso:
+        "Você encontrou o diário e a corrente de prata. O botão Diário foi liberado.",
 
       aoResolver: function () {
         inventario.ganhar("corrente");
-        diario.registrar("Encontrei o diário. A corrente de prata estava guardada entre as páginas e tem um fecho para pingente.");
-      }
+        diario.registrar(
+          "Encontrei o diário. A corrente de prata estava guardada entre as páginas e tem um fecho para pingente.",
+        );
+      },
     }),
 
     caldeira: criarEnigma({
@@ -209,14 +265,16 @@ function criarPuzzles() {
       cena: "Subsolo",
       itemNecessario: "alicate",
       afeta: ["relatorio", "cameras"],
-      pista: "A caldeira está presa por correntes. Selecione o alicate para cortá-las.",
-      sucesso: "Você corta as correntes da caldeira. Um papel dobrado estava escondido dentro dela.",
+      pista:
+        "A caldeira está presa por correntes. Selecione o alicate para cortá-las.",
+      sucesso:
+        "Você corta as correntes da caldeira. Um papel dobrado estava escondido dentro dela.",
 
       aoResolver: function () {
         inventario.perder("alicate");
         puzzles.relatorio.estado = "aberto";
         diario.registrar("Cortei as correntes da caldeira com o alicate.");
-      }
+      },
     }),
 
     relatorio: criarEnigma({
@@ -225,7 +283,8 @@ function criarPuzzles() {
       afeta: ["medalhao", "retrato", "cameras"],
       pista: "Há algo escondido atrás das correntes da caldeira.",
       sucesso: "Você leu o relatório da guardiã.",
-      texto: "O Breu se espalha pela matéria orgânica e reage ao medo. A luz ultravioleta o enfraquece. Desde que ele entrou pelos dutos, as vozes passaram a imitar as nossas. A guardiã deixou o retrato no corredor, perto da porta da frente. A meia-lua riscada na moldura também foi gravada no pingente que ela usava.",
+      texto:
+        "O Breu se espalha pela matéria orgânica e reage ao medo. A luz ultravioleta o enfraquece. Desde que ele entrou pelos dutos, as vozes passaram a imitar as nossas. A guardiã deixou o retrato no corredor, perto da porta da frente. A meia-lua riscada na moldura também foi gravada no pingente que ela usava.",
 
       tentar: function () {
         this.tentativas++;
@@ -239,26 +298,36 @@ function criarPuzzles() {
       },
 
       aoResolver: function () {
-        if (partida.sorteio.localPingente === "relatorio") inventario.ganhar("pingente");
-        diario.registrar("Relatório do Breu: a meia-lua riscada no retrato da guardiã também está gravada no pingente.");
+        if (partida.sorteio.localPingente === "relatorio")
+          inventario.ganhar("pingente");
+        diario.registrar(
+          "Relatório do Breu: a meia-lua riscada no retrato da guardiã também está gravada no pingente.",
+        );
         diario.registrar(pistaDoPingente());
-      }
+      },
     }),
 
-    medalhao: criarCombinacao("Montar medalhão", "corrente", "pingente", "medalhao",
-      ["retrato", "final"], "A corrente e o pingente formam um medalhão gravado com uma meia-lua riscada."),
+    medalhao: criarCombinacao(
+      "Montar medalhão",
+      "corrente",
+      "pingente",
+      "medalhao",
+      ["retrato", "final"],
+      "A corrente e o pingente formam um medalhão gravado com uma meia-lua riscada.",
+    ),
 
     armazem: criarEnigma({
       nome: "Porta emperrada do armazém",
       cena: "Corredor",
       itemNecessario: "pedecabra",
       afeta: ["bateria", "cameras"],
-      pista: "A porta está emperrada. Talvez haja uma ferramenta na Sala de Segurança.",
+      pista:
+        "A porta está emperrada. Talvez haja uma ferramenta na Sala de Segurança.",
       sucesso: "O pé de cabra soltou a porta emperrada do armazém.",
 
       aoResolver: function () {
         diario.registrar(this.sucesso);
-      }
+      },
     }),
 
     monitores: criarEnigma({
@@ -266,15 +335,17 @@ function criarPuzzles() {
       cena: "Sala de Segurança",
       itemNecessario: "bateria",
       afeta: ["cameras", "terminal"],
-      pista: "Os quatro monitores compartilham uma entrada de energia. Procure uma bateria portátil.",
-      sucesso: "A bateria portátil ligou os quatro monitores da Sala de Segurança.",
+      pista:
+        "Os quatro monitores compartilham uma entrada de energia. Procure uma bateria portátil.",
+      sucesso:
+        "A bateria portátil ligou os quatro monitores da Sala de Segurança.",
 
       aoResolver: function () {
         inventario.perder("bateria");
         puzzles.cameras.estado = "aberto";
         puzzles.terminal.estado = "aberto";
         diario.registrar(this.sucesso);
-      }
+      },
     }),
 
     cameras: criarEnigma({
@@ -287,15 +358,22 @@ function criarPuzzles() {
 
       descrever: function (camera) {
         if (camera.nome === "Quarto") {
-          return puzzles.bueiro.estado === "resolvido" ? "Bueiro aberto" : "Bueiro fechado";
+          return puzzles.bueiro.estado === "resolvido"
+            ? "Bueiro aberto"
+            : "Bueiro fechado";
         }
         if (camera.nome === "Subsolo") {
-          return puzzles.caldeira.estado === "resolvido" ? "Correntes da caldeira cortadas" : "Caldeira acorrentada";
+          return puzzles.caldeira.estado === "resolvido"
+            ? "Correntes da caldeira cortadas"
+            : "Caldeira acorrentada";
         }
         if (camera.nome === "Corredor") {
-          return puzzles.terminal.alarme > 0 ? "Alertas do terminal: " + puzzles.terminal.alarme : "";
+          return puzzles.terminal.alarme > 0
+            ? "Alertas do terminal: " + puzzles.terminal.alarme
+            : "";
         }
-        if (camera.nome === "Armazém" && puzzles.bateria.estado === "resolvido") return "Bancada sem a bateria";
+        if (camera.nome === "Armazém" && puzzles.bateria.estado === "resolvido")
+          return "Bancada sem a bateria";
         return "";
       },
 
@@ -307,11 +385,19 @@ function criarPuzzles() {
         var digito = digitoDoCanal(canal);
         if (this.canaisVistos.indexOf(camera.nome) === -1) {
           this.canaisVistos.push(camera.nome);
-          diario.registrar("Canal 0" + canal + " · " + camera.nome + " (UV): dígito " + digito + ".");
+          diario.registrar(
+            "Canal 0" +
+              canal +
+              " · " +
+              camera.nome +
+              " (UV): dígito " +
+              digito +
+              ".",
+          );
         }
         if (this.canaisVistos.length === cameras.length) this.resolver();
         return digito;
-      }
+      },
     }),
 
     terminal: criarEnigma({
@@ -337,12 +423,18 @@ function criarPuzzles() {
           diario.registrar("O terceiro erro no terminal disparou o alarme.");
           return "O alarme disparou.";
         }
-        return "Sequência incorreta. Alertas: " + this.alarme + "/" + limiteAlarme + ".";
+        return (
+          "Sequência incorreta. Alertas: " +
+          this.alarme +
+          "/" +
+          limiteAlarme +
+          "."
+        );
       },
 
       aoResolver: function () {
         diario.registrar(this.sucesso);
-      }
+      },
     }),
 
     ritmo: criarEnigma({
@@ -354,7 +446,8 @@ function criarPuzzles() {
       tolerancia: 300,
       pistasNecessarias: ["terminal"],
       afeta: ["terminal", "finais"],
-      pista: "Observe os três sinais luminosos e repita o ritmo com a barra de espaço ou pelo botão.",
+      pista:
+        "Observe os três sinais luminosos e repita o ritmo com a barra de espaço ou pelo botão.",
       sucesso: "O ritmo foi reconhecido. A saída aceita sua decisão.",
 
       tentar: function (intervalos) {
@@ -364,22 +457,31 @@ function criarPuzzles() {
 
         var correto = intervalos.length === this.intervalos.length;
         for (var i = 0; correto && i < this.intervalos.length; i++) {
-          if (Math.abs(intervalos[i] - this.intervalos[i]) > this.tolerancia) correto = false;
+          if (Math.abs(intervalos[i] - this.intervalos[i]) > this.tolerancia)
+            correto = false;
         }
 
         if (correto) return this.resolver();
 
         puzzles.terminal.alarme++;
         if (puzzles.terminal.alarme >= limiteAlarme) {
-          diario.registrar("Errei três vezes o ritmo dos dutos e disparei o alarme.");
+          diario.registrar(
+            "Errei três vezes o ritmo dos dutos e disparei o alarme.",
+          );
           return "O ritmo estava errado. O alarme disparou.";
         }
-        return "O ritmo estava errado. Alertas: " + puzzles.terminal.alarme + "/" + limiteAlarme + ".";
+        return (
+          "O ritmo estava errado. Alertas: " +
+          puzzles.terminal.alarme +
+          "/" +
+          limiteAlarme +
+          "."
+        );
       },
 
       aoResolver: function () {
         diario.registrar(this.sucesso);
-      }
+      },
     }),
 
     retrato: criarEnigma({
@@ -388,7 +490,8 @@ function criarPuzzles() {
       estado: "aberto",
       itemNecessario: "medalhao",
       afeta: ["medalhao", "bilhete"],
-      pista: "Uma meia-lua riscada marca a moldura. Atrás dela, você encontra um pedaço de papel.",
+      pista:
+        "Uma meia-lua riscada marca a moldura. Atrás dela, você encontra um pedaço de papel.",
       sucesso: "A meia-lua riscada do medalhão coincide com a da moldura.",
 
       tentar: function (item) {
@@ -397,18 +500,22 @@ function criarPuzzles() {
         this.tentativas++;
         if (primeiraVez) {
           inventario.ganhar("fragmento");
-          diario.registrar("Retrato: a guardiã usava o medalhão de meia-lua. No verso da moldura alguém escreveu: «A Sombra já sabe meu nome».");
+          diario.registrar(
+            "Retrato: a guardiã usava o medalhão de meia-lua. No verso da moldura alguém escreveu: «A Sombra já sabe meu nome».",
+          );
         }
         if (item === this.itemNecessario) {
           this.resolver();
           return primeiraVez ? this.pista + " " + this.sucesso : this.sucesso;
         }
-        return primeiraVez ? this.pista : "A meia-lua riscada na moldura parece a marca de uma joia.";
+        return primeiraVez
+          ? this.pista
+          : "A meia-lua riscada na moldura parece a marca de uma joia.";
       },
 
       aoResolver: function () {
         diario.registrar(this.sucesso);
-      }
+      },
     }),
 
     caixas: criarEnigma({
@@ -416,13 +523,15 @@ function criarPuzzles() {
       cena: "Quarto",
       itemNecessario: "pedecabra",
       afeta: ["bueiro", "bilhete", "medalhao"],
-      pista: "Há marcas de arrasto até o bueiro. Uma das caixas tem um fundo que dá para forçar.",
+      pista:
+        "Há marcas de arrasto até o bueiro. Uma das caixas tem um fundo que dá para forçar.",
       sucesso: "Você forçou o fundo da caixa e achou um recorte de papel.",
 
       tentar: function (item) {
         this.inspecionar();
         this.tentativas++;
-        if (this.estado === "resolvido") return "O compartimento das caixas está vazio.";
+        if (this.estado === "resolvido")
+          return "O compartimento das caixas está vazio.";
         diario.registrar("Caixas: marcas de arrasto levam ao bueiro.");
         if (item !== this.itemNecessario) return this.pista;
         var mensagem = this.resolver();
@@ -437,22 +546,54 @@ function criarPuzzles() {
         diario.registrar(this.sucesso);
         if (partida.sorteio.localPingente === "caixas") {
           inventario.ganhar("pingente");
-          diario.registrar("Encontrei o pingente no fundo falso das caixas do quarto.");
+          diario.registrar(
+            "Encontrei o pingente no fundo falso das caixas do quarto.",
+          );
         }
-      }
+      },
     }),
 
-    bilhete: criarCombinacao("Reconstruir bilhete", "recorte", "fragmento", "bilhete",
-      ["terminal"], "As duas metades formam o bilhete da guardiã: ligue o UV e leia os canais de 01 a 04 em ordem."),
+    bilhete: criarCombinacao(
+      "Reconstruir bilhete",
+      "recorte",
+      "fragmento",
+      "bilhete",
+      ["terminal"],
+      "As duas metades formam o bilhete da guardiã: ligue o UV e leia os canais de 01 a 04 em ordem.",
+    ),
 
-    chaveFenda: criarColeta("Chave de fenda", "Subsolo", "chavefenda", ["bueiro"],
-      "Chave de fenda coletada. Ela pode soltar o parafuso do bueiro.", "Encontrei a chave de fenda no subsolo."),
-    alicate: criarColeta("Alicate", "Subsolo", "alicate", ["caldeira"],
-      "Alicate coletado. As correntes da caldeira parecem cortáveis.", "Encontrei o alicate no subsolo."),
-    peDeCabra: criarColeta("Pé de cabra", "Sala de Segurança", "pedecabra", ["armazem", "caixas"],
-      "Você pegou o pé de cabra. Ele pode abrir a porta emperrada do armazém.", "Encontrei o pé de cabra na Sala de Segurança."),
-    bateria: criarColeta("Bateria portátil", "Armazém", "bateria", ["monitores"],
-      "Você pegou a bateria portátil. Use-a num monitor da Sala de Segurança.", "Encontrei uma bateria portátil no armazém.")
+    chaveFenda: criarColeta(
+      "Chave de fenda",
+      "Subsolo",
+      "chavefenda",
+      ["bueiro"],
+      "Chave de fenda coletada. Ela pode soltar o parafuso do bueiro.",
+      "Encontrei a chave de fenda no subsolo.",
+    ),
+    alicate: criarColeta(
+      "Alicate",
+      "Subsolo",
+      "alicate",
+      ["caldeira"],
+      "Alicate coletado. As correntes da caldeira parecem cortáveis.",
+      "Encontrei o alicate no subsolo.",
+    ),
+    peDeCabra: criarColeta(
+      "Pé de cabra",
+      "Sala de Segurança",
+      "pedecabra",
+      ["armazem", "caixas"],
+      "Você pegou o pé de cabra. Ele pode abrir a porta emperrada do armazém.",
+      "Encontrei o pé de cabra na Sala de Segurança.",
+    ),
+    bateria: criarColeta(
+      "Bateria portátil",
+      "Armazém",
+      "bateria",
+      ["monitores"],
+      "Você pegou a bateria portátil. Use-a num monitor da Sala de Segurança.",
+      "Encontrei uma bateria portátil no armazém.",
+    ),
   };
 }
 
@@ -464,7 +605,7 @@ function salvarEstado() {
     puzzles: puzzles,
     itens: inventario.itens,
     selecionado: inventario.selecionado,
-    entradas: diario.entradas
+    entradas: diario.entradas,
   };
   localStorage.setItem(PREFIXO + "estado", JSON.stringify(estado));
 }
@@ -480,12 +621,20 @@ function carregarEstado() {
   diario.entradas = estado.entradas;
 
   // As funções ficam no código. Só o progresso vem do arquivo salvo.
-  var campos = ["estado", "inspecionado", "tentativas", "voltas", "canaisVistos", "alarme"];
+  var campos = [
+    "estado",
+    "inspecionado",
+    "tentativas",
+    "voltas",
+    "canaisVistos",
+    "alarme",
+  ];
   for (var nome in puzzles) {
     if (!estado.puzzles[nome]) continue;
     for (var i = 0; i < campos.length; i++) {
       var campo = campos[i];
-      if (campo in estado.puzzles[nome]) puzzles[nome][campo] = estado.puzzles[nome][campo];
+      if (campo in estado.puzzles[nome])
+        puzzles[nome][campo] = estado.puzzles[nome][campo];
     }
   }
 }

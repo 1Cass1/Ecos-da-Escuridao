@@ -4,7 +4,9 @@ var focoAntesPainel;
 var paginaDiario = 0;
 var informacoesPorPagina = 3;
 
-function pegar(id) { return document.getElementById(id); }
+function pegar(id) {
+  return document.getElementById(id);
+}
 
 function novoJogo() {
   limparJogo();
@@ -46,7 +48,9 @@ function iniciarPagina() {
   return true;
 }
 
-function irPara(pagina) { window.location.href = pagina; }
+function irPara(pagina) {
+  window.location.href = pagina;
+}
 
 function atualizarModoClaro() {
   var ativo = localStorage.getItem(PREFIXO + "modoClaro") === "sim";
@@ -72,14 +76,17 @@ function falar(texto) {
   timerMensagem = setTimeout(esconderMensagem, 2500 + texto.length * 40);
 }
 
-function esconderMensagem() { pegar("mensagem").style.opacity = 0; }
+function esconderMensagem() {
+  pegar("mensagem").style.opacity = 0;
+}
 
 function abrirPainel(nome) {
   focoAntesPainel = document.activeElement;
   var pedacos = document.getElementsByClassName("subpainel");
   for (var i = 0; i < pedacos.length; i++) pedacos[i].style.display = "none";
   painelAtual = nome;
-  pegar("botao-fechar-painel").textContent = nome === "diario" ? "Fechar diário" : "Fechar";
+  pegar("botao-fechar-painel").textContent =
+    nome === "diario" ? "Fechar diário" : "Fechar";
   var painel = pegar("p-" + nome);
   painel.style.display = "flex";
   pegar("painel").style.display = "flex";
@@ -92,7 +99,11 @@ function fecharPainel() {
   if (!painelAtual) return;
   painelAtual = "";
   pegar("painel").style.display = "none";
-  if (focoAntesPainel && !focoAntesPainel.hidden && focoAntesPainel !== document.body) {
+  if (
+    focoAntesPainel &&
+    !focoAntesPainel.hidden &&
+    focoAntesPainel !== document.body
+  ) {
     focoAntesPainel.focus();
   } else {
     pegar("palco").querySelector("h1").focus();
@@ -102,8 +113,8 @@ function fecharPainel() {
 function moverLanterna(evento) {
   var palco = pegar("palco");
   var caixa = palco.getBoundingClientRect();
-  palco.style.setProperty("--x", (evento.clientX - caixa.left) + "px");
-  palco.style.setProperty("--y", (evento.clientY - caixa.top) + "px");
+  palco.style.setProperty("--x", evento.clientX - caixa.left + "px");
+  palco.style.setProperty("--y", evento.clientY - caixa.top + "px");
 }
 
 function atualizarCena() {
@@ -116,7 +127,7 @@ function atualizarCena() {
     "campo-cadeado": "portaQuarto",
     "campo-caldeira": "caldeira",
     "campo-pe-de-cabra": "peDeCabra",
-    "campo-bateria": "bateria"
+    "campo-bateria": "bateria",
   };
   for (var id in objetos) {
     var campo = pegar(id);
@@ -127,7 +138,11 @@ function atualizarCena() {
   if (papel) papel.hidden = puzzles.relatorio.estado === "trancado";
 
   var retrato = pegar("campo-retrato");
-  if (retrato) retrato.classList.toggle("retrato-inspecionado", puzzles.retrato.inspecionado);
+  if (retrato)
+    retrato.classList.toggle(
+      "retrato-inspecionado",
+      puzzles.retrato.inspecionado,
+    );
 
   var botao = pegar("botao-diario");
   if (botao) botao.hidden = puzzles.diario.estado !== "resolvido";
@@ -135,7 +150,9 @@ function atualizarCena() {
   var ritmo = pegar("botao-ritmo");
   if (ritmo) {
     ritmo.disabled = puzzles.ritmo.estado === "resolvido";
-    ritmo.textContent = ritmo.disabled ? "Ritmo reconhecido" : "Repetir sequência";
+    ritmo.textContent = ritmo.disabled
+      ? "Ritmo reconhecido"
+      : "Repetir sequência";
   }
 
   var portaAberta = pegar("sprite-porta-saida-aberta");
@@ -206,7 +223,11 @@ function atualizarPaginaDiario() {
     var textoPagina = "";
     pegar("diario-titulo").textContent = "ANOTAÇÕES " + paginaDiario;
 
-    for (var i = primeira; i < primeira + informacoesPorPagina && i < entradas.length; i++) {
+    for (
+      var i = primeira;
+      i < primeira + informacoesPorPagina && i < entradas.length;
+      i++
+    ) {
       textoPagina += "- " + entradas[i] + "\n\n";
     }
     pegar("diario-texto").textContent = textoPagina;
@@ -214,13 +235,14 @@ function atualizarPaginaDiario() {
 
   pegar("pagina-diario").classList.toggle("esquerda", paginaDiario % 2 === 0);
   pegar("pagina-diario").classList.toggle("direita", paginaDiario % 2 !== 0);
-  pegar("diario-pagina").textContent = (paginaDiario + 1) + " / " + totalPaginas;
+  pegar("diario-pagina").textContent = paginaDiario + 1 + " / " + totalPaginas;
   pegar("seta-diario-voltar").disabled = paginaDiario === 0;
   pegar("seta-diario-avancar").disabled = paginaDiario === totalPaginas - 1;
 }
 
 function passarPaginaDiario(direcao) {
-  var totalPaginas = Math.ceil(diario.entradas.length / informacoesPorPagina) + 1;
+  var totalPaginas =
+    Math.ceil(diario.entradas.length / informacoesPorPagina) + 1;
   paginaDiario += direcao;
   if (paginaDiario < 0) paginaDiario = 0;
   if (paginaDiario >= totalPaginas) paginaDiario = totalPaginas - 1;
@@ -251,7 +273,9 @@ document.addEventListener("keydown", function (evento) {
   }
   if (!modal) return;
 
-  var elementos = modal.querySelectorAll("button:not(:disabled), input:not(:disabled), [tabindex='0']");
+  var elementos = modal.querySelectorAll(
+    "button:not(:disabled), input:not(:disabled), [tabindex='0']",
+  );
   var focaveis = [];
   for (var i = 0; i < elementos.length; i++) {
     if (elementos[i].getClientRects().length > 0) focaveis.push(elementos[i]);
@@ -273,8 +297,14 @@ document.addEventListener("focusin", function (evento) {
   if (!palco || !palco.contains(evento.target)) return;
   var caixaPalco = palco.getBoundingClientRect();
   var caixaAlvo = evento.target.getBoundingClientRect();
-  palco.style.setProperty("--x", (caixaAlvo.left + caixaAlvo.width / 2 - caixaPalco.left) + "px");
-  palco.style.setProperty("--y", (caixaAlvo.top + caixaAlvo.height / 2 - caixaPalco.top) + "px");
+  palco.style.setProperty(
+    "--x",
+    caixaAlvo.left + caixaAlvo.width / 2 - caixaPalco.left + "px",
+  );
+  palco.style.setProperty(
+    "--y",
+    caixaAlvo.top + caixaAlvo.height / 2 - caixaPalco.top + "px",
+  );
 });
 
 window.onpageshow = function (evento) {
@@ -294,5 +324,6 @@ window.onpageshow = function (evento) {
 };
 
 document.addEventListener("visibilitychange", function () {
-  if (!document.hidden && relogio && partida.iniciada && !partida.final) atualizarRelogio();
+  if (!document.hidden && relogio && partida.iniciada && !partida.final)
+    atualizarRelogio();
 });

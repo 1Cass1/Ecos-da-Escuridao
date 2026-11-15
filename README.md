@@ -4,14 +4,14 @@ Escape room em HTML, CSS e JavaScript. A casa permanece no escuro durante toda a
 
 ## Mapa e arquivos
 
-| Página | Cena | Fundo em `images/` |
-| --- | --- | --- |
-| `cena1.html` | Quarto | `quarto.png` |
-| `cena2.html` | Subsolo | `subsolo.png` |
-| `cena3.html` | Corredor | `corredor.png` |
-| `cena4.html` | Sala de Segurança | `seguranca.png` |
-| `cena5.html` | Armazém | `armazem.png` |
-| `cena6.html` | Saída | `saida.png` |
+| Página       | Cena              | Fundo em `images/` |
+| ------------ | ----------------- | ------------------ |
+| `cena1.html` | Quarto            | `quarto.png`       |
+| `cena2.html` | Subsolo           | `subsolo.png`      |
+| `cena3.html` | Corredor          | `corredor.png`     |
+| `cena4.html` | Sala de Segurança | `seguranca.png`    |
+| `cena5.html` | Armazém           | `armazem.png`      |
+| `cena6.html` | Saída             | `saida.png`        |
 
 Comece em `index.html`. O Quarto leva ao Subsolo e, depois que a porta é destrancada, ao Corredor. Pelo Corredor, o jogador pode voltar ao Quarto ou seguir para a Sala de Segurança, para o Armazém ou pela porta da frente até a Saída. `final.html` mostra o desfecho.
 
@@ -28,14 +28,14 @@ O botão **Porta da frente** abre o terminal do Corredor. O terminal libera a Sa
 
 ## Finais
 
-| Final | Condição |
-| --- | --- |
-| Fuga perfeita | Escolher Fugir com pelo menos 1 minuto restante, os quatro dígitos vistos e zero erros no terminal. |
-| Fuga com sequelas | Escolher Fugir sem cumprir todos os critérios da fuga perfeita. |
-| Captura pelo alarme | Errar a senha três vezes. |
-| Captura pelo Breu | Deixar o tempo acabar. |
-| O pacto | Montar o medalhão e escolher Usar o medalhão na Saída. |
-| Você ficou | Escolher Ficar na Saída. |
+| Final               | Condição                                                                                            |
+| ------------------- | --------------------------------------------------------------------------------------------------- |
+| Fuga perfeita       | Escolher Fugir com pelo menos 1 minuto restante, os quatro dígitos vistos e zero erros no terminal. |
+| Fuga com sequelas   | Escolher Fugir sem cumprir todos os critérios da fuga perfeita.                                     |
+| Captura pelo alarme | Errar a senha três vezes.                                                                           |
+| Captura pelo Breu   | Deixar o tempo acabar.                                                                              |
+| O pacto             | Montar o medalhão e escolher Usar o medalhão na Saída.                                              |
+| Você ficou          | Escolher Ficar na Saída.                                                                            |
 
 ## Organização do código
 

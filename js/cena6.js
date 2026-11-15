@@ -80,7 +80,8 @@ function registrarBatida() {
   if (faseRitmo !== "respondendo") return;
 
   temposBatidas.push(Date.now());
-  pegar("ritmo-progresso").textContent = "Batidas registradas: " + temposBatidas.length + " de 3.";
+  pegar("ritmo-progresso").textContent =
+    "Batidas registradas: " + temposBatidas.length + " de 3.";
   clearTimeout(timerRespostaRitmo);
 
   if (temposBatidas.length < 3) {
@@ -90,7 +91,7 @@ function registrarBatida() {
 
   var intervalos = [
     temposBatidas[1] - temposBatidas[0],
-    temposBatidas[2] - temposBatidas[1]
+    temposBatidas[2] - temposBatidas[1],
   ];
   avaliarRitmo(intervalos);
 }
@@ -123,7 +124,8 @@ function avaliarRitmo(intervalos) {
     return;
   }
 
-  pegar("ritmo-progresso").textContent = mensagem + " Observe e tente novamente.";
+  pegar("ritmo-progresso").textContent =
+    mensagem + " Observe e tente novamente.";
   pegar("botao-mostrar-ritmo").disabled = false;
   pegar("botao-batida-manual").disabled = true;
   pegar("botao-mostrar-ritmo").focus();
@@ -170,15 +172,18 @@ function pedirConfirmacaoFinal(escolha) {
 
   if (escolha === "medalhao") {
     titulo.textContent = "O espelho chama";
-    texto.textContent = "Entregar o medalhão pode mudar seu destino. Você tem certeza?";
+    texto.textContent =
+      "Entregar o medalhão pode mudar seu destino. Você tem certeza?";
     botao.textContent = "Entregar medalhão";
   } else if (escolha === "fugir") {
     titulo.textContent = "Sair da casa?";
-    texto.textContent = "Atravessar esta porta encerra a partida com um final de fuga. Tem certeza?";
+    texto.textContent =
+      "Atravessar esta porta encerra a partida com um final de fuga. Tem certeza?";
     botao.textContent = "Fugir pela porta";
   } else {
     titulo.textContent = "Ficar na casa?";
-    texto.textContent = "Ficar encerra a partida e leva a um final. Tem certeza de que quer ficar?";
+    texto.textContent =
+      "Ficar encerra a partida e leva a um final. Tem certeza de que quer ficar?";
     botao.textContent = "Sim, vou ficar";
   }
 
@@ -202,7 +207,11 @@ document.addEventListener("keydown", function (evento) {
     return;
   }
 
-  if (evento.code === "Space" && !pegar("minigame-ritmo").hidden && faseRitmo === "respondendo") {
+  if (
+    evento.code === "Space" &&
+    !pegar("minigame-ritmo").hidden &&
+    faseRitmo === "respondendo"
+  ) {
     evento.preventDefault();
     if (!espacoPressionado) {
       espacoPressionado = true;
