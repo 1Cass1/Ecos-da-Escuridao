@@ -42,7 +42,7 @@ O botão **Porta da frente** abre o terminal do Corredor. O terminal libera a Sa
 - `js/puzzles.js` define os objetos dos enigmas, do inventário e do diário. As cenas chamam seus métodos e atualizam a tela. Use **Inspecionar** no inventário para ver a descrição do item selecionado.
 - `js/partida.js` sorteia a senha, o esconderijo, o canal do vulto e os textos da partida. Também calcula o tempo restante e decide o final. A lanterna perde alcance e a vinheta escurece à medida que o relógio avança.
 - `js/jogo.js` atualiza a interface, os painéis, a lanterna e a navegação. `js/cameras.js` fornece os dígitos sorteados para o filtro UV e o terminal. `js/final.js` exibe o desfecho, o tempo gasto e as anotações da partida.
-- `css/base.css` define cores e botões. `css/cena.css` cuida do palco e da lanterna. `css/hud.css` estiliza o inventário, o diário e os painéis.
+- `css/base.css` define cores, fontes e transições. `css/cena.css` cuida do palco, da lanterna e dos efeitos de erro. `css/hud.css` adapta inventário, HUD e painéis para celular e telas largas; o diário usa uma fonte própria.
 - `salvarEstado()` grava a partida, os enigmas, o inventário e o diário em `ecos:estado`. `carregarEstado()` restaura esses dados ao mudar de página. Começar de novo apaga o progresso e preserva o **Modo claro**.
 - O inventário fica no canto superior esquerdo do palco nas seis cenas. O item selecionado acompanha o jogador entre as salas.
 

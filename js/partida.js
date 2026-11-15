@@ -8,6 +8,7 @@ var esconderijos = {
   relatorio: "O pingente está embrulhado neste relatório.",
   caixas: "Escondi o pingente no fundo falso de uma das caixas do quarto. É preciso forçar a tampa."
 };
+var locaisPingente = ["relatorio", "caixas"];
 
 var anotacoesAntigas = [
   "A Sombra aprendeu a falar com a minha voz. Se ouvir alguém chamando nos dutos, não responda.",
@@ -26,12 +27,14 @@ function sortearPartida() {
   var digitos = [];
   for (var i = 0; i < 4; i++) digitos.push(String(Math.floor(Math.random() * 10)));
 
-  var locais = Object.keys(esconderijos);
   var primeiroSussurro = Math.floor(Math.random() * sussurros.length);
-  var segundoSussurro = (primeiroSussurro + 1 + Math.floor(Math.random() * (sussurros.length - 1))) % sussurros.length;
+  var segundoSussurro = Math.floor(Math.random() * sussurros.length);
+  while (segundoSussurro === primeiroSussurro) {
+    segundoSussurro = Math.floor(Math.random() * sussurros.length);
+  }
   return {
     digitos: digitos,
-    localPingente: locais[Math.floor(Math.random() * locais.length)],
+    localPingente: locaisPingente[Math.floor(Math.random() * locaisPingente.length)],
     canalVulto: 1 + Math.floor(Math.random() * 4),
     anotacao: anotacoesAntigas[Math.floor(Math.random() * anotacoesAntigas.length)],
     sussurros: [sussurros[primeiroSussurro], sussurros[segundoSussurro]]

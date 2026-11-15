@@ -347,6 +347,7 @@
   text-shadow: 1px 1px #111;
   line-height: 1.35;
   font-size: clamp(9px, 1vw, 14px);
+  font-family: "IM Fell English", Georgia, serif;
 }
 .pagina-diario.esquerda { left: 15%; }
 .pagina-diario.direita { left: 52%; }
@@ -430,4 +431,32 @@
   top: 44%;
   height: 12%;
   background: #222;
+}
+
+@media (max-width: 600px) {
+  #inv {
+    width: min(42vw, 170px);
+    min-width: 0;
+    max-height: 44%;
+    padding: 8px;
+    gap: 4px;
+  }
+  .hud-tempo { inset-inline: 18%; }
+  #tempo-restante,
+  #sussurro:not(:empty) { padding: 4px 8px; }
+  #painel { gap: 8px; padding: 10px; }
+  #diario-aberto { width: min(94vw, 76vh); }
+  .pagina-diario { padding: 6px; font-size: clamp(9px, 2.5vw, 13px); }
+  .cena-jogo nav button { padding: 7px 9px; }
+}
+
+@media (min-width: 1200px) {
+  #inv {
+    width: min(220px, 18vw);
+    max-height: 62%;
+    padding: 14px;
+  }
+  .hud-tempo { font-size: 15px; }
+  #painel { padding: clamp(24px, 3vw, 48px); }
+  .pagina-diario { font-size: clamp(14px, 1vw, 18px); }
 }

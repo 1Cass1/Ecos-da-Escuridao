@@ -7,10 +7,6 @@ var timerRespostaRitmo;
 var timerSinalRitmo;
 var espacoPressionado = false;
 
-function concluirTravessia(escolha) {
-  encerrarPartida(escolha);
-}
-
 function abrirDesafioBatidas(escolha) {
   if (puzzles.ritmo.estado === "resolvido") {
     falar("O ritmo foi reconhecido. Agora escolha seu desfecho.");
@@ -78,10 +74,6 @@ function iniciarRespostaRitmo() {
   pegar("ritmo-progresso").textContent = "Agora repita as batidas: 0 de 3.";
   pegar("botao-batida-manual").focus();
   timerRespostaRitmo = setTimeout(falharRitmo, 4000);
-}
-
-function registrarBatidaClique() {
-  registrarBatida();
 }
 
 function registrarBatida() {
@@ -200,7 +192,7 @@ function fecharConfirmacaoFinal() {
 }
 
 function confirmarFinal() {
-  concluirTravessia(escolhaConfirmacaoFinal);
+  encerrarPartida(escolhaConfirmacaoFinal);
 }
 
 document.addEventListener("keydown", function (evento) {

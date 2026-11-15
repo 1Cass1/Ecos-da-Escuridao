@@ -132,13 +132,10 @@ function atualizarCena() {
   var botao = pegar("botao-diario");
   if (botao) botao.hidden = puzzles.diario.estado !== "resolvido";
 
-  var pacto = pegar("botao-pacto");
-  if (pacto) pacto.disabled = !inventario.tem("medalhao");
-
   var ritmo = pegar("botao-ritmo");
   if (ritmo) {
     ritmo.disabled = puzzles.ritmo.estado === "resolvido";
-    ritmo.textContent = ritmo.disabled ? "Ritmo reconhecido" : "Repetir batidas";
+    ritmo.textContent = ritmo.disabled ? "Ritmo reconhecido" : "Repetir sequência";
   }
 
   var portaAberta = pegar("sprite-porta-saida-aberta");
@@ -231,6 +228,54 @@ function passarPaginaDiario(direcao) {
 }
 
 atualizarModoClaro();
+
+var painelInicial = pegar("painel");
+if (painelInicial) {
+  painelInicial.setAttribute("role", "dialog");
+  painelInicial.setAttribute("aria-modal", "true");
+  painelInicial.setAttribute("aria-label", "Painel da cena");
+}
+
+document.addEventListener("keydown", function (evento) {
+  if (evento.key === "Escape" && painelAtual) {
+    evento.preventDefault();
+    fecharPainel();
+    return;
+  }
+  if (evento.key !== "Tab") return;
+
+  var modal = document.querySelector(".confirmacao-jogo:not([hidden])");
+  if (!modal) {
+    var painel = pegar("painel");
+    if (painel && painel.style.display !== "none") modal = painel;
+  }
+  if (!modal) return;
+
+  var elementos = modal.querySelectorAll("button:not(:disabled), input:not(:disabled), [tabindex='0']");
+  var focaveis = [];
+  for (var i = 0; i < elementos.length; i++) {
+    if (elementos[i].getClientRects().length > 0) focaveis.push(elementos[i]);
+  }
+  if (focaveis.length === 0) return;
+
+  var indice = focaveis.indexOf(document.activeElement);
+  if (evento.shiftKey && indice <= 0) {
+    evento.preventDefault();
+    focaveis[focaveis.length - 1].focus();
+  } else if (!evento.shiftKey && indice === focaveis.length - 1) {
+    evento.preventDefault();
+    focaveis[0].focus();
+  }
+});
+
+document.addEventListener("focusin", function (evento) {
+  var palco = pegar("palco");
+  if (!palco || !palco.contains(evento.target)) return;
+  var caixaPalco = palco.getBoundingClientRect();
+  var caixaAlvo = evento.target.getBoundingClientRect();
+  palco.style.setProperty("--x", (caixaAlvo.left + caixaAlvo.width / 2 - caixaPalco.left) + "px");
+  palco.style.setProperty("--y", (caixaAlvo.top + caixaAlvo.height / 2 - caixaPalco.top) + "px");
+});
 
 window.onpageshow = function (evento) {
   atualizarModoClaro();
