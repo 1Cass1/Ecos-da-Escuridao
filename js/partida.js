@@ -54,20 +54,6 @@ function iniciarTempo() {
 function prepararPartida() {
   if (!partida.iniciada || partida.final || partida.sorteio) return;
   iniciarTempo();
-
-  if (
-    puzzles.relatorio.estado === "resolvido" ||
-    puzzles.caixas.estado === "resolvido"
-  ) {
-    partida.sorteio.localPingente = "relatorio";
-  }
-  if (puzzles.terminal.alarme >= limiteAlarme)
-    puzzles.terminal.alarme = limiteAlarme - 1;
-  puzzles.cameras.canaisVistos = [];
-  if (puzzles.cameras.estado === "resolvido") puzzles.cameras.estado = "aberto";
-  diario.entradas = diario.entradas.filter(function (entrada) {
-    return entrada.indexOf(" (UV): dígito ") === -1;
-  });
   salvarEstado();
 }
 

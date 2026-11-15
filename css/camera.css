@@ -112,24 +112,6 @@
 
 #vulto-camera:not([hidden]) {
   opacity: 0.65;
-  animation: aparicao 0.45s ease-out;
-}
-
-@keyframes aparicao {
-  from {
-    opacity: 1;
-    transform: translateX(-24%) scale(1.3);
-  }
-  to {
-    opacity: 0.65;
-    transform: translateX(0) scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #vulto-camera:not([hidden]) {
-    animation: none;
-  }
 }
 
 .modo-claro .imagem-monitor img {

@@ -1,2 +1,0 @@
-Coloque aqui os sprites dos objetos (PNG com fundo transparente).
-Depois tire o comentario da linha <img> dentro do campo no cenaN.html.

@@ -54,10 +54,7 @@
   align-items: end;
   justify-items: center;
   border: 3px double #a3a3a3;
-  background:
-    radial-gradient(ellipse at 50% 33%, #777 0 12%, transparent 14%),
-    radial-gradient(ellipse at 50% 90%, #626262 0 32%, transparent 34%),
-    linear-gradient(#262626, #080808);
+  background: linear-gradient(#262626, #080808);
   color: #dedede;
 }
 
