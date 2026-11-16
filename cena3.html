@@ -1,175 +1,115 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ecos da Escuridão - Corredor</title>
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/cena.css" />
-    <link rel="stylesheet" href="css/hud.css" />
-    <link rel="stylesheet" href="css/equipamentos.css" />
-  </head>
-  <body>
-    <main id="travessia" class="cena-jogo com-equipamentos">
-      <div
-        id="palco"
-        style="background-image: url(&quot;images/corredor.png&quot;)"
-        onmousemove="moverLanterna(event)"
-      >
-        <h1 class="nome-cena" tabindex="-1">Corredor</h1>
-        <button
-          type="button"
-          class="campo"
-          id="campo-retrato"
-          aria-label="Examinar retrato da guardiã"
-          onclick="clicarRetrato()"
-        >
-          <span class="marca-retrato" aria-hidden="true">☾</span>
-        </button>
-        <button
-          type="button"
-          class="campo equipamento"
-          id="campo-porta-seguranca"
-          aria-label="Entrar na Sala de Segurança"
-          onclick="irPara('cena4.html')"
-        ></button>
-        <button
-          type="button"
-          class="campo equipamento"
-          id="campo-porta-armazem"
-          aria-label="Porta do Armazém"
-          onclick="tentarAbrirArmazem()"
-        ></button>
-        <button
-          type="button"
-          class="campo equipamento"
-          id="campo-porta-saida"
-          aria-label="Porta de saída"
-          onclick="tentarPortaDaFrente()"
-        ></button>
-        <img
-          id="sprite-porta-saida-aberta"
-          class="sprite-porta-saida"
-          src="images/objetos/porta-segura-aberta.png"
-          alt=""
-          hidden
-        />
-        <button
-          type="button"
-          class="campo equipamento"
-          id="campo-terminal"
-          style="left: 51%; top: 35%; width: 15%; height: 15%"
-          aria-label="Terminal da porta da frente"
-          onclick="tentarPortaDaFrente()"
-        >
-          <img src="images/objetos/terminal-senha.png" alt="" />
-        </button>
-        <div id="luz"></div>
-        <div class="vinheta-breu" aria-hidden="true"></div>
-        <div class="hud-tempo">
-          <p id="tempo-restante" role="timer" aria-label="Tempo restante">
-            4:00
-          </p>
-          <p id="sussurro" role="status"></p>
-        </div>
-        <aside id="inv" aria-label="Inventário">
-          <span class="titulo-inventario">Itens</span>
-          <span id="inventario-vazio">Vazio</span>
-          <button
-            type="button"
-            id="inspecionar-item"
-            onclick="inspecionarItem()"
-            hidden
-          >
-            Inspecionar
-          </button>
-        </aside>
-        <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>
-          Diário
-        </button>
-        <div id="rodape"><p id="mensagem" role="status"></p></div>
-        <div id="painel">
-          <div class="subpainel" id="p-diario">
-            <h2>DIÁRIO DE BORDO</h2>
-            <div id="diario-aberto">
-              <section id="pagina-diario" class="pagina-diario esquerda">
-                <h3 id="diario-titulo">Anotação antiga</h3>
-                <p id="diario-texto"></p>
-              </section>
-            </div>
-            <div id="controles-diario">
-              <button
-                type="button"
-                id="seta-diario-voltar"
-                class="seta-diario"
-                onclick="passarPaginaDiario(-1)"
-                aria-label="Página anterior"
-                disabled
-              >
-                ←
-              </button>
-              <span id="diario-pagina">1 / 1</span>
-              <button
-                type="button"
-                id="seta-diario-avancar"
-                class="seta-diario"
-                onclick="passarPaginaDiario(1)"
-                aria-label="Próxima página"
-              >
-                &#8594;
-              </button>
-            </div>
-          </div>
-          <div id="p-terminal" class="subpainel">
-            <h2>Terminal da porta da frente</h2>
-            <form onsubmit="tentarSenha(event)">
-              <label for="senha-terminal">Dígitos dos canais 01 a 04</label>
-              <input
-                id="senha-terminal"
-                inputmode="numeric"
-                pattern="[0-9]{4}"
-                maxlength="4"
-                autocomplete="off"
-                required
-              />
-              <button type="submit">Liberar porta</button>
-            </form>
-            <p id="resposta-terminal" role="status"></p>
-          </div>
-          <button
-            type="button"
-            id="botao-fechar-painel"
-            onclick="fecharPainel()"
-          >
-            Fechar
-          </button>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ecos da Escuridão - Corredor</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/cena.css" />
+  <link rel="stylesheet" href="css/hud.css" />
+  <link rel="stylesheet" href="css/equipamentos.css" />
+</head>
+
+<body>
+  <main id="travessia" class="cena-jogo com-equipamentos">
+    <div id="palco" style="background-image: url(&quot;images/corredor.png&quot;)" onmousemove="moverLanterna(event)">
+      <h1 class="nome-cena" tabindex="-1">Corredor</h1>
+      <button type="button" class="campo" id="campo-retrato" aria-label="Examinar retrato da guardiã"
+        onclick="clicarRetrato()">
+        <span class="marca-retrato" aria-hidden="true">☾</span>
+      </button>
+      <button type="button" class="campo equipamento" id="campo-porta-seguranca"
+        aria-label="Entrar na Sala de Segurança" onclick="irPara('cena4.html')"></button>
+      <button type="button" class="campo equipamento" id="campo-porta-armazem" aria-label="Porta do Armazém"
+        onclick="tentarAbrirArmazem()"></button>
+      <button type="button" class="campo equipamento" id="campo-porta-saida" aria-label="Porta de saída"
+        onclick="tentarPortaDaFrente()"></button>
+      <img id="sprite-porta-saida-aberta" class="sprite-porta-saida" src="images/objetos/porta-segura-aberta.png" alt=""
+        hidden />
+      <button type="button" class="campo equipamento" id="campo-terminal"
+        style="left: 51%; top: 35%; width: 15%; height: 15%" aria-label="Terminal da porta da frente"
+        onclick="tentarPortaDaFrente()">
+        <img src="images/objetos/terminal-senha.png" alt="" />
+      </button>
+      <div id="luz"></div>
+      <div class="vinheta-breu" aria-hidden="true"></div>
+      <div class="hud-tempo">
+        <p id="tempo-restante" role="timer" aria-label="Tempo restante">
+          4:00
+        </p>
+        <p id="sussurro" role="status"></p>
       </div>
-      <nav aria-label="Navegação entre cenas">
-        <button type="button" onclick="irPara('cena1.html')">
-          Voltar ao quarto
+      <aside id="inv" aria-label="Inventário">
+        <span class="titulo-inventario">Itens</span>
+        <span id="inventario-vazio">Vazio</span>
+        <button type="button" id="inspecionar-item" onclick="inspecionarItem()" hidden>
+          Inspecionar
         </button>
-        <button type="button" onclick="irPara('cena4.html')">
-          Sala de Segurança
+      </aside>
+      <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>
+        Diário
+      </button>
+      <div id="rodape">
+        <p id="mensagem" role="status"></p>
+      </div>
+      <div id="painel">
+        <div class="subpainel" id="p-diario">
+          <h2>DIÁRIO DE BORDO</h2>
+          <div id="diario-aberto">
+            <section id="pagina-diario" class="pagina-diario esquerda">
+              <h3 id="diario-titulo">Anotação antiga</h3>
+              <p id="diario-texto"></p>
+            </section>
+          </div>
+          <div id="controles-diario">
+            <button type="button" id="seta-diario-voltar" class="seta-diario" onclick="passarPaginaDiario(-1)"
+              aria-label="Página anterior" disabled>
+              ←
+            </button>
+            <span id="diario-pagina">1 / 1</span>
+            <button type="button" id="seta-diario-avancar" class="seta-diario" onclick="passarPaginaDiario(1)"
+              aria-label="Próxima página">
+              &#8594;
+            </button>
+          </div>
+        </div>
+        <div id="p-terminal" class="subpainel">
+          <h2>Terminal da porta da frente</h2>
+          <form onsubmit="tentarSenha(event)">
+            <label for="senha-terminal">Dígitos dos canais 01 a 04</label>
+            <input id="senha-terminal" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off"
+              required />
+            <button type="submit">Liberar porta</button>
+          </form>
+          <p id="resposta-terminal" role="status"></p>
+        </div>
+        <button type="button" id="botao-fechar-painel" onclick="fecharPainel()">
+          Fechar
         </button>
-        <button type="button" onclick="tentarAbrirArmazem()">Armazém</button>
-        <button type="button" onclick="tentarPortaDaFrente()">
-          Porta da frente
-        </button>
-        <button
-          type="button"
-          class="botao-modo-claro"
-          aria-pressed="false"
-          onclick="alternarModoClaro()"
-        >
-          Modo claro
-        </button>
-      </nav>
-    </main>
-    <script src="js/puzzles.js"></script>
-    <script src="js/partida.js"></script>
-    <script src="js/jogo.js"></script>
-    <script src="js/cameras.js"></script>
-    <script src="js/cena3.js"></script>
-  </body>
+      </div>
+    </div>
+    <nav aria-label="Navegação entre cenas">
+      <button type="button" onclick="irPara('cena1.html')">
+        Voltar ao quarto
+      </button>
+      <button type="button" onclick="irPara('cena4.html')">
+        Sala de Segurança
+      </button>
+      <button type="button" onclick="tentarAbrirArmazem()">Armazém</button>
+      <button type="button" onclick="tentarPortaDaFrente()">
+        Porta da frente
+      </button>
+      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">
+        Modo claro
+      </button>
+    </nav>
+  </main>
+  <script src="js/puzzles.js"></script>
+  <script src="js/partida.js"></script>
+  <script src="js/jogo.js"></script>
+  <script src="js/cameras.js"></script>
+  <script src="js/cena3.js"></script>
+</body>
+
 </html>

@@ -1,66 +1,54 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ecos da Escuridão - Câmeras</title>
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/cena.css" />
-    <link rel="stylesheet" href="css/camera.css" />
-  </head>
-  <body>
-    <main
-      id="travessia"
-      class="cena-jogo"
-      data-requer-progresso="monitores"
-      data-voltar="cena4.html"
-    >
-      <h1 class="so-leitor">Câmeras de segurança</h1>
-      <figure id="palco" class="imagem-monitor">
-        <img id="imagem-camera" src="images/quarto.png" alt="" />
-        <span id="bueiro-camera" aria-hidden="true" hidden></span>
-        <span id="vulto-camera" aria-hidden="true" hidden></span>
-        <span id="digito-camera" aria-live="polite" hidden></span>
 
-        <div class="vinheta-breu" aria-hidden="true"></div>
-        <div class="hud-tempo">
-          <p id="tempo-restante" role="timer" aria-label="Tempo restante">
-            4:00
-          </p>
-          <p id="sussurro" role="status"></p>
-        </div>
-        <figcaption>
-          <span id="canal-camera"></span>
-          <span id="estado-camera"></span>
-          <span id="aviso-vulto" role="status"></span>
-        </figcaption>
-      </figure>
-      <nav aria-label="Controles da câmera">
-        <button
-          type="button"
-          id="botao-uv"
-          aria-pressed="false"
-          onclick="alternarFiltroUV()"
-        >
-          Filtro UV desligado
-        </button>
-        <button type="button" onclick="irPara('cena4.html')">
-          Voltar à Sala de Segurança
-        </button>
-        <button
-          type="button"
-          class="botao-modo-claro"
-          aria-pressed="false"
-          onclick="alternarModoClaro()"
-        >
-          Modo claro
-        </button>
-      </nav>
-    </main>
-    <script src="js/puzzles.js"></script>
-    <script src="js/partida.js"></script>
-    <script src="js/jogo.js"></script>
-    <script src="js/cameras.js"></script>
-    <script src="js/camera.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ecos da Escuridão - Câmeras</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/cena.css" />
+  <link rel="stylesheet" href="css/camera.css" />
+</head>
+
+<body>
+  <main id="travessia" class="cena-jogo" data-requer-progresso="monitores" data-voltar="cena4.html">
+    <h1 class="so-leitor">Câmeras de segurança</h1>
+    <figure id="palco" class="imagem-monitor">
+      <img id="imagem-camera" src="images/quarto.png" alt="" />
+      <span id="bueiro-camera" aria-hidden="true" hidden></span>
+      <span id="vulto-camera" aria-hidden="true" hidden></span>
+      <span id="digito-camera" aria-live="polite" hidden></span>
+
+      <div class="vinheta-breu" aria-hidden="true"></div>
+      <div class="hud-tempo">
+        <p id="tempo-restante" role="timer" aria-label="Tempo restante">
+          4:00
+        </p>
+        <p id="sussurro" role="status"></p>
+      </div>
+      <figcaption>
+        <span id="canal-camera"></span>
+        <span id="estado-camera"></span>
+        <span id="aviso-vulto" role="status"></span>
+      </figcaption>
+    </figure>
+    <nav aria-label="Controles da câmera">
+      <button type="button" id="botao-uv" aria-pressed="false" onclick="alternarFiltroUV()">
+        Filtro UV desligado
+      </button>
+      <button type="button" onclick="irPara('cena4.html')">
+        Voltar à Sala de Segurança
+      </button>
+      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">
+        Modo claro
+      </button>
+    </nav>
+  </main>
+  <script src="js/puzzles.js"></script>
+  <script src="js/partida.js"></script>
+  <script src="js/jogo.js"></script>
+  <script src="js/cameras.js"></script>
+  <script src="js/camera.js"></script>
+</body>
+
 </html>

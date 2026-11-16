@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
+
+:root {
+  --fundo: #080808;
+  --painel: #151419;
+  --texto: #eeeeee;
+  --roxo: #7929a3;
+  --linha: #49454d;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: "Special Elite", "Courier New", monospace;
+  line-height: 1.6;
+}
+a { color: inherit; }
+a:hover { color: #d9b5ec; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid #d9b5ec;
+  outline-offset: 3px;
+}
+header, footer {
+  padding: 16px max(18px, calc((100% - 1050px) / 2));
+  background: #111014;
+  border-bottom: 1px solid var(--linha);
+}
+.marca {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #d9b5ec;
+  font-size: 20px;
+  text-decoration: none;
+}
+nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+nav a { padding: 5px 0; text-decoration: none; }
+nav .jogar, .botao {
+  display: inline-block;
+  padding: 9px 15px;
+  border: 1px solid var(--roxo);
+  border-radius: 4px;
+  background: var(--roxo);
+  color: white;
+  text-decoration: none;
+}
+nav .jogar:hover, .botao:hover { background: #5e207f; color: white; }
+main { width: min(1000px, calc(100% - 36px)); min-height: 70vh; margin: 32px auto; }
+.apresentacao, .duas-colunas { display: flex; align-items: center; gap: 32px; }
+.apresentacao > *, .duas-colunas > * { flex: 1; min-width: 0; }
+h1, h2 { line-height: 1.2; }
+h1 span { color: #c58be0; }
+.imagem img, .foto-pagina {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--linha);
+  image-rendering: pixelated;
+}
+.secao { margin: 36px 0; }
+.cartoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.cartao { padding: 16px; border: 1px solid var(--linha); border-radius: 5px; background: var(--painel); }
+a.cartao { display: block; text-decoration: none; }
+.cartao img { width: 100%; height: 150px; object-fit: cover; border: 1px solid var(--linha); }
+.botao { margin: 8px 8px 0 0; }
+.tabela { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: var(--painel); }
+caption { padding: 8px; text-align: left; }
+th, td { padding: 10px; border: 1px solid var(--linha); text-align: left; vertical-align: top; }
+th { background: #211b27; }
+.formulario label { display: block; margin-top: 12px; }
+.formulario input, .formulario textarea {
+  width: 100%; padding: 10px; border: 1px solid var(--linha); border-radius: 4px;
+  background: #101014; color: var(--texto); font: inherit;
+}
+.formulario textarea { min-height: 120px; }
+footer { border-top: 1px solid var(--linha); border-bottom: 0; }
+footer p { margin: 0; }
+@media (max-width: 650px) {
+  .apresentacao, .duas-colunas { align-items: stretch; flex-direction: column; }
+  .cartoes { grid-template-columns: 1fr; }
+  table { font-size: 14px; }
+}

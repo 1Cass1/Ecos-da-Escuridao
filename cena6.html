@@ -1,214 +1,143 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ecos da Escuridão - Saída</title>
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/cena.css" />
-    <link rel="stylesheet" href="css/hud.css" />
-  </head>
-  <body>
-    <main id="travessia" class="cena-jogo" data-requer-progresso="terminal">
-      <div
-        id="palco"
-        style="background-image: url(&quot;images/saida.png&quot;)"
-        onmousemove="moverLanterna(event)"
-      >
-        <h1 class="nome-cena" tabindex="-1">Saída</h1>
-        <button
-          type="button"
-          id="campo-espelho"
-          class="campo"
-          onclick="clicarEspelho()"
-          aria-label="Entregar o medalhão ao espelho"
-        ></button>
-        <button
-          type="button"
-          id="campo-porta-final"
-          class="campo"
-          onclick="clicarPortaFinal()"
-          aria-label="Abrir a porta final e fugir"
-        ></button>
-        <div id="luz"></div>
-        <div class="vinheta-breu" aria-hidden="true"></div>
-        <div class="hud-tempo">
-          <p id="tempo-restante" role="timer" aria-label="Tempo restante">
-            4:00
-          </p>
-          <p id="sussurro" role="status"></p>
-        </div>
-        <aside id="inv" aria-label="Inventário">
-          <span class="titulo-inventario">Itens</span>
-          <span id="inventario-vazio">Vazio</span>
-          <button
-            type="button"
-            id="inspecionar-item"
-            onclick="inspecionarItem()"
-            hidden
-          >
-            Inspecionar
-          </button>
-        </aside>
-        <p class="narracao-cena">
-          Três sinais percorrem o painel dos dutos. Depois, repita o padrão.
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ecos da Escuridão - Saída</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/cena.css" />
+  <link rel="stylesheet" href="css/hud.css" />
+</head>
+
+<body>
+  <main id="travessia" class="cena-jogo" data-requer-progresso="terminal">
+    <div id="palco" style="background-image: url(&quot;images/saida.png&quot;)" onmousemove="moverLanterna(event)">
+      <h1 class="nome-cena" tabindex="-1">Saída</h1>
+      <button type="button" id="campo-espelho" class="campo" onclick="clicarEspelho()"
+        aria-label="Entregar o medalhão ao espelho"></button>
+      <button type="button" id="campo-porta-final" class="campo" onclick="clicarPortaFinal()"
+        aria-label="Abrir a porta final e fugir"></button>
+      <div id="luz"></div>
+      <div class="vinheta-breu" aria-hidden="true"></div>
+      <div class="hud-tempo">
+        <p id="tempo-restante" role="timer" aria-label="Tempo restante">
+          4:00
         </p>
-        <div id="rodape"><p id="mensagem" role="status"></p></div>
-        <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>
-          Diário
+        <p id="sussurro" role="status"></p>
+      </div>
+      <aside id="inv" aria-label="Inventário">
+        <span class="titulo-inventario">Itens</span>
+        <span id="inventario-vazio">Vazio</span>
+        <button type="button" id="inspecionar-item" onclick="inspecionarItem()" hidden>
+          Inspecionar
         </button>
-        <div id="painel">
-          <div class="subpainel" id="p-diario">
-            <h2>DIÁRIO DE BORDO</h2>
-            <div id="diario-aberto">
-              <section id="pagina-diario" class="pagina-diario esquerda">
-                <h3 id="diario-titulo">Anotação antiga</h3>
-                <p id="diario-texto"></p>
-              </section>
-            </div>
-            <div id="controles-diario">
-              <button
-                type="button"
-                id="seta-diario-voltar"
-                class="seta-diario"
-                onclick="passarPaginaDiario(-1)"
-                aria-label="Página anterior"
-                disabled
-              >
-                ←
-              </button>
-              <span id="diario-pagina">1 / 1</span>
-              <button
-                type="button"
-                id="seta-diario-avancar"
-                class="seta-diario"
-                onclick="passarPaginaDiario(1)"
-                aria-label="Próxima página"
-              >
-                &#8594;
-              </button>
-            </div>
+      </aside>
+      <p class="narracao-cena">
+        Três sinais percorrem o painel dos dutos. Depois, repita o padrão.
+      </p>
+      <div id="rodape">
+        <p id="mensagem" role="status"></p>
+      </div>
+      <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>
+        Diário
+      </button>
+      <div id="painel">
+        <div class="subpainel" id="p-diario">
+          <h2>DIÁRIO DE BORDO</h2>
+          <div id="diario-aberto">
+            <section id="pagina-diario" class="pagina-diario esquerda">
+              <h3 id="diario-titulo">Anotação antiga</h3>
+              <p id="diario-texto"></p>
+            </section>
           </div>
-          <button
-            type="button"
-            id="botao-fechar-painel"
-            onclick="fecharPainel()"
-          >
-            Fechar
+          <div id="controles-diario">
+            <button type="button" id="seta-diario-voltar" class="seta-diario" onclick="passarPaginaDiario(-1)"
+              aria-label="Página anterior" disabled>
+              ←
+            </button>
+            <span id="diario-pagina">1 / 1</span>
+            <button type="button" id="seta-diario-avancar" class="seta-diario" onclick="passarPaginaDiario(1)"
+              aria-label="Próxima página">
+              &#8594;
+            </button>
+          </div>
+        </div>
+        <button type="button" id="botao-fechar-painel" onclick="fecharPainel()">
+          Fechar
+        </button>
+      </div>
+    </div>
+    <section id="confirmacao-final" class="confirmacao-jogo" role="dialog" aria-modal="true"
+      aria-labelledby="titulo-confirmacao-final" hidden>
+      <div class="modal-confirmacao">
+        <span class="selo-pacto" aria-hidden="true">☾</span>
+        <h2 id="titulo-confirmacao-final">O espelho chama</h2>
+        <p id="texto-confirmacao-final">
+          Entregar o medalhão pode mudar seu destino. Você tem certeza?
+        </p>
+        <div class="acoes-confirmacao">
+          <button type="button" class="botao-secundario" onclick="fecharConfirmacaoFinal()">
+            Voltar
+          </button>
+          <button type="button" id="confirmar-final" onclick="confirmarFinal()">
+            Entregar medalhão
           </button>
         </div>
       </div>
-      <section
-        id="confirmacao-final"
-        class="confirmacao-jogo"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="titulo-confirmacao-final"
-        hidden
-      >
-        <div class="modal-confirmacao">
-          <span class="selo-pacto" aria-hidden="true">☾</span>
-          <h2 id="titulo-confirmacao-final">O espelho chama</h2>
-          <p id="texto-confirmacao-final">
-            Entregar o medalhão pode mudar seu destino. Você tem certeza?
-          </p>
-          <div class="acoes-confirmacao">
-            <button
-              type="button"
-              class="botao-secundario"
-              onclick="fecharConfirmacaoFinal()"
-            >
-              Voltar
-            </button>
-            <button
-              type="button"
-              id="confirmar-final"
-              onclick="confirmarFinal()"
-            >
-              Entregar medalhão
-            </button>
-          </div>
+    </section>
+    <section id="minigame-ritmo" class="confirmacao-jogo" role="dialog" aria-modal="true" aria-labelledby="titulo-ritmo"
+      hidden>
+      <div class="modal-confirmacao modal-ritmo">
+        <h2 id="titulo-ritmo">O ritmo dos dutos</h2>
+        <p>
+          Observe os três sinais luminosos. Depois, repita o ritmo com a barra
+          de espaço ou clique três vezes.
+        </p>
+        <div class="sequencia-ritmo" aria-label="Painel com três sinais luminosos">
+          <span class="pulso-ritmo"></span>
+          <span class="pulso-ritmo"></span>
+          <span class="pulso-ritmo"></span>
         </div>
-      </section>
-      <section
-        id="minigame-ritmo"
-        class="confirmacao-jogo"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="titulo-ritmo"
-        hidden
-      >
-        <div class="modal-confirmacao modal-ritmo">
-          <h2 id="titulo-ritmo">O ritmo dos dutos</h2>
-          <p>
-            Observe os três sinais luminosos. Depois, repita o ritmo com a barra
-            de espaço ou clique três vezes.
-          </p>
-          <div
-            class="sequencia-ritmo"
-            aria-label="Painel com três sinais luminosos"
-          >
-            <span class="pulso-ritmo"></span>
-            <span class="pulso-ritmo"></span>
-            <span class="pulso-ritmo"></span>
-          </div>
-          <p id="ritmo-progresso" role="status" aria-live="polite">
-            Pronto para mostrar a sequência.
-          </p>
-          <div class="acoes-confirmacao controles-ritmo">
-            <button
-              type="button"
-              id="botao-mostrar-ritmo"
-              onclick="mostrarSequenciaRitmo()"
-            >
-              Mostrar sequência
-            </button>
-            <button
-              type="button"
-              id="botao-batida-manual"
-              class="botao-secundario"
-              onclick="registrarBatida()"
-              disabled
-              aria-label="Marcar uma batida; clique três vezes no ritmo"
-            >
-              Marcar batida
-            </button>
-            <button
-              type="button"
-              class="botao-secundario"
-              onclick="fecharMinigameRitmo()"
-            >
-              Voltar
-            </button>
-          </div>
+        <p id="ritmo-progresso" role="status" aria-live="polite">
+          Pronto para mostrar a sequência.
+        </p>
+        <div class="acoes-confirmacao controles-ritmo">
+          <button type="button" id="botao-mostrar-ritmo" onclick="mostrarSequenciaRitmo()">
+            Mostrar sequência
+          </button>
+          <button type="button" id="botao-batida-manual" class="botao-secundario" onclick="registrarBatida()" disabled
+            aria-label="Marcar uma batida; clique três vezes no ritmo">
+            Marcar batida
+          </button>
+          <button type="button" class="botao-secundario" onclick="fecharMinigameRitmo()">
+            Voltar
+          </button>
         </div>
-      </section>
-      <nav aria-label="Navegação entre cenas">
-        <button type="button" id="botao-ritmo" onclick="abrirDesafioBatidas()">
-          Repetir sequência
-        </button>
-        <button type="button" onclick="irPara('cena3.html')">
-          Voltar ao corredor
-        </button>
-        <button type="button" onclick="pedirConfirmacaoFinal('fugir')">
-          Fugir
-        </button>
-        <button type="button" onclick="pedirConfirmacaoFinal('ficar')">
-          Ficar
-        </button>
-        <button
-          type="button"
-          class="botao-modo-claro"
-          aria-pressed="false"
-          onclick="alternarModoClaro()"
-        >
-          Modo claro
-        </button>
-      </nav>
-    </main>
-    <script src="js/puzzles.js"></script>
-    <script src="js/partida.js"></script>
-    <script src="js/jogo.js"></script>
-    <script src="js/cena6.js"></script>
-  </body>
+      </div>
+    </section>
+    <nav aria-label="Navegação entre cenas">
+      <button type="button" id="botao-ritmo" onclick="abrirDesafioBatidas()">
+        Repetir sequência
+      </button>
+      <button type="button" onclick="irPara('cena3.html')">
+        Voltar ao corredor
+      </button>
+      <button type="button" onclick="pedirConfirmacaoFinal('fugir')">
+        Fugir
+      </button>
+      <button type="button" onclick="pedirConfirmacaoFinal('ficar')">
+        Ficar
+      </button>
+      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">
+        Modo claro
+      </button>
+    </nav>
+  </main>
+  <script src="js/puzzles.js"></script>
+  <script src="js/partida.js"></script>
+  <script src="js/jogo.js"></script>
+  <script src="js/cena6.js"></script>
+</body>
+
 </html>

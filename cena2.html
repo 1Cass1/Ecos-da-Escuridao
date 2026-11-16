@@ -1,171 +1,117 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ecos da Escuridão - Subsolo</title>
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/cena.css" />
-    <link rel="stylesheet" href="css/hud.css" />
-  </head>
-  <body>
-    <main class="cena-jogo">
-      <div
-        id="palco"
-        style="background-image: url(&quot;images/subsolo.png&quot;)"
-        onmousemove="moverLanterna(event)"
-      >
-        <h1 class="nome-cena" tabindex="-1">Subsolo</h1>
 
-        <!-- Áreas clicáveis -->
-        <button
-          type="button"
-          class="campo"
-          id="campo-escada-cima"
-          style="left: 46%; top: 7%; width: 9%; height: 62%"
-          aria-label="Escada para cima"
-          onclick="irPara('cena1.html')"
-        ></button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ecos da Escuridão - Subsolo</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/cena.css" />
+  <link rel="stylesheet" href="css/hud.css" />
+</head>
 
-        <button
-          type="button"
-          class="campo"
-          id="campo-chave-de-fenda"
-          style="left: 77%; top: 55%; width: 10%; height: 10%"
-          aria-label="Chave de fenda"
-          onclick="clicarChaveDeFenda()"
-        >
-          <img src="images/objetos/chave-de-fenda.png" alt="" />
-        </button>
+<body>
+  <main class="cena-jogo">
+    <div id="palco" style="background-image: url(&quot;images/subsolo.png&quot;)" onmousemove="moverLanterna(event)">
+      <h1 class="nome-cena" tabindex="-1">Subsolo</h1>
 
-        <button
-          type="button"
-          class="campo"
-          id="campo-caldeira"
-          style="left: 23%; top: 58%; width: 10%; height: 22%"
-          aria-label="Caldeira"
-          onclick="clicarCaldeira()"
-        >
-          <img src="images/objetos/caldeira.png" alt="" />
-        </button>
+      <!-- Áreas clicáveis -->
+      <button type="button" class="campo" id="campo-escada-cima" style="left: 46%; top: 7%; width: 9%; height: 62%"
+        aria-label="Escada para cima" onclick="irPara('cena1.html')"></button>
 
-        <button
-          type="button"
-          class="campo papel-campo"
-          id="campo-papel"
-          style="left: 25%; top: 48%; width: 7%; height: 9%"
-          onclick="clicarPapel()"
-          hidden
-        >
-          <span>RELATÓRIO</span>
-        </button>
+      <button type="button" class="campo" id="campo-chave-de-fenda" style="left: 77%; top: 55%; width: 10%; height: 10%"
+        aria-label="Chave de fenda" onclick="clicarChaveDeFenda()">
+        <img src="images/objetos/chave-de-fenda.png" alt="" />
+      </button>
 
-        <button
-          type="button"
-          class="campo"
-          id="campo-alicate"
-          style="left: 40%; top: 78%; width: 20%; height: 20%"
-          aria-label="Alicate"
-          onclick="clicarAlicate()"
-        >
-          <img src="images/objetos/alicate.png" alt="" />
-        </button>
+      <button type="button" class="campo" id="campo-caldeira" style="left: 23%; top: 58%; width: 10%; height: 22%"
+        aria-label="Caldeira" onclick="clicarCaldeira()">
+        <img src="images/objetos/caldeira.png" alt="" />
+      </button>
 
-        <!-- Lanterna -->
-        <div id="luz"></div>
-        <div class="vinheta-breu" aria-hidden="true"></div>
-        <div class="hud-tempo">
-          <p id="tempo-restante" role="timer" aria-label="Tempo restante">
-            4:00
-          </p>
-          <p id="sussurro" role="status"></p>
-        </div>
-        <aside id="inv" aria-label="Inventário">
-          <span class="titulo-inventario">Itens</span>
-          <span id="inventario-vazio">Vazio</span>
-          <button
-            type="button"
-            id="inspecionar-item"
-            onclick="inspecionarItem()"
-            hidden
-          >
-            Inspecionar
-          </button>
-        </aside>
+      <button type="button" class="campo papel-campo" id="campo-papel"
+        style="left: 25%; top: 48%; width: 7%; height: 9%" onclick="clicarPapel()" hidden>
+        <span>RELATÓRIO</span>
+      </button>
 
-        <!-- Interface do jogo -->
-        <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>
-          Diário
-        </button>
+      <button type="button" class="campo" id="campo-alicate" style="left: 40%; top: 78%; width: 20%; height: 20%"
+        aria-label="Alicate" onclick="clicarAlicate()">
+        <img src="images/objetos/alicate.png" alt="" />
+      </button>
 
-        <div id="rodape"><p id="mensagem" role="status"></p></div>
-
-        <!-- Painéis -->
-        <div id="painel">
-          <div class="subpainel" id="p-diario">
-            <h2>DIÁRIO DE BORDO</h2>
-            <div id="diario-aberto">
-              <section id="pagina-diario" class="pagina-diario esquerda">
-                <h3 id="diario-titulo">Anotação antiga</h3>
-                <p id="diario-texto"></p>
-              </section>
-            </div>
-            <div id="controles-diario">
-              <button
-                type="button"
-                id="seta-diario-voltar"
-                class="seta-diario"
-                onclick="passarPaginaDiario(-1)"
-                aria-label="Página anterior"
-                disabled
-              >
-                ←
-              </button>
-              <span id="diario-pagina">1 / 1</span>
-              <button
-                type="button"
-                id="seta-diario-avancar"
-                class="seta-diario"
-                onclick="passarPaginaDiario(1)"
-                aria-label="Próxima página"
-              >
-                &#8594;
-              </button>
-            </div>
-          </div>
-
-          <div class="subpainel" id="p-papel">
-            <h2>PAPEL ENCONTRADO NA CALDEIRA</h2>
-            <p id="papel-texto" class="texto-papel"></p>
-          </div>
-
-          <button
-            type="button"
-            id="botao-fechar-painel"
-            onclick="fecharPainel()"
-          >
-            Fechar
-          </button>
-        </div>
+      <!-- Lanterna -->
+      <div id="luz"></div>
+      <div class="vinheta-breu" aria-hidden="true"></div>
+      <div class="hud-tempo">
+        <p id="tempo-restante" role="timer" aria-label="Tempo restante">
+          4:00
+        </p>
+        <p id="sussurro" role="status"></p>
       </div>
-      <nav aria-label="Navegação entre cenas">
-        <button type="button" onclick="irPara('cena1.html')">
-          Subir a escada
+      <aside id="inv" aria-label="Inventário">
+        <span class="titulo-inventario">Itens</span>
+        <span id="inventario-vazio">Vazio</span>
+        <button type="button" id="inspecionar-item" onclick="inspecionarItem()" hidden>
+          Inspecionar
         </button>
-        <button
-          type="button"
-          class="botao-modo-claro"
-          aria-pressed="false"
-          onclick="alternarModoClaro()"
-        >
-          Modo claro
-        </button>
-      </nav>
-    </main>
+      </aside>
 
-    <script src="js/puzzles.js"></script>
-    <script src="js/partida.js"></script>
-    <script src="js/jogo.js"></script>
-    <script src="js/cena2.js"></script>
-  </body>
+      <!-- Interface do jogo -->
+      <button type="button" id="botao-diario" onclick="diario.abrir()" hidden>
+        Diário
+      </button>
+
+      <div id="rodape">
+        <p id="mensagem" role="status"></p>
+      </div>
+
+      <!-- Painéis -->
+      <div id="painel">
+        <div class="subpainel" id="p-diario">
+          <h2>DIÁRIO DE BORDO</h2>
+          <div id="diario-aberto">
+            <section id="pagina-diario" class="pagina-diario esquerda">
+              <h3 id="diario-titulo">Anotação antiga</h3>
+              <p id="diario-texto"></p>
+            </section>
+          </div>
+          <div id="controles-diario">
+            <button type="button" id="seta-diario-voltar" class="seta-diario" onclick="passarPaginaDiario(-1)"
+              aria-label="Página anterior" disabled>
+              ←
+            </button>
+            <span id="diario-pagina">1 / 1</span>
+            <button type="button" id="seta-diario-avancar" class="seta-diario" onclick="passarPaginaDiario(1)"
+              aria-label="Próxima página">
+              &#8594;
+            </button>
+          </div>
+        </div>
+
+        <div class="subpainel" id="p-papel">
+          <h2>PAPEL ENCONTRADO NA CALDEIRA</h2>
+          <p id="papel-texto" class="texto-papel"></p>
+        </div>
+
+        <button type="button" id="botao-fechar-painel" onclick="fecharPainel()">
+          Fechar
+        </button>
+      </div>
+    </div>
+    <nav aria-label="Navegação entre cenas">
+      <button type="button" onclick="irPara('cena1.html')">
+        Subir a escada
+      </button>
+      <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">
+        Modo claro
+      </button>
+    </nav>
+  </main>
+
+  <script src="js/puzzles.js"></script>
+  <script src="js/partida.js"></script>
+  <script src="js/jogo.js"></script>
+  <script src="js/cena2.js"></script>
+</body>
+
 </html>
