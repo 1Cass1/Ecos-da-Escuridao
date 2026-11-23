@@ -6,8 +6,7 @@ var avisoSussurro;
 
 var esconderijos = {
   relatorio: "O pingente está embrulhado neste relatório.",
-  caixas:
-    "Escondi o pingente no fundo falso de uma das caixas do quarto. É preciso forçar a tampa.",
+  caixas: "Escondi o pingente no fundo falso de uma das caixas do quarto. É preciso forçar a tampa.",
 };
 var locaisPingente = ["relatorio", "caixas"];
 

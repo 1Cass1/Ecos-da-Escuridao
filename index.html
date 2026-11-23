@@ -1,37 +1,35 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ecos da Escuridão</title>
-    <link rel="stylesheet" href="css/base.css" />
-  </head>
-  <body>
-    <main class="tela">
-      <h1>Ecos da Escuridão</h1>
-      <p>
-        Você acordou num quarto estranho. Sua lanterna é a única luz. Procure a
-        porta da frente enquanto a Sombra ronda a casa.
-      </p>
-      <p>
-        Você tem quatro minutos. Clique nos objetos, junte itens e resolva os
-        enigmas.
-      </p>
-      <p>Aperte F11 para jogar em tela cheia.</p>
-      <button type="button" onclick="novoJogo()">Começar</button>
-      <button
-        type="button"
-        class="botao-modo-claro"
-        aria-pressed="false"
-        onclick="alternarModoClaro()"
-      >
-        Modo claro
-      </button>
-      <p><a class="link-site" href="site%20do%20jogo/html/home.html">Conheça o site do jogo</a></p>
-    </main>
 
-    <script src="js/puzzles.js"></script>
-    <script src="js/partida.js"></script>
-    <script src="js/jogo.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ecos da Escuridão</title>
+  <link rel="stylesheet" href="css/base.css" />
+</head>
+
+<body>
+  <main class="tela">
+    <h1>Ecos da Escuridão</h1>
+    <p>
+      Você acorda em um lugar completamente desconhecido e escuro, as paredes
+      umidas e frias, tudo que você enxerga é a escuridão ao seu redor, você
+      não tem ideia de como chegou aqui, você sente algo na sua mão, clique em
+      iniciar para ligar a lanterna e iluminar o seu caminho.
+    </p>
+    <p>Aperte F11 para jogar em tela cheia.</p>
+    <button type="button" onclick="novoJogo()">Começar</button>
+    <button type="button" class="botao-modo-claro" aria-pressed="false" onclick="alternarModoClaro()">
+      Modo claro
+    </button>
+    <p>
+      <a class="link-site" href="site%20do%20jogo/html/home.html">Conheça o site do jogo</a>
+    </p>
+  </main>
+
+  <script src="js/puzzles.js"></script>
+  <script src="js/partida.js"></script>
+  <script src="js/jogo.js"></script>
+</body>
+
 </html>

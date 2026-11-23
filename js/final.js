@@ -45,14 +45,6 @@ function mostrarFinal() {
     partida.tempoGasto === undefined
       ? "Tempo gasto indisponível para esta partida."
       : "Tempo gasto: " + formatarTempo(Math.floor(partida.tempoGasto / 1000));
-  var lista = pegar("pistas-encontradas");
-  lista.textContent = "";
-  pegar("pistas-vazias").hidden = diario.entradas.length !== 0;
-  for (var i = 0; i < diario.entradas.length; i++) {
-    var pista = document.createElement("li");
-    pista.textContent = diario.entradas[i];
-    lista.appendChild(pista);
-  }
 }
 
 mostrarFinal();

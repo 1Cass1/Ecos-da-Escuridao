@@ -3,7 +3,7 @@
 /* Cores e lanterna */
 :root {
   --sangue: #a34bd2;
-  --botao: #52117a; /* cor roxa dos botões */
+  --botao: #52117a; /* cor dos botões */
   --brilho: #fff; /* cor do brilho dos objetos ao passar o mouse */
   --luz-claro: 10px; /* até aqui a lanterna ilumina totalmente */
   --luz-escuro: 250px; /* a partir daqui fica quase tudo preto */
@@ -57,7 +57,7 @@ button:focus-visible {
 
 .link-site {
   color: #d9b5ec;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .link-site:hover {
