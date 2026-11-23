@@ -12,7 +12,7 @@ var finais = {
   alarme: {
     titulo: "Captura pelo alarme",
     texto:
-      "Ao terceiro erro, uma sirene ecoa pelos dutos. As travas da porta descem. Antes que a sirene pare, a Sombra já está atrás de você.",
+      "Ao terceiro erro as travas da porta descem. A Sombra já está atrás de você.",
   },
   tempo: {
     titulo: "Captura pelo Breu",
@@ -22,12 +22,12 @@ var finais = {
   secreto: {
     titulo: "Final secreto: o pacto",
     texto:
-      "Você oferece o medalhão. A Sombra toca o risco na meia-lua, e a porta se abre. Quando os dutos chamam pelo seu nome, você entende o preço: a guardiã pode sair, e a casa agora é sua.",
+      "Você encaixa o medalhão. A Sombra atrás de você toca nele, e a porta se abre. Os dutos chamam pelo seu nome, você entende o que precisa fazer a guardiã será liberdade, e o novo guardião do Breu agora é você.",
   },
   ficou: {
     titulo: "Você ficou",
     texto:
-      "Você solta a maçaneta e volta pelo corredor. Atrás de você, a porta fecha devagar. As batidas nos dutos aprendem a repetir o seu nome.",
+      "Você solta a maçaneta e volta pelo corredor. Atrás de você, a porta fecha devagar. Você não enxerga mais nada...",
   },
 };
 
