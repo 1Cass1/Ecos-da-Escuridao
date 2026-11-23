@@ -200,7 +200,7 @@ function confirmarFinal() {
   encerrarPartida(escolhaConfirmacaoFinal);
 }
 
-document.addEventListener("keydown", function (evento) {
+function teclaRitmoPressionada(evento) {
   if (evento.key === "Escape") {
     if (!pegar("confirmacao-final").hidden) fecharConfirmacaoFinal();
     else if (!pegar("minigame-ritmo").hidden) fecharMinigameRitmo();
@@ -218,10 +218,10 @@ document.addEventListener("keydown", function (evento) {
       registrarBatida();
     }
   }
-});
+}
 
-document.addEventListener("keyup", function (evento) {
+function teclaRitmoSolta(evento) {
   if (evento.code === "Space") espacoPressionado = false;
-});
+}
 
 iniciarPagina();

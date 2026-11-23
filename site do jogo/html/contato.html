@@ -19,7 +19,7 @@
   <main>
     <h1>Contato</h1>
     <p>Este formulário é uma demonstração para o trabalho. Ele não envia nem guarda os dados.</p>
-    <form class="formulario" id="form-contato"><label for="nome">Nome</label><input id="nome" name="nome" type="text"
+<form class="formulario" id="form-contato" onsubmit="enviarFormulario(event)"><label for="nome">Nome</label><input id="nome" name="nome" type="text"
         autocomplete="name" required /><label for="email">E-mail</label><input id="email" name="email" type="email"
         autocomplete="email" required /><label for="mensagem">Mensagem</label><textarea id="mensagem" name="mensagem"
         required></textarea><button class="botao" type="submit">Enviar demonstração</button></form>

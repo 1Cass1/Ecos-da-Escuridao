@@ -115,19 +115,3 @@ button:disabled {
   flex-shrink: 0;
 }
 
-.pistas-finais {
-  width: min(100%, 560px);
-  text-align: left;
-}
-
-.pistas-finais h2 {
-  margin-bottom: 8px;
-  font-size: 1.1rem;
-}
-
-.pistas-finais ul {
-  max-height: 24vh;
-  overflow-y: auto;
-  padding-left: 24px;
-  line-height: 1.45;
-}

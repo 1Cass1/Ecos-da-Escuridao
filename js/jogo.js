@@ -169,25 +169,36 @@ function atualizarInventario() {
   var lista = pegar("inv");
   if (!lista) return;
 
-  var inspecionar = pegar("inspecionar-item");
+  var conteudo =
+    '<span class="titulo-inventario">Itens</span>' +
+    '<span id="inventario-vazio"' +
+    (inventario.itens.length ? " hidden" : "") +
+    ">Vazio</span>";
+
   for (var item in fichaDosItens) {
-    var botao = pegar("item-" + item);
-    if (!botao) {
-      botao = document.createElement("button");
-      botao.type = "button";
-      botao.id = "item-" + item;
-      botao.value = item;
-      botao.className = "item-inventario";
-      botao.textContent = fichaDosItens[item].nome;
-      botao.addEventListener("click", clicarItem);
-      lista.insertBefore(botao, inspecionar);
-    }
-    botao.hidden = !inventario.tem(item);
-    botao.classList.toggle("sel", inventario.selecionado === item);
-    botao.setAttribute("aria-pressed", String(inventario.selecionado === item));
+    var temItem = inventario.tem(item);
+    var selecionado = inventario.selecionado === item;
+    conteudo +=
+      '<button type="button" id="item-' +
+      item +
+      '" class="item-inventario' +
+      (selecionado ? " sel" : "") +
+      '" value="' +
+      item +
+      '" onclick="clicarItem(event)" aria-pressed="' +
+      selecionado +
+      '"' +
+      (temItem ? "" : " hidden") +
+      ">" +
+      fichaDosItens[item].nome +
+      "</button>";
   }
-  pegar("inventario-vazio").hidden = inventario.itens.length !== 0;
-  inspecionar.hidden = !inventario.selecionado;
+
+  conteudo +=
+    '<button type="button" id="inspecionar-item" onclick="inspecionarItem()"' +
+    (inventario.selecionado ? "" : " hidden") +
+    ">Inspecionar</button>";
+  lista.innerHTML = conteudo;
 }
 
 function clicarItem(evento) {
@@ -258,11 +269,14 @@ if (painelInicial) {
   painelInicial.setAttribute("aria-label", "Painel da cena");
 }
 
-document.addEventListener("keydown", function (evento) {
+document.onkeydown = function (evento) {
   if (evento.key === "Escape" && painelAtual) {
     evento.preventDefault();
     fecharPainel();
     return;
+  }
+  if (typeof teclaRitmoPressionada === "function") {
+    teclaRitmoPressionada(evento);
   }
   if (evento.key !== "Tab") return;
 
@@ -290,9 +304,13 @@ document.addEventListener("keydown", function (evento) {
     evento.preventDefault();
     focaveis[0].focus();
   }
-});
+};
 
-document.addEventListener("focusin", function (evento) {
+document.onkeyup = function (evento) {
+  if (typeof teclaRitmoSolta === "function") teclaRitmoSolta(evento);
+};
+
+document.onfocusin = function (evento) {
   var palco = pegar("palco");
   if (!palco || !palco.contains(evento.target)) return;
   var caixaPalco = palco.getBoundingClientRect();
@@ -305,7 +323,7 @@ document.addEventListener("focusin", function (evento) {
     "--y",
     caixaAlvo.top + caixaAlvo.height / 2 - caixaPalco.top + "px",
   );
-});
+};
 
 window.onpageshow = function (evento) {
   atualizarModoClaro();
@@ -323,7 +341,7 @@ window.onpageshow = function (evento) {
   }
 };
 
-document.addEventListener("visibilitychange", function () {
+document.onvisibilitychange = function () {
   if (!document.hidden && relogio && partida.iniciada && !partida.final)
     atualizarRelogio();
-});
+};
