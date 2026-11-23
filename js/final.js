@@ -17,7 +17,7 @@ var finais = {
   tempo: {
     titulo: "Captura pelo Breu",
     texto:
-      "A lanterna apaga. Quando você estende a mão, alguém do escuro segura a sua. Já é tarde para encontrar a saída.",
+      "A lanterna apaga. Quando você estende a mão, alguém do escuro a segura. Já é tarde para encontrar a saída.",
   },
   secreto: {
     titulo: "Final secreto: o pacto",
